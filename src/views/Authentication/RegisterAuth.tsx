@@ -6,7 +6,7 @@ import Button from "../../components/common/Button";
 
 const RegisterAuth: React.FC = () => {
   return (
-    <div className="h-screen w-full flex items-center justify-center white:bg-slate-900 bg-gray-100 py-16">
+    <div className="h-screen w-full flex items-center justify-center py-16">
       <main className="w-full max-w-md mx-auto p-6">
         <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm white:bg-gray-800 white:border-gray-700">
           <div className="flex justify-center">
