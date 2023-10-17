@@ -1,3 +1,5 @@
+import { Field } from "formik";
+
 const FormField = (props: any) => {
   return (
     <>
@@ -15,7 +17,7 @@ const FormField = (props: any) => {
         )}
       </div>
       <div className="relative">
-        <input
+        <Field
           type={props.type}
           id={props.mark}
           name={props.mark}
@@ -25,7 +27,6 @@ const FormField = (props: any) => {
             props.width +
             " custom-border px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:text-gray-400"
           }
-          required
           aria-describedby="email-error"
         />
       </div>
