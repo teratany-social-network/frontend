@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { withAsync } from "../../helpers/withAsync";
 import { signinAuth } from "../../api/AuthenticationApi";
@@ -17,6 +17,7 @@ import {
 } from "../../store/reducer/userReducer";
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
+import useLoadingButton from "../../hooks/useLoadingButton";
 
 interface signinFormValues {
   email: string;
@@ -26,6 +27,7 @@ interface signinFormValues {
 const SignInAuth: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, startLoading, endLoading] = useLoadingButton();
 
   const initialValues: signinFormValues = {
     email: "",
@@ -33,15 +35,18 @@ const SignInAuth: React.FC = () => {
   };
 
   const signInUser = async (values: signinFormValues) => {
+    startLoading();
     const { response, error } = await withAsync(() =>
       signinAuth(values.email, values.password)
     );
 
     if (error instanceof AxiosError) {
+      endLoading();
       const error_message: string = error?.response?.data.error.description;
       toast.error(error_message);
       return;
     } else {
+      endLoading();
       const token: string = String(response?.data);
       const user: UserInitialState = jwtDecode(token);
       dispatch(
@@ -139,7 +144,12 @@ const SignInAuth: React.FC = () => {
                           </label>
                         </div>
                       </div>
-                      <Button width="px-4" height="py-3" name="Sign in" />
+                      <Button
+                        isLoading={isLoading}
+                        width="px-4"
+                        height="py-3"
+                        name="Sign in"
+                      />
                     </div>
                   </Form>
                 </Formik>
