@@ -1,34 +1,60 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { withAsync } from "../../helpers/withAsync";
 import { signinAuth } from "../../api/AuthenticationApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store/store";
-import { setAuthentication } from "store/reducer/userReducer";
 import { toast } from "react-toastify";
 import teratanyLogo from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import FormField from "../../components/common/FormField";
 import Button from "../../components/common/Button";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import ErrorMessageForm from "components/common/ErrorMessageForm";
+import {
+  UserInitialState,
+  setAuthentication,
+} from "../../store/reducer/userReducer";
+import jwtDecode from "jwt-decode";
+import { AxiosError } from "axios";
+
+interface signinFormValues {
+  email: string;
+  password: string;
+}
 
 const SignInAuth: React.FC = () => {
-  const disptach = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const signInUser = async () => {
-    disptach(
-      setAuthentication({
-        id: "id",
-        username: "nyhasina",
-        token: "token",
-        isAuthenticated: true,
-      })
+  const initialValues: signinFormValues = {
+    email: "",
+    password: "",
+  };
+
+  const signInUser = async (values: signinFormValues) => {
+    const { response, error } = await withAsync(() =>
+      signinAuth(values.email, values.password)
     );
-    toast.info("🦄 Wow so easy!");
-    const { response, error } = await withAsync(() => signinAuth());
 
-    if (response) {
-      console.log(response);
+    if (error instanceof AxiosError) {
+      const error_message: string = error?.response?.data.error.description;
+      toast.error(error_message);
+      return;
     } else {
-      console.log(error);
+      const token: string = String(response?.data);
+      const user: UserInitialState = jwtDecode(token);
+      dispatch(
+        setAuthentication({
+          id: user.id,
+          displayName: user.displayName,
+          email: user.email,
+          token,
+          isAuthenticated: true,
+        })
+      );
+      navigate("/feed");
+      toast.success("Successfully logged in");
     }
   };
 
@@ -57,46 +83,66 @@ const SignInAuth: React.FC = () => {
               </div>
 
               <div className="mt-5">
-                <form>
-                  <div className="grid text-start gap-y-2">
-                    <FormField
-                      label="Email Address"
-                      type="email"
-                      mark="email"
-                      height="py-3"
-                      width="px-4"
-                      extra={false}
-                    />
-                    <FormField
-                      label="Password"
-                      type="password"
-                      mark="psswrd"
-                      height="py-3"
-                      width="px-4"
-                      extra={true}
-                      extraDesc="Forgot Password?"
-                    />
-                    <div className="flex items-center">
-                      <div className="flex">
-                        <input
-                          id="remember-me"
-                          name="remember-me"
-                          type="checkbox"
-                          className="shrink-0 mt-0.5 border border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:checked:bg-blue-500 white:checked:border-blue-500 white:focus:ring-offset-gray-800"
-                        />
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={Yup.object({
+                    email: Yup.string()
+                      .email("Invalid email address")
+                      .required("Required"),
+                    password: Yup.string().min(1).required("Required"),
+                  })}
+                  onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                      signInUser(values);
+                      setSubmitting(false);
+                    }, 400);
+                  }}
+                >
+                  <Form>
+                    <div className="grid text-start gap-y-2">
+                      <FormField
+                        label="Email Address"
+                        type="email"
+                        mark="email"
+                        height="py-3"
+                        width="px-4"
+                        extra={false}
+                      />
+                      <ErrorMessageForm name="email" />
+
+                      <FormField
+                        label="Password"
+                        type="password"
+                        mark="password"
+                        height="py-3"
+                        width="px-4"
+                        extra={false}
+                        extraDesc="Forgot Password?"
+                      />
+                      <ErrorMessageForm name="password" />
+
+                      <div className="flex items-center">
+                        <div className="flex">
+                          <input
+                            id="remember-me"
+                            name="remember-me"
+                            type="checkbox"
+                            className="shrink-0 mt-0.5 border border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:checked:bg-blue-500 white:checked:border-blue-500 white:focus:ring-offset-gray-800"
+                          />
+                        </div>
+                        <div className="ml-3">
+                          <label
+                            htmlFor="remember-me"
+                            className="text-sm white:text-white"
+                          >
+                            Remember me
+                          </label>
+                        </div>
                       </div>
-                      <div className="ml-3">
-                        <label
-                          htmlFor="remember-me"
-                          className="text-sm white:text-white"
-                        >
-                          Remember me
-                        </label>
-                      </div>
+                      <Button width="px-4" height="py-3" name="Sign in" />
                     </div>
-                    <Button width="px-4" height="py-3" name="Sign in" />
-                  </div>
-                </form>
+                  </Form>
+                </Formik>
               </div>
             </div>
           </div>

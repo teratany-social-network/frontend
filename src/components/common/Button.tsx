@@ -1,6 +1,7 @@
 const Button = (props: any) => {
   return (
     <button
+      disabled={props.disabled ?? false}
       type="submit"
       className={
         props.width +
