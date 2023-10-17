@@ -1,13 +1,14 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/common/NavBar";
-import Home from "./components/Home";
-import SignInAuth from "./views/Authentication/SignInAuth";
-import RegisterAuth from "./views/Authentication/RegisterAuth";
+import NavBar from "components/common/NavBar";
+import Home from "components/Home";
+import SignInAuth from "views/Authentication/SignInAuth";
+import RegisterAuth from "views/Authentication/RegisterAuth";
 import { Provider } from "react-redux";
-import { store, persistor } from "./store/store";
+import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
-import ToastNotification from "./components/common/ToastNotification";
+import ToastNotification from "components/common/ToastNotification";
+
 const App: React.FC = () => {
   return (
     <div className="App">

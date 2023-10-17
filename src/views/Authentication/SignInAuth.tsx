@@ -1,9 +1,9 @@
 import React from "react";
-import { withAsync } from "../../helpers/withAsync";
-import { signinAuth } from "../../api/AuthenticationApi";
+import { withAsync } from "helpers/withAsync";
+import { signinAuth } from "api/AuthenticationApi";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { setAuthentication } from "../../store/reducer/userReducer";
+import { AppDispatch } from "store/store";
+import { setAuthentication } from "store/reducer/userReducer";
 import { toast } from "react-toastify";
 const SignInAuth: React.FC = () => {
   const disptach = useDispatch<AppDispatch>();
@@ -17,16 +17,7 @@ const SignInAuth: React.FC = () => {
         isAuthenticated: true,
       })
     );
-    toast.info("🦄 Wow so easy!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.info("🦄 Wow so easy!");
     const { response, error } = await withAsync(() => signinAuth());
 
     if (response) {
