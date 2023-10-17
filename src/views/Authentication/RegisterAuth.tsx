@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import teratanyLogo from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import FormField from "components/common/FormField";
@@ -17,6 +17,7 @@ import {
 } from "../../store/reducer/userReducer";
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
+import useLoadingButton from "../../hooks/useLoadingButton";
 
 interface signupFormValues {
   email: string;
@@ -27,6 +28,7 @@ interface signupFormValues {
 const RegisterAuth: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, startLoading, endLoading] = useLoadingButton();
 
   const initialValues: signupFormValues = {
     email: "",
@@ -35,16 +37,18 @@ const RegisterAuth: React.FC = () => {
   };
 
   const registerUser = async (values: signupFormValues) => {
+    startLoading();
     const { error, response } = await withAsync(() =>
       registerAuth(values.email, values.name, values.password)
     );
 
     if (error instanceof AxiosError) {
-      console.log("error ", error);
+      endLoading();
       const error_message: string = error?.response?.data.error.description;
       toast.error(error_message);
       return;
     } else {
+      endLoading();
       const token: string = String(response?.data);
       const user: UserInitialState = jwtDecode(token);
       dispatch(
@@ -155,7 +159,12 @@ const RegisterAuth: React.FC = () => {
                         </label>
                       </div>
                     </div>
-                    <Button width="px-4" height="py-3" name="Sign up" />
+                    <Button
+                      isLoading={isLoading}
+                      width="px-4"
+                      height="py-3"
+                      name="Sign up"
+                    />
                   </div>
                 </Form>
               </Formik>
