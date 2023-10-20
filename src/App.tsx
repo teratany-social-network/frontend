@@ -1,7 +1,7 @@
 import "./App.css";
 import { Outlet, BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/common/NavBar";
-import Home from "./components/Home";
+import Home from "./views/Home";
 import SignInAuth from "./views/Authentication/SignInAuth";
 import RegisterAuth from "./views/Authentication/RegisterAuth";
 import PageProfile from "./views/Page/PageProfile";
