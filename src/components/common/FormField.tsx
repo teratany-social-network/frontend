@@ -28,6 +28,7 @@ const FormField = (props: any) => {
             " custom-border px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:text-gray-400"
           }
           aria-describedby="email-error"
+          value={props.value}
         />
       </div>
     </>
