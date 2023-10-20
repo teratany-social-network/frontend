@@ -1,9 +1,9 @@
 import React from "react";
-import EditHeader from "./pageComponents/EditHeader";
+import EditHeader from "../../components/common/HeaderEdit";
 import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import Button from "../../components/common/Button";
 
-const EditPicture: React.FC = () => {
+const EditUserPicture: React.FC = () => {
   return (
     <>
       <EditHeader name="Profile picture" />
@@ -24,4 +24,4 @@ const EditPicture: React.FC = () => {
     </>
   );
 };
-export default EditPicture;
+export default EditUserPicture;
