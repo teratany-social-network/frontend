@@ -1,52 +1,90 @@
 import React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ChatIcon from "@mui/icons-material/Chat";
-import HomeIcon from "@mui/icons-material/Home";
-import SettingsIcon from "@mui/icons-material/Settings";
-import PersonIcon from "@mui/icons-material/Person";
-import { Paper } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { AiFillHome } from "@react-icons/all-files/ai/AiFillHome";
+import { AiOutlineHome } from "@react-icons/all-files/ai/AiOutlineHome";
+import { RiSearchLine } from "@react-icons/all-files/ri/RiSearchLine";
+import { RiSearchFill } from "@react-icons/all-files/ri/RiSearchFill";
+import { IoMap } from "@react-icons/all-files/io5/IoMap";
+import { IoMapOutline } from "@react-icons/all-files/io5/IoMapOutline";
+import { BsFillPlusSquareFill } from "@react-icons/all-files/bs/BsFillPlusSquareFill";
+import { BsPlusSquare } from "@react-icons/all-files/bs/BsPlusSquare";
+import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NavBar: React.FC = () => {
-  const [value, setValue] = React.useState("home");
   const navigate = useNavigate();
-  const location = useLocation();
-  useEffect(() => {
-    setValue(location.pathname.split("/")[1]);
-  }, [location.pathname]);
+  const [activeButton, setActiveButton] = useState("home");
 
-  const handleChange = async (
-    event: React.SyntheticEvent,
-    newValue: string
-  ) => {
-    navigate(`/${newValue}`);
+  const handleButtonClick = (buttonName: any) => {
+    setActiveButton(buttonName);
   };
+
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      elevation={3}
-    >
-      <BottomNavigation value={value} onChange={handleChange}>
-        <BottomNavigationAction
-          label="Actualités"
-          value="feed"
-          icon={<HomeIcon />}
-        />
-        <BottomNavigationAction label="Chat" value="chat" icon={<ChatIcon />} />
-        <BottomNavigationAction
-          label="Profile"
-          value="profile"
-          icon={<PersonIcon />}
-        />
-        <BottomNavigationAction
-          label="Settings"
-          value="edit-profile"
-          icon={<SettingsIcon />}
-        />
-      </BottomNavigation>
-    </Paper>
+    <div className="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200">
+      <div className="flex items-center justify-around h-full max-w-lg mx-auto font-medium">
+        <button
+          onClick={() => {
+            handleButtonClick("home");
+            navigate("/");
+          }}
+          type="button"
+          className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 dark:hover-bg-gray-800 group"
+        >
+          {activeButton === "home" ? (
+            <AiFillHome size={30} color="black" />
+          ) : (
+            <AiOutlineHome size={30} color="black" />
+          )}
+        </button>
+        <button
+          onClick={() => handleButtonClick("search")}
+          type="button"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
+        >
+          {activeButton === "search" ? (
+            <RiSearchFill size={30} color="black" />
+          ) : (
+            <RiSearchLine size={30} color="black" />
+          )}
+        </button>
+        <button
+          onClick={() => handleButtonClick("addPub")}
+          type="button"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
+        >
+          {activeButton === "addPub" ? (
+            <BsFillPlusSquareFill size={28} color="black" />
+          ) : (
+            <BsPlusSquare size={28} color="black" />
+          )}
+        </button>
+        <button
+          onClick={() => handleButtonClick("setting")}
+          type="button"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
+        >
+          {activeButton === "setting" ? (
+            <IoMap size={30} color="black" />
+          ) : (
+            <IoMapOutline size={30} color="black" />
+          )}
+        </button>
+        <button
+          onClick={() => {
+            handleButtonClick("");
+            navigate("/profile");
+          }}
+          type="button"
+          className="inline-flex flex-col items-center justify-center px-5"
+        >
+          <img
+            src={ProfilePicture}
+            className="w-8 h-8 border-2 rounded-full border-black"
+            alt=""
+          />
+        </button>
+      </div>
+    </div>
   );
 };
 

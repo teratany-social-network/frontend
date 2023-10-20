@@ -119,7 +119,7 @@ const RegisterAuth: React.FC = () => {
                       type="email"
                       mark="email"
                       height="py-3"
-                      width="px-4"
+                      width="w-full"
                       extra={false}
                     />
                     <ErrorMessageForm name="email" />
@@ -128,7 +128,7 @@ const RegisterAuth: React.FC = () => {
                       type="texte"
                       mark="name"
                       height="py-3"
-                      width="px-4"
+                      width="w-full"
                       extra={false}
                     />
                     <ErrorMessageForm name="name" />
@@ -137,7 +137,7 @@ const RegisterAuth: React.FC = () => {
                       type="password"
                       mark="password"
                       height="py-3"
-                      width="px-4"
+                      width="w-full"
                       extra={false}
                     />
                     <ErrorMessageForm name="password" />
