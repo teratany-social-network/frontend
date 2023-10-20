@@ -44,7 +44,7 @@ const RegisterAuth: React.FC = () => {
 
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string = error?.response?.data.error.description;
+      const error_message: string = error?.response?.data.error.description ?? error.message;
       toast.error(error_message);
       return;
     } else {
