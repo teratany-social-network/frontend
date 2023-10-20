@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { withAsync } from "../../helpers/withAsync";
 import { signinAuth } from "../../api/AuthenticationApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store/store";
 import { toast } from "react-toastify";
-import teratanyLogo from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
+import TeratanyLogo from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import FormField from "../../components/common/FormField";
 import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
@@ -69,7 +69,7 @@ const SignInAuth: React.FC = () => {
         <main className="w-full max-w-md mx-auto p-6">
           <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm white:bg-gray-800 white:border-gray-700">
             <div className="flex justify-center">
-              <img src={teratanyLogo} alt="" className=" w-20 h-20" />
+              <img src={TeratanyLogo} alt="" className=" w-20 h-20" />
             </div>
             <div className="p-4 sm:p-7">
               <div className="text-center">
@@ -110,7 +110,7 @@ const SignInAuth: React.FC = () => {
                         type="email"
                         mark="email"
                         height="py-3"
-                        width="px-4"
+                        width="w-full"
                         extra={false}
                       />
                       <ErrorMessageForm name="email" />
@@ -120,7 +120,7 @@ const SignInAuth: React.FC = () => {
                         type="password"
                         mark="password"
                         height="py-3"
-                        width="px-4"
+                        width="w-full"
                         extra={false}
                         extraDesc="Forgot Password?"
                       />
