@@ -19,6 +19,10 @@ const NavBar: React.FC = () => {
     setActiveButton(buttonName);
   };
 
+  const toPublication = () => {
+    navigate("/publication");
+  };
+
   return (
     <div className="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200">
       <div className="flex items-center justify-around h-full max-w-lg mx-auto font-medium">
@@ -48,12 +52,19 @@ const NavBar: React.FC = () => {
           )}
         </button>
         <button
-          onClick={() => handleButtonClick("addPub")}
+          onClick={() => {
+            handleButtonClick("addPub");
+            toPublication();
+          }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
         >
           {activeButton === "addPub" ? (
-            <BsFillPlusSquareFill size={28} color="black" />
+            <BsFillPlusSquareFill
+              size={28}
+              color="black"
+              onClick={toPublication}
+            />
           ) : (
             <BsPlusSquare size={28} color="black" />
           )}
