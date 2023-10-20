@@ -1,26 +1,29 @@
 import React from "react";
-import EditHeader from "./pageComponents/EditHeader";
+import EditHeader from "../../components/common/HeaderEdit";
 import FormField from "../../components/common/FormField";
+import SwitchToggle from "../../components/common/switchToggle";
 import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-interface editPasswordFormValues {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+interface editGeneralPageFormValues {
+  name: string;
+  email: string;
+  address: string;
+  addressIsPrivate: Boolean;
 }
 
-const initialValues: editPasswordFormValues = {
-  currentPassword: "",
-  newPassword: "",
-  confirmPassword: "",
+const initialValues: editGeneralPageFormValues = {
+  name: "",
+  email: "",
+  address: "",
+  addressIsPrivate: true,
 };
 
-const EditProfile: React.FC = () => {
+const EditGeneralPage: React.FC = () => {
   return (
     <>
-      <EditHeader name="Edit Password" />
+      <EditHeader name="Edit Profile" />
       <div className="mt-20 flex flex-col items-center mx-4">
         <Formik
           initialValues={initialValues}
@@ -39,32 +42,35 @@ const EditProfile: React.FC = () => {
         >
           <Form className="w-3/4">
             <FormField
-              label="Current password"
+              label="Name"
+              type="name"
+              mark="name"
+              height="py-2"
+              width="w-full"
+              extra={false}
+              extraDesc="Forgot Password?"
+            />
+            <FormField
+              label="Email"
+              type="email"
+              mark="email"
+              height="py-2"
+              width="w-full"
+              extra={false}
+              extraDesc="Forgot Password?"
+            />
+            <FormField
+              label="Address"
               type="text"
-              mark="text1"
+              mark="text"
               height="py-2"
               width="w-full"
               extra={false}
               extraDesc="Forgot Password?"
             />
-            <FormField
-              label="New password"
-              type="password"
-              mark="text2"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
-            <FormField
-              label="Confirm password"
-              type="password"
-              mark="text3"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
+            <div className="flex items-start mt-4">
+              <SwitchToggle label="Private Address" />
+            </div>
           </Form>
         </Formik>
         <div className="my-10">
@@ -74,4 +80,4 @@ const EditProfile: React.FC = () => {
     </>
   );
 };
-export default EditProfile;
+export default EditGeneralPage;

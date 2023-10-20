@@ -48,7 +48,10 @@ const NavBar: React.FC = () => {
           )}
         </button>
         <button
-          onClick={() => handleButtonClick("addPub")}
+          onClick={() => {
+            handleButtonClick("addPub");
+            navigate("/page");
+          }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
         >
@@ -59,7 +62,10 @@ const NavBar: React.FC = () => {
           )}
         </button>
         <button
-          onClick={() => handleButtonClick("setting")}
+          onClick={() => {
+            handleButtonClick("setting");
+            navigate("/page");
+          }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
         >
@@ -72,7 +78,7 @@ const NavBar: React.FC = () => {
         <button
           onClick={() => {
             handleButtonClick("");
-            navigate("/profile");
+            navigate("/user");
           }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5"

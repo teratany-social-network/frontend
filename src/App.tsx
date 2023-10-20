@@ -5,15 +5,20 @@ import Home from "./components/Home";
 import SignInAuth from "./views/Authentication/SignInAuth";
 import RegisterAuth from "./views/Authentication/RegisterAuth";
 import PageProfile from "./views/Page/PageProfile";
-import EditPage from "./views/Page/EditPage";
-import EditProfile from "./views/Page/EditProfile";
-import EditPicture from "./views/Page/EditPicture";
-import EditPassword from "./views/Page/EditPassword";
-import EditLocation from "./views/Page/EditLocation";
+import EditPageMenu from "./views/Page/EditPageMenu";
+import EditGeneralPage from "./views/Page/EditGeneralPage";
+import EditPagePicture from "./views/Page/EditPagePicture";
+import EditPageLocation from "./views/Page/EditLocationPage";
+import UserProfile from "./views/User/UserProfile";
 import { Provider } from "react-redux";
 import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
+import EditUserMenu from "./views/User/EditUserMenu";
+import EditGeneralUser from "./views/User/UserGeneral";
+import EditUserPassword from "./views/User/UserPassword";
+import EditUserPicture from "./views/User/UserPicture";
+import EditUserLocation from "./views/User/UserLocation";
 
 const App: React.FC = () => {
   return (
@@ -30,12 +35,19 @@ const App: React.FC = () => {
               </Route>
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<PageProfile />} />
-                <Route path="/edit-page" element={<EditPage />} />
-                <Route path="/edit-profile" element={<EditProfile />} />
-                <Route path="/edit-picture" element={<EditPicture />} />
-                <Route path="/edit-password" element={<EditPassword />} />
-                <Route path="/edit-location" element={<EditLocation />} />
+                {/* PAGE */}
+                <Route path="/page" element={<PageProfile />} />
+                <Route path="/edit-menu" element={<EditPageMenu />} />
+                <Route path="/page-general" element={<EditGeneralPage />} />
+                <Route path="/page-picture" element={<EditPagePicture />} />
+                <Route path="/page-location" element={<EditPageLocation />} />
+                {/* USER */}
+                <Route path="/user" element={<UserProfile />} />
+                <Route path="/edit-user" element={<EditUserMenu />} />
+                <Route path="/user-general" element={<EditGeneralUser />} />
+                <Route path="/user-password" element={<EditUserPassword />} />
+                <Route path="/user-picture" element={<EditUserPicture />} />
+                <Route path="/user-location" element={<EditUserLocation />} />
               </Route>
             </Routes>
           </BrowserRouter>
