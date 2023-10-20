@@ -1,6 +1,7 @@
 import React from "react";
 import TopNavBarProfile from "../../components/common/TopNavBarProfile";
 import Button from "../../components/common/Button";
+import Publication from "../../components/common/Publication";
 
 const UserProfile: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const UserProfile: React.FC = () => {
         <div className="flex flex-col">
           <div className="flex flex-col items-start">
             <h2 className="text-xl font-normal mb-2">Rakotoarivelo Miandry</h2>
-            <Button width="w-full" height="py-1" name="Follow" />
+            <Button width="w-full" height="h-7" name="Follow" />
           </div>
 
           <ul className="flex space-x-8 mt-2">
@@ -32,6 +33,9 @@ const UserProfile: React.FC = () => {
           </ul>
         </div>
       </div>
+      <Publication />
+      <Publication />
+      <Publication />
     </>
   );
 };
