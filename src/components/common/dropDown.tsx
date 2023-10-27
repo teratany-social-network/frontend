@@ -1,7 +1,7 @@
 const DropDown = (props: any) => {
   return (
     <>
-      <div className="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow w-32">
+      <div className="absolute z-10 mt-8 bg-white divide-y divide-gray-100 rounded-lg shadow w-32">
         <ul className="py-2 text-sm text-black ">
           {props.choices.map((choice: string, i: any) => {
             return (
