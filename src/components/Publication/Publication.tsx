@@ -1,18 +1,28 @@
-import React from "react";
 import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
 import { FaRegComment } from "@react-icons/all-files/fa/FaRegComment";
 import { FiSend } from "@react-icons/all-files/fi/FiSend";
 import { useState } from "react";
+import { DrawerContainer } from "../DrawerContainer";
 
-const Publication: React.FC = () => {
+const Publication = () => {
   const [isPostLiked, setIsPostLiked] = useState<Boolean>(false);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   const handleClickLikePost = () => {
     setIsPostLiked(!isPostLiked);
   };
 
+  const changeDrawerStatus = () => {
+    console.log("clicked");
+    setDrawerOpen(true);
+  };
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+  };
+
   return (
+    // <!-- Wrapper-->
     <div className="wrapper my-2 w-full sm:w-[30%] flex flex-col items-center bg-white rounded-lg shadow-md">
       {/* <!-- Card--> */}
       <article className="mb-4 break-inside rounded-xl bg-white white:bg-slate-800 flex flex-col bg-clip-border w-full">
@@ -22,19 +32,19 @@ const Publication: React.FC = () => {
               <img
                 alt=""
                 className="rounded-full max-w-none w-12 h-12"
-                src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                src="https://randomuser.me/api/portraits/men/35.jpg"
               />
             </a>
             <div className="flex flex-col">
               <div>
                 <a
-                  className="inline-block text-base font-bold white:text-white"
+                  className="inline-block text-lg font-bold white:text-white"
                   href="/"
                 >
-                  Rakotoarivelo Miandry
+                  Wade Warren
                 </a>
               </div>
-              <div className="flex text-xs text-slate-500 white:text-slate-300 white:text-slate-400">
+              <div className="flex text-slate-500 white:text-slate-300 white:text-slate-400">
                 July 17, 2018
               </div>
             </div>
@@ -71,7 +81,7 @@ const Publication: React.FC = () => {
                 )}
               </span>
               <span className="mr-4">
-                <FaRegComment size={24} />
+                <FaRegComment size={24} onClick={changeDrawerStatus} />
               </span>
               <span className="mr-4">
                 <FiSend size={24} />
@@ -88,13 +98,17 @@ const Publication: React.FC = () => {
 
           <p className="text-left  text-gray-400 font-normal">plus</p>
 
-          <p className="text-left  text-gray-400 font-normal">
+          <p
+            onClick={changeDrawerStatus}
+            className="text-left  text-gray-400 font-normal"
+          >
             Afficher les 32 commentaires
           </p>
           <p className="text-left text-xs text-gray-400 font-normal">
             IL Y A 14 JOURS
           </p>
         </div>
+        <DrawerContainer isOpen={drawerOpen} onClose={closeDrawer} />
       </article>
     </div>
   );

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import EditHeader from "../../components/common/HeaderEdit";
-import EditType from "../../components/common/EditType";
-import HorizontalCards from "../../components/common/HorizontalCards";
+import EditType from "../../components/EditType";
 import { FiChevronDown } from "@react-icons/all-files/fi/FiChevronDown";
 import { FiChevronUp } from "@react-icons/all-files/fi/FiChevronUp";
 import { GrAddCircle } from "@react-icons/all-files/gr/GrAddCircle";
 import { useNavigate } from "react-router-dom";
+import TopBar from "../../components/common/TopBar";
 
 const EditUser: React.FC = () => {
   const [accordionVisible, setVisibility] = useState(false);
@@ -16,8 +15,8 @@ const EditUser: React.FC = () => {
   };
   return (
     <>
-      <EditHeader name="User settings" />
-      <div className="mt-20 mx-4 ">
+      <TopBar text="User settings" />
+      <div className="mt-2 mx-4 ">
         <EditType name="General" type="user" path="/user-general" />
         <EditType name="Profile picture" type="user" path="/user-picture" />
         <EditType name="Edit Password" type="user" path="/user-password" />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
+import Button from "./common/Button";
 
 interface horizontalCardsProps {
   name: string;

@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBar from "../../components/common/SearchBar";
-import RecentCard from "../../components/common/RecentCard";
+import SearchBar from "../../components/SearchBar";
+import RecentCard from "../../components/RecentCard";
 
 const Search: React.FC = () => {
   return (

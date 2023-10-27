@@ -1,14 +1,13 @@
-import React from "react";
-const PageTopList: React.FC = () => {
+const PageTopList = () => {
   return (
-    <div className="flex my-2 mt-14 overflow-x-scroll no-scrollbar  w-full xs:w-[30%] p-2 pl-4 ">
-      <div className="flex flex-col w-14 h-14 mr-4">
+    <div className="flex my-2 overflow-x-scroll no-scrollbar  w-full sm:w-[30%] p-2 pl-4 ">
+      <div className="flex flex-col w-16 h-16 mr-4">
         <img
           className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
           src="https://randomuser.me/api/portraits/men/36.jpg"
           alt="Bordered avatar"
         />
-        <p>Avatar</p>
+        <p>Avatar avatar</p>
       </div>
       <div className="flex flex-col w-16 h-16 mr-4">
         <img

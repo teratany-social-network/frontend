@@ -1,12 +1,12 @@
 import React from "react";
-import EditHeader from "../../components/common/HeaderEdit";
 import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import Button from "../../components/common/Button";
+import TopBar from "../../components/common/TopBar";
 
 const EditUserPicture: React.FC = () => {
   return (
     <>
-      <EditHeader name="Profile picture" />
+      <TopBar text="Profile picture" />
       <div className="mt-20 flex flex-col items-center">
         <img
           src={ProfilePicture}
