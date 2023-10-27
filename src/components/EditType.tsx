@@ -6,23 +6,25 @@ import { BiPhotoAlbum } from "@react-icons/all-files/bi/BiPhotoAlbum";
 import { useNavigate } from "react-router-dom";
 
 interface EditTypeProps {
+  name: string;
+  path: string;
   type: string;
 }
 
 const EditType: React.FC<EditTypeProps> = (props: any) => {
   const navigate = useNavigate();
   let icon = <FaRegUserCircle size={23} />; // Icône par défaut
-  let navigationPath = "/edit-profile";
+  let navigationPath = props.path;
 
-  if (props.type === "Edit Password") {
+  if (props.name === "Edit Password") {
     icon = <MdSecurity size={23} />;
-    navigationPath = "/edit-password";
-  } else if (props.type === "Location parameter") {
+    navigationPath = `/${props.type}-password`;
+  } else if (props.name === "Location parameter") {
     icon = <MdMyLocation size={23} />;
-    navigationPath = "/edit-location";
-  } else if (props.type === "Profile picture") {
+    navigationPath = `/${props.type}-location`;
+  } else if (props.name === "Profile picture") {
     icon = <BiPhotoAlbum size={23} />;
-    navigationPath = "/edit-picture";
+    navigationPath = `/${props.type}-picture`;
   }
 
   return (
@@ -31,7 +33,7 @@ const EditType: React.FC<EditTypeProps> = (props: any) => {
       onClick={() => navigate(navigationPath)}
     >
       {icon}
-      <p className="px-3 text-lg font-normal">{props.type}</p>
+      <p className="px-3 text-lg font-normal">{props.name}</p>
     </div>
   );
 };

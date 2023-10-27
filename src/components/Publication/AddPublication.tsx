@@ -1,6 +1,6 @@
-import React, {  useState } from "react";
-import TopBar from "../../components/common/TopBar";
-import Button from "../../components/common/Button";
+import React, { useState } from "react";
+import TopBar from "../common/TopBar";
+import Button from "../common/Button";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import { BiPhotoAlbum } from "@react-icons/all-files/bi/BiPhotoAlbum";
 
