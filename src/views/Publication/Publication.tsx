@@ -3,12 +3,22 @@ import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
 import { FaRegComment } from "@react-icons/all-files/fa/FaRegComment";
 import { FiSend } from "@react-icons/all-files/fi/FiSend";
 import { useState } from "react";
+import { DrawerContainer } from "../../components/DrawerContainer";
 
 const Publication = () => {
   const [isPostLiked, setIsPostLiked] = useState<Boolean>(false);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   const handleClickLikePost = () => {
     setIsPostLiked(!isPostLiked);
+  };
+
+  const changeDrawerStatus = () => {
+    console.log("clicked");
+    setDrawerOpen(true);
+  };
+  const closeDrawer = () => {
+    setDrawerOpen(false);
   };
 
   return (
@@ -71,7 +81,7 @@ const Publication = () => {
                 )}
               </span>
               <span className="mr-4">
-                <FaRegComment size={24} />
+                <FaRegComment size={24} onClick={changeDrawerStatus} />
               </span>
               <span className="mr-4">
                 <FiSend size={24} />
@@ -88,13 +98,17 @@ const Publication = () => {
 
           <p className="text-left  text-gray-400 font-normal">plus</p>
 
-          <p className="text-left  text-gray-400 font-normal">
+          <p
+            onClick={changeDrawerStatus}
+            className="text-left  text-gray-400 font-normal"
+          >
             Afficher les 32 commentaires
           </p>
           <p className="text-left text-xs text-gray-400 font-normal">
             IL Y A 14 JOURS
           </p>
         </div>
+        <DrawerContainer isOpen={drawerOpen} onClose={closeDrawer} />
       </article>
     </div>
   );

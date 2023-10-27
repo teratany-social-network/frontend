@@ -24,7 +24,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200">
+    <div className="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200 z-1000">
       <div className="flex items-center justify-around h-full max-w-lg mx-auto font-medium">
         <button
           onClick={() => {
@@ -70,7 +70,10 @@ const NavBar: React.FC = () => {
           )}
         </button>
         <button
-          onClick={() => handleButtonClick("setting")}
+          onClick={() => {
+            handleButtonClick("setting");
+            navigate("/map");
+          }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
         >

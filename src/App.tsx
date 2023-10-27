@@ -15,6 +15,7 @@ import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
 import AddPublication from "./views/Publication/AddPublication";
+import Map from "./views/Map/Map";
 
 const App: React.FC = () => {
   return (
@@ -39,6 +40,8 @@ const App: React.FC = () => {
                 <Route path="/edit-location" element={<EditLocation />} />
                 {/* // publication */}
                 <Route path="/publication" element={<AddPublication />} />
+                {/* // Map */}
+                <Route path="/map" element={<Map />} />
               </Route>
             </Routes>
           </BrowserRouter>
