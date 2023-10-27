@@ -13,7 +13,6 @@ const Publication: React.FC = () => {
   };
 
   return (
-    // <!-- Wrapper-->
     <div className="wrapper my-2 w-full sm:w-[30%] flex flex-col items-center bg-white rounded-lg shadow-md">
       {/* <!-- Card--> */}
       <article className="mb-4 break-inside rounded-xl bg-white white:bg-slate-800 flex flex-col bg-clip-border w-full">
@@ -29,13 +28,13 @@ const Publication: React.FC = () => {
             <div className="flex flex-col">
               <div>
                 <a
-                  className="inline-block text-lg font-bold white:text-white"
+                  className="inline-block text-base font-bold white:text-white"
                   href="/"
                 >
                   Rakotoarivelo Miandry
                 </a>
               </div>
-              <div className="flex text-sm text-slate-500 white:text-slate-300 white:text-slate-400">
+              <div className="flex text-xs text-slate-500 white:text-slate-300 white:text-slate-400">
                 July 17, 2018
               </div>
             </div>

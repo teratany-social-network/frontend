@@ -2,11 +2,19 @@ import React from "react";
 import TopNavBarProfile from "../../components/common/TopNavBarProfile";
 import Button from "../../components/common/Button";
 import Publication from "../../components/common/Publication";
+import SwitchAccountDrawer from "../../components/common/SwitchAccountDrawer";
 
 const UserProfile: React.FC = () => {
+  const [openBottom, setOpenBottom] = React.useState(false);
+
+  const openDrawerBottom = () => setOpenBottom(true);
+  const closeDrawerBottom = () => setOpenBottom(false);
+
   return (
     <>
-      <TopNavBarProfile user="Miandry" path="/edit-user" />
+      <div onClick={openDrawerBottom}>
+        <TopNavBarProfile user="Miandry" path="/edit-user" />
+      </div>
       <div className="mt-16 pb-3 flex w-full justify-evenly items-center border-b border-gray-200">
         <img
           className="w-20 h-20 object-cover rounded-full
@@ -16,26 +24,33 @@ const UserProfile: React.FC = () => {
         />
         <div className="flex flex-col">
           <div className="flex flex-col items-start">
-            <h2 className="text-xl font-normal mb-2">Rakotoarivelo Miandry</h2>
-            <Button width="w-full" height="h-7" name="Follow" />
+            <h2 className="text-xl font-normal mb-1">Rakotoarivelo Miandry</h2>
+
+            <ul className="flex space-x-8 mb-2">
+              <li>
+                <span className="font-semibold">136 </span>
+                posts
+              </li>
+
+              <li>
+                <span className="font-semibold">40.5k </span>
+                followers
+              </li>
+            </ul>
           </div>
-
-          <ul className="flex space-x-8 mt-2">
-            <li>
-              <span className="font-semibold">136 </span>
-              posts
-            </li>
-
-            <li>
-              <span className="font-semibold">40.5k </span>
-              followers
-            </li>
-          </ul>
+          <div className="flex items-center w-full">
+            <Button width="w-full" height="h-7" name="Unfollow" />
+            <Button width="w-1/3" height="h-7" name="Message" />
+          </div>
         </div>
       </div>
       <Publication />
       <Publication />
       <Publication />
+      <SwitchAccountDrawer
+        openBottom={openBottom}
+        closeBottom={closeDrawerBottom}
+      />
     </>
   );
 };
