@@ -1,9 +1,9 @@
 import React from "react";
-import SearchBar from "../../components/common/SearchBar";
-import SearchFilterBar from "../../components/common/SearchFilterBar";
+import SearchBar from "../../components/SearchBar";
+import SearchFilterBar from "../../components/SearchFilterBar";
 import { HiArrowNarrowLeft } from "@react-icons/all-files/hi/HiArrowNarrowLeft";
-import Publication from "../../components/common/Publication";
-import HorizontalCards from "../../components/common/HorizontalCards";
+import Publication from "../../components/Publication/Publication";
+import HorizontalCards from "../../components/HorizontalCards";
 
 const SearchResult: React.FC = () => {
   const handleGoBack = () => {

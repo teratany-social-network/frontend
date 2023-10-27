@@ -14,6 +14,8 @@ import { Provider } from "react-redux";
 import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
+import AddPublication from "./components/Publication/AddPublication";
+import Map from "./views/Map/Map";
 import EditUserMenu from "./views/User/EditUserMenu";
 import EditGeneralUser from "./views/User/UserGeneral";
 import EditUserPassword from "./views/User/UserPassword";
@@ -39,6 +41,12 @@ const App: React.FC = () => {
               </Route>
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<PageProfile />} />
+
+                {/* // publication */}
+                <Route path="/publication" element={<AddPublication />} />
+                {/* // Map */}
+                <Route path="/map" element={<Map />} />
                 {/* PAGE */}
                 <Route path="/page" element={<PageProfile />} />
                 <Route path="/edit-menu" element={<EditPageMenu />} />

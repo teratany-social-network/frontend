@@ -1,9 +1,9 @@
 import React from "react";
-import EditHeader from "../../components/common/HeaderEdit";
 import FormField from "../../components/common/FormField";
 import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import TopBar from "../../components/common/TopBar";
 
 interface editPasswordFormValues {
   currentPassword: string;
@@ -20,7 +20,7 @@ const initialValues: editPasswordFormValues = {
 const EditUserPassword: React.FC = () => {
   return (
     <>
-      <EditHeader name="Edit Password" />
+      <TopBar text="Edit Password" />
       <div className="mt-20 flex flex-col items-center mx-4">
         <Formik
           initialValues={initialValues}

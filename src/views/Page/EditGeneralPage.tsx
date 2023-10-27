@@ -1,10 +1,10 @@
 import React from "react";
-import EditHeader from "../../components/common/HeaderEdit";
 import FormField from "../../components/common/FormField";
 import SwitchToggle from "../../components/common/switchToggle";
 import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import TopBar from "../../components/common/TopBar";
 
 interface editGeneralPageFormValues {
   name: string;
@@ -23,7 +23,7 @@ const initialValues: editGeneralPageFormValues = {
 const EditGeneralPage: React.FC = () => {
   return (
     <>
-      <EditHeader name="Edit Profile" />
+      <TopBar text="Edit Profile" />
       <div className="mt-20 flex flex-col items-center mx-4">
         <Formik
           initialValues={initialValues}

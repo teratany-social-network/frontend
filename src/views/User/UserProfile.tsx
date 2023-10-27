@@ -1,8 +1,8 @@
 import React from "react";
-import TopNavBarProfile from "../../components/common/TopNavBarProfile";
+import TopNavBarProfile from "../../components/TopNavBarProfile";
 import Button from "../../components/common/Button";
-import Publication from "../../components/common/Publication";
-import SwitchAccountDrawer from "../../components/common/SwitchAccountDrawer";
+import Publication from "../../components/Publication/Publication";
+import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
 
 const UserProfile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState(false);
