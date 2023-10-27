@@ -11,3 +11,19 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.z-1000 {
+  z-index: 1000;
+}
+
+.custom-form-comment {
+  margin: -1rem;
+  position: fixed;
+  bottom: 4.5rem;
+  background: white;
+  padding: 1rem;
+}
+
+.custom-height-comment {
+  height: calc(87vh - 5rem) !important;
+}

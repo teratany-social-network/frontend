@@ -6,7 +6,6 @@ const Home = () => {
     <div className="bg-gray-100 flex flex-col items-center justify-center h-full">
       <PageTopList />
       <Publication />
-      <Publication />
     </div>
   );
 };
