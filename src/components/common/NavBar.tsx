@@ -74,7 +74,7 @@ const NavBar: React.FC = () => {
         </button>
         <button
           onClick={() => {
-            handleButtonClick("setting");
+            handleButtonClick("map");
             navigate("/map");
           }}
           type="button"

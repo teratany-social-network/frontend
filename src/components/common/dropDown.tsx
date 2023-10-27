@@ -10,6 +10,10 @@ const DropDown = (props: any) => {
                   key={i}
                   type="button"
                   className="inline-flex rounded-lg w-full px-4 py-2 hover:bg-black hover:text-white"
+                  onClick={() => {
+                    props.onChoiceSelect(choice);
+                    props.closeOnSelect();
+                  }}
                 >
                   {choice}
                 </button>
