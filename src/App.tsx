@@ -22,6 +22,7 @@ import EditUserLocation from "./views/User/UserLocation";
 import Search from "./views/Search/Search";
 import AddPage from "./views/Page/AddPage";
 import SearchResult from "./views/Search/SearchResultPage";
+import SearchFilterResult from "./views/Search/SearchFilterResult";
 
 const App: React.FC = () => {
   return (
@@ -55,6 +56,14 @@ const App: React.FC = () => {
                 {/* SEARCH */}
                 <Route path="/search" element={<Search />} />
                 <Route path="/search/result" element={<SearchResult />} />
+                <Route
+                  path="/search/result/publication"
+                  element={<SearchFilterResult />}
+                />
+                <Route
+                  path="/search/result/user"
+                  element={<SearchFilterResult />}
+                />
               </Route>
             </Routes>
           </BrowserRouter>
