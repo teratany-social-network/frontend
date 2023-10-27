@@ -19,6 +19,9 @@ import EditGeneralUser from "./views/User/UserGeneral";
 import EditUserPassword from "./views/User/UserPassword";
 import EditUserPicture from "./views/User/UserPicture";
 import EditUserLocation from "./views/User/UserLocation";
+import Search from "./views/Search/Search";
+import AddPage from "./views/Page/AddPage";
+import SearchResult from "./views/Search/SearchResultPage";
 
 const App: React.FC = () => {
   return (
@@ -41,6 +44,7 @@ const App: React.FC = () => {
                 <Route path="/page-general" element={<EditGeneralPage />} />
                 <Route path="/page-picture" element={<EditPagePicture />} />
                 <Route path="/page-location" element={<EditPageLocation />} />
+                <Route path="/add-page" element={<AddPage />} />
                 {/* USER */}
                 <Route path="/user" element={<UserProfile />} />
                 <Route path="/edit-user" element={<EditUserMenu />} />
@@ -48,6 +52,9 @@ const App: React.FC = () => {
                 <Route path="/user-password" element={<EditUserPassword />} />
                 <Route path="/user-picture" element={<EditUserPicture />} />
                 <Route path="/user-location" element={<EditUserLocation />} />
+                {/* SEARCH */}
+                <Route path="/search" element={<Search />} />
+                <Route path="/search/result" element={<SearchResult />} />
               </Route>
             </Routes>
           </BrowserRouter>

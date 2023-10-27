@@ -37,7 +37,10 @@ const NavBar: React.FC = () => {
           )}
         </button>
         <button
-          onClick={() => handleButtonClick("search")}
+          onClick={() => {
+            handleButtonClick("search");
+            navigate("/search");
+          }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
         >
@@ -63,13 +66,13 @@ const NavBar: React.FC = () => {
         </button>
         <button
           onClick={() => {
-            handleButtonClick("setting");
+            handleButtonClick("map");
             navigate("/page");
           }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover-bg-gray-800 group"
         >
-          {activeButton === "setting" ? (
+          {activeButton === "map" ? (
             <IoMap size={30} color="black" />
           ) : (
             <IoMapOutline size={30} color="black" />

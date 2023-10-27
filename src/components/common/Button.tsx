@@ -1,3 +1,5 @@
+import { AiFillMessage } from "@react-icons/all-files/ai/AiFillMessage";
+
 const Button = (props: any) => {
   if (!props.isLoading) {
     return (
@@ -7,10 +9,14 @@ const Button = (props: any) => {
           props.width +
           " " +
           props.height +
-          " inline-flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800  font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700  items-center"
+          " inline-flex justify-center items-center text-white bg-black font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700  items-center"
         }
       >
-        {props.name}
+        {props.name === "Message" ? (
+          <AiFillMessage size={24} color="white" />
+        ) : (
+          props.name
+        )}
       </button>
     );
   } else {
