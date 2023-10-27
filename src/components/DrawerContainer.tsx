@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Typography } from "@material-tailwind/react";
+import { Drawer } from "@material-tailwind/react";
 import { HiOutlineXMark } from "react-icons/hi2";
 import Comments from "../views/Comments/Comments";
 
@@ -17,7 +17,7 @@ export const DrawerContainer: React.FC<DrawerProps> = ({
       <Drawer
         open={isOpen}
         onClose={onClose}
-        className="p-4  rounded-l-2xl rounded-r-2xl !h-[95%] !max-h-[95%]"
+        className="p-4  rounded-l-2xl rounded-r-2xl !h-[90%] !max-h-[90%]"
         placement="bottom"
       >
         <div className=" flex flex-col items-end justify-between">

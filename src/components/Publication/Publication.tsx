@@ -3,7 +3,7 @@ import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
 import { FaRegComment } from "@react-icons/all-files/fa/FaRegComment";
 import { FiSend } from "@react-icons/all-files/fi/FiSend";
 import { useState } from "react";
-import { DrawerContainer } from "../../components/DrawerContainer";
+import { DrawerContainer } from "../DrawerContainer";
 
 const Publication = () => {
   const [isPostLiked, setIsPostLiked] = useState<Boolean>(false);

@@ -1,12 +1,12 @@
 import React from "react";
-import EditHeader from "./pageComponents/EditHeader";
 import SwitchToggle from "../../components/common/switchToggle";
 import Button from "../../components/common/Button";
+import TopBar from "../../components/common/TopBar";
 
-const EditProfile: React.FC = () => {
+const EditUserLocation: React.FC = () => {
   return (
     <>
-      <EditHeader name="Location parameter" />
+      <TopBar text="Location parameter" />
       <div className="mt-20 flex flex-col items-center mx-4">
         <p className="font-medium">
           You have the choice to make your location public or private. The
@@ -24,4 +24,4 @@ const EditProfile: React.FC = () => {
     </>
   );
 };
-export default EditProfile;
+export default EditUserLocation;
