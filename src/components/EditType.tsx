@@ -8,23 +8,23 @@ import { useNavigate } from "react-router-dom";
 interface EditTypeProps {
   name: string;
   path: string;
-  type: string;
+  type?: string;
 }
 
-const EditType: React.FC<EditTypeProps> = (props: any) => {
+const EditType: React.FC<EditTypeProps> = ({ name, path, type }) => {
   const navigate = useNavigate();
   let icon = <FaRegUserCircle size={23} />; // Icône par défaut
-  let navigationPath = props.path;
+  let navigationPath = path;
 
-  if (props.name === "Edit Password") {
+  if (name === "Edit Password") {
     icon = <MdSecurity size={23} />;
-    navigationPath = `/${props.type}-password`;
-  } else if (props.name === "Location parameter") {
+    navigationPath = `/${type}-password`;
+  } else if (name === "Location parameter") {
     icon = <MdMyLocation size={23} />;
-    navigationPath = `/${props.type}-location`;
-  } else if (props.name === "Profile picture") {
+    navigationPath = `/${type}-location`;
+  } else if (name === "Profile picture") {
     icon = <BiPhotoAlbum size={23} />;
-    navigationPath = `/${props.type}-picture`;
+    navigationPath = `/${type}-picture`;
   }
 
   return (
@@ -33,7 +33,7 @@ const EditType: React.FC<EditTypeProps> = (props: any) => {
       onClick={() => navigate(navigationPath)}
     >
       {icon}
-      <p className="px-3 text-lg font-normal">{props.name}</p>
+      <p className="px-3 text-lg font-normal">{name}</p>
     </div>
   );
 };
