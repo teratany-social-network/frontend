@@ -24,6 +24,7 @@ import EditUserLocation from "./views/User/UserLocation";
 import Search from "./views/Search/Search";
 import AddPage from "./views/Page/AddPage";
 import SearchResult from "./views/Search/SearchResultPage";
+import Notification from "./views/Notification/Notification";
 
 const App: React.FC = () => {
   return (
@@ -63,6 +64,8 @@ const App: React.FC = () => {
                 {/* SEARCH */}
                 <Route path="/search" element={<Search />} />
                 <Route path="/search/result" element={<SearchResult />} />
+                {/* Notifications */}
+                <Route path="/notifications" element={<Notification />} />
               </Route>
             </Routes>
           </BrowserRouter>
