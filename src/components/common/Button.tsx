@@ -1,4 +1,5 @@
 import React from "react";
+import { BsFillChatDotsFill } from "@react-icons/all-files/bs/BsFillChatDotsFill";
 
 interface ButtonProps {
   name: string;
@@ -22,9 +23,9 @@ const Button: React.FC<ButtonProps> = ({
       <button
         type="submit"
         onClick={onClick}
-        className={`${width} ${height} inline-flex justify-center  text-white bg-blue-700 hover:bg-blue-800  font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700  items-center ${className}`}
+        className={`${width} ${height} inline-flex justify-center  text-white bg-black font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700  items-center ${className}`}
       >
-        {name}
+        {name === "Message" ? <BsFillChatDotsFill size={23} /> : name}
       </button>
     );
   } else {

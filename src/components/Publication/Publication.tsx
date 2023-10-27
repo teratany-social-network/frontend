@@ -38,13 +38,13 @@ const Publication = () => {
             <div className="flex flex-col">
               <div>
                 <a
-                  className="inline-block text-lg font-bold white:text-white"
+                  className="inline-block text-base font-bold white:text-white"
                   href="/"
                 >
                   Wade Warren
                 </a>
               </div>
-              <div className="flex text-slate-500 white:text-slate-300 white:text-slate-400">
+              <div className="flex text-sm text-slate-500 white:text-slate-300 white:text-slate-400">
                 July 17, 2018
               </div>
             </div>
