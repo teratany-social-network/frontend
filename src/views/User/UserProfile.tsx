@@ -5,7 +5,7 @@ import Publication from "../../components/Publication/Publication";
 import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
 
 const UserProfile: React.FC = () => {
-  const [openBottom, setOpenBottom] = React.useState(false);
+  const [openBottom, setOpenBottom] = React.useState<boolean>(false);
 
   const openDrawerBottom = () => {
     setOpenBottom(true);

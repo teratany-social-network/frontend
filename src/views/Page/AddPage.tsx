@@ -68,7 +68,25 @@ const AddPage: React.FC = () => {
               extraDesc="Forgot Password?"
             />
             <FormField
-              label="Address"
+              label="Phone Number"
+              type="tel"
+              mark="phone"
+              height="py-2"
+              width="w-full"
+              extra={false}
+              extraDesc="Forgot Password?"
+            />
+            <FormField
+              label="Website"
+              type="text"
+              mark="text"
+              height="py-2"
+              width="w-full"
+              extra={false}
+              extraDesc="Forgot Password?"
+            />
+            <FormField
+              label="Deviant Wallet ID"
               type="text"
               mark="text"
               height="py-2"
@@ -121,9 +139,6 @@ const AddPage: React.FC = () => {
               extra={false}
               extraDesc="Forgot Password?"
             />
-            <div className="flex items-start mt-4">
-              <SwitchToggle label="Private Address" />
-            </div>
           </Form>
         </Formik>
         <div className="my-10">
