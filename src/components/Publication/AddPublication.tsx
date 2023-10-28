@@ -20,7 +20,7 @@ const AddPublication: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <TopBar text="New publication" />
-      <div className="w-[90%] flex justify-start items-center space-x-4 mt-2">
+      <div className="w-[90%] flex justify-start items-center space-x-4 mt-20">
         <img
           className="w-10 h-10 rounded-full"
           src="https://randomuser.me/api/portraits/men/35.jpg"

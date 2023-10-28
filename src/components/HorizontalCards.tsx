@@ -21,7 +21,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = (props) => {
         <div className="flex flex-col items-start px-4 w-full">
           <p className="font-medium">{props.name}</p>
           <p className="text-sm text-gray-500 mb-1">{props.desc}</p>
-          <Button width="w-full" height="py-1" name="Follow" />
+          <Button width="w-full" height="h-8" name="Follow" />
         </div>
       </div>
     </div>

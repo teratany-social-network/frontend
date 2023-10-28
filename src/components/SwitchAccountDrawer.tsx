@@ -1,29 +1,34 @@
 import React from "react";
 import { Drawer, Typography, IconButton } from "@material-tailwind/react";
+import PageRepresent from "./PageRepresent";
 
 interface DrawerProps {
   openBottom: any;
   closeBottom: any;
 }
 
-const SwitchAccountDrawer: React.FC<DrawerProps> = (props: any) => {
+const SwitchAccountDrawer: React.FC<DrawerProps> = ({
+  openBottom,
+  closeBottom,
+}) => {
   const handleClickClose = () => {
     // Appel de la fonction closeBottom du composant parent
-    console.log("Fermeture du drawer");
-
-    props.closeBottom();
+    closeBottom();
   };
   return (
     <>
       <Drawer
         placement="bottom"
-        open={props.openBottom}
-        onClose={props.closeBottom}
-        className="p-4"
+        open={openBottom}
+        onClose={closeBottom}
+        className="p-4 rounded-3xl overflow-y-scroll"
       >
-        <div className="mb-6 flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray">
-            Material Tailwind
+        <div className="flex items-center justify-between w-full">
+          <Typography
+            className="text-lg font-semibold border-b border-b-1 border-gray-300"
+            color="black"
+          >
+            Switch account
           </Typography>
           <IconButton
             variant="text"
@@ -36,7 +41,7 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = (props: any) => {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="h-5 w-5"
+              className="h-5 w-5 absolute -top-3"
             >
               <path
                 strokeLinecap="round"
@@ -46,10 +51,12 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = (props: any) => {
             </svg>
           </IconButton>
         </div>
-        <Typography color="gray" className="mb-8 pr-4 font-normal">
-          Material Tailwind features multiple React and HTML components, all
-          written with Tailwind CSS classes and Material Design guidelines.
-        </Typography>
+        <div className="mb-12">
+          <PageRepresent name="Teratany" />
+          <PageRepresent name="Symbiozis" />
+          <PageRepresent name="Symbiozis" />
+          <PageRepresent name="Symbiozis" />
+        </div>
       </Drawer>
     </>
   );
