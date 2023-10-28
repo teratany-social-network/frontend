@@ -27,6 +27,7 @@ import SearchResult from "./views/Search/SearchResultPage";
 import Notification from "./views/Notification/Notification";
 import SearchFilterResult from "./views/Search/SearchFilterResult";
 import AddPageStep2 from "./views/Page/AddPageStep2";
+import AddPageStep3 from "./views/Page/AddPageStep3";
 
 const App: React.FC = () => {
   return (
@@ -42,6 +43,7 @@ const App: React.FC = () => {
                 <Route path="/register" element={<RegisterAuth />} />
                 <Route path="/add-page" element={<AddPageStep1 />} />
                 <Route path="/add-page/step-2" element={<AddPageStep2 />} />
+                <Route path="/add-page/step-3" element={<AddPageStep3 />} />
               </Route>
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
