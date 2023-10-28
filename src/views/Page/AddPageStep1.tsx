@@ -1,10 +1,11 @@
 import React from "react";
 import TopBar from "../../components/common/TopBar";
 import FormField from "../../components/common/FormField";
-import SwitchToggle from "../../components/common/switchToggle";
 import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+
 interface addNewPageField {
   name: string;
   email: string;
@@ -19,7 +20,10 @@ const initialValues: addNewPageField = {
   addressIsPrivate: true,
 };
 
-const AddPage: React.FC = () => {
+const AddPageStep1: React.FC = () => {
+  const navigate = useNavigate()
+
+
   return (
     <>
       <TopBar text="Add new page" />
@@ -47,7 +51,7 @@ const AddPage: React.FC = () => {
               height="py-2"
               width="w-full"
               extra={false}
-              extraDesc="Forgot Password?"
+              extraDesc="Name"
             />
             <FormField
               label="Email"
@@ -56,82 +60,34 @@ const AddPage: React.FC = () => {
               height="py-2"
               width="w-full"
               extra={false}
-              extraDesc="Forgot Password?"
+              extraDesc="Email"
             />
             <FormField
-              label="Address"
-              type="text"
+              label="Phone number"
+              type="phone"
               mark="text"
               height="py-2"
               width="w-full"
               extra={false}
-              extraDesc="Forgot Password?"
+              extraDesc="Phone number"
             />
             <FormField
-              label="Address"
-              type="text"
+              label="website"
+              type="url"
               mark="text"
               height="py-2"
               width="w-full"
               extra={false}
-              extraDesc="Forgot Password?"
+              extraDesc="Website"
             />
-            <FormField
-              label="Address"
-              type="text"
-              mark="text"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
-            <FormField
-              label="Address"
-              type="text"
-              mark="text"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
-            <FormField
-              label="Address"
-              type="text"
-              mark="text"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
-            <FormField
-              label="Address"
-              type="text"
-              mark="text"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
-            <FormField
-              label="Address"
-              type="text"
-              mark="text"
-              height="py-2"
-              width="w-full"
-              extra={false}
-              extraDesc="Forgot Password?"
-            />
-            <div className="flex items-start mt-4">
-              <SwitchToggle label="Private Address" />
-            </div>
           </Form>
         </Formik>
         <div className="my-10">
-          <Button width="px-4" height="py-3" name="Save" />
+          <Button width="px-4" height="py-3" name="Next step" onClick={() => navigate('/add-page/step-2')} />
         </div>
       </div>
     </>
   );
 };
 
-export default AddPage;
+export default AddPageStep1;
