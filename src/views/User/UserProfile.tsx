@@ -7,9 +7,13 @@ import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
 const UserProfile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState(false);
 
-  const openDrawerBottom = () => setOpenBottom(true);
-  const closeDrawerBottom = () => setOpenBottom(false);
+  const openDrawerBottom = () => {
+    setOpenBottom(true);
+  };
 
+  const closeDrawerBottom = () => {
+    setOpenBottom(false);
+  };
   return (
     <>
       <div onClick={openDrawerBottom}>
