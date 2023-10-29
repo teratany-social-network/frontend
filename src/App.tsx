@@ -22,11 +22,13 @@ import EditUserPassword from "./views/User/UserPassword";
 import EditUserPicture from "./views/User/UserPicture";
 import EditUserLocation from "./views/User/UserLocation";
 import Search from "./views/Search/Search";
-import AddPage from "./views/Page/AddPage";
+import AddPageStep1 from "./views/Page/AddPageStep1";
 import SearchResult from "./views/Search/SearchResultPage";
 import Notification from "./views/Notification/Notification";
 import SearchFilterResult from "./views/Search/SearchFilterResult";
 import PageList from "./views/Page/PageList";
+import AddPageStep2 from "./views/Page/AddPageStep2";
+import AddPageStep3 from "./views/Page/AddPageStep3";
 
 const App: React.FC = () => {
   return (
@@ -40,6 +42,9 @@ const App: React.FC = () => {
                 {/* // authentication routes */}
                 <Route path="/signin" element={<SignInAuth />} />
                 <Route path="/register" element={<RegisterAuth />} />
+                <Route path="/add-page" element={<AddPageStep1 />} />
+                <Route path="/add-page/step-2" element={<AddPageStep2 />} />
+                <Route path="/add-page/step-3" element={<AddPageStep3 />} />
               </Route>
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
@@ -55,8 +60,8 @@ const App: React.FC = () => {
                 <Route path="/page-general" element={<EditGeneralPage />} />
                 <Route path="/page-picture" element={<EditPagePicture />} />
                 <Route path="/page-location" element={<EditPageLocation />} />
-                <Route path="/add-page" element={<AddPage />} />
                 <Route path="/pages" element={<PageList />} />
+
                 {/* USER */}
                 <Route path="/user" element={<UserProfile />} />
                 <Route path="/edit-user" element={<EditUserMenu />} />
