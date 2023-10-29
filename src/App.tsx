@@ -28,6 +28,7 @@ import Notification from "./views/Notification/Notification";
 import SearchFilterResult from "./views/Search/SearchFilterResult";
 import AddPageStep2 from "./views/Page/AddPageStep2";
 import AddPageStep3 from "./views/Page/AddPageStep3";
+import { HomeChat } from "./views/chat/HomeChat";
 
 const App: React.FC = () => {
   return (
@@ -59,6 +60,8 @@ const App: React.FC = () => {
                 <Route path="/page-general" element={<EditGeneralPage />} />
                 <Route path="/page-picture" element={<EditPagePicture />} />
                 <Route path="/page-location" element={<EditPageLocation />} />
+                {/*CHAT*/}
+                <Route path="/discussions" element={<HomeChat />} />
 
                 {/* USER */}
                 <Route path="/user" element={<UserProfile />} />
