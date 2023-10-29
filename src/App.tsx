@@ -26,6 +26,7 @@ import AddPageStep1 from "./views/Page/AddPageStep1";
 import SearchResult from "./views/Search/SearchResultPage";
 import Notification from "./views/Notification/Notification";
 import SearchFilterResult from "./views/Search/SearchFilterResult";
+import PageList from "./views/Page/PageList";
 import AddPageStep2 from "./views/Page/AddPageStep2";
 import AddPageStep3 from "./views/Page/AddPageStep3";
 import { HomeChat } from "./views/chat/HomeChat";
@@ -62,6 +63,7 @@ const App: React.FC = () => {
                 <Route path="/page-location" element={<EditPageLocation />} />
                 {/*CHAT*/}
                 <Route path="/discussions" element={<HomeChat />} />
+                <Route path="/pages" element={<PageList />} />
 
                 {/* USER */}
                 <Route path="/user" element={<UserProfile />} />
