@@ -30,6 +30,7 @@ import PageList from "./views/Page/PageList";
 import AddPageStep2 from "./views/Page/AddPageStep2";
 import AddPageStep3 from "./views/Page/AddPageStep3";
 import { HomeChat } from "./views/chat/HomeChat";
+import { OneChat } from "./views/chat/OneChat";
 
 const App: React.FC = () => {
   return (
@@ -46,6 +47,7 @@ const App: React.FC = () => {
                 <Route path="/add-page" element={<AddPageStep1 />} />
                 <Route path="/add-page/step-2" element={<AddPageStep2 />} />
                 <Route path="/add-page/step-3" element={<AddPageStep3 />} />
+                <Route path="/oneChat" element={<OneChat />} />
               </Route>
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
