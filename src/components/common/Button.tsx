@@ -1,33 +1,43 @@
-const Button = (props: any) => {
-  if (!props.isLoading) {
+import React from "react";
+import { BsFillChatDotsFill } from "@react-icons/all-files/bs/BsFillChatDotsFill";
+
+interface ButtonProps {
+  name: string;
+  width?: string;
+  height?: string;
+  isLoading?: boolean;
+  className?: string;
+  onClick?: (evt?: any) => void;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  name,
+  width,
+  height,
+  isLoading,
+  className,
+  onClick,
+}) => {
+  if (!isLoading) {
     return (
       <button
         type="submit"
-        className={
-          props.width +
-          " " +
-          props.height +
-          " inline-flex justify-center items-center text-white bg-blue-700 hover:bg-blue-800  font-medium rounded text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700  items-center"
-        }
+        onClick={onClick}
+        className={`${width} ${height} inline-flex justify-center  text-white bg-black font-medium rounded text-sm px-5 py-2.5 text-center mr-2 items-center ${className}`}
       >
-        {props.name}
+        {name === "Message" ? <BsFillChatDotsFill size={23} /> : name}
       </button>
     );
   } else {
     return (
       <button
         type="button"
-        className={
-          props.width +
-          " " +
-          props.height +
-          " inline-flex justify-center items-center py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded border border-gray-200  dark:bg-gray-200 dark:text-gray-400 dark:border-gray-100  inline-flex items-center"
-        }
+        className={` ${width} ${height} inline-flex justify-center items-center py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded border border-gray-200 ${className}`}
       >
         <svg
           aria-hidden="true"
           role="status"
-          className="inline-flex justify-center items-center inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+          className="inline-flex justify-center items-center  mr-2 w-4 h-4 text-gray-200 animate-spin"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
