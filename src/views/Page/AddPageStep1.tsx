@@ -46,7 +46,7 @@ const AddPageStep1: React.FC = () => {
             }, 400);
           }}
         >
-          <Form className="w-3/4">
+          <Form className="w-5/6">
             <label htmlFor="pageType" className="text-left block text-sm white:text-white my-2">
               Your organization type
             </label>
@@ -99,7 +99,7 @@ const AddPageStep1: React.FC = () => {
             </textarea>
           </Form>
         </Formik>
-        <div className="my-6 w-3/4">
+        <div className="my-6 w-5/6">
           <Button width="w-full" height="py-3" name="Next step" onClick={() => navigate('/add-page/step-2')} />
           <button className="w-full text-gray-500 bg-white  rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 mt-4" onClick={() => navigate('/user')}>
             Cancel
