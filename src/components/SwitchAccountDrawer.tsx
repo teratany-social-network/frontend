@@ -1,7 +1,7 @@
 import React from "react";
 import { Drawer, Typography, IconButton } from "@material-tailwind/react";
-import PageRepresent from "./PageRepresent";
 import { useState, useEffect } from "react";
+import PageSwitchCard from "./PageSwitchCard";
 
 interface DrawerProps {
   openBottom: any;
@@ -69,11 +69,11 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
               </svg>
             </IconButton>
           </div>
-          <div className=" h-[60%] overflow-y-scroll">
-            <PageRepresent name="Teratany" />
-            <PageRepresent name="Symbiozis" />
-            <PageRepresent name="Symbiozis" />
-            <PageRepresent name="Symbiozis" />
+          <div className=" h-[60%] w-full overflow-y-scroll">
+            <PageSwitchCard name="Teratany" desc="50k followers" />
+            <PageSwitchCard name="Symbiozis" desc="10k followers" />
+            <PageSwitchCard name="Ampela Mijoro" desc="20k followers" />
+            <PageSwitchCard name="Majunga Miray" desc="50k followers" />
           </div>
         </Drawer>
       </React.Fragment>

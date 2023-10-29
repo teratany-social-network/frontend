@@ -55,7 +55,7 @@ const App: React.FC = () => {
                 {/* // Map */}
                 <Route path="/map" element={<Map />} />
                 {/* PAGE */}
-                <Route path="/page" element={<PageProfile />} />
+                <Route path="/page-profile" element={<PageProfile />} />
                 <Route path="/edit-menu" element={<EditPageMenu />} />
                 <Route path="/page-general" element={<EditGeneralPage />} />
                 <Route path="/page-picture" element={<EditPagePicture />} />
