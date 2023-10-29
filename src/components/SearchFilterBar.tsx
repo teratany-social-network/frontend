@@ -24,7 +24,12 @@ const SearchFilterBar: React.FC = () => {
       >
         User
       </p>
-      <p className="w-1/3 border border-1 rounded-lg border-gray-200 mx-1 text-center px-2">
+      <p
+        className="w-1/3 border border-1 rounded-lg border-gray-200 mx-1 text-center px-2"
+        onClick={() => {
+          navigate("/pages");
+        }}
+      >
         Page
       </p>
     </div>
