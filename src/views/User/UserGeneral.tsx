@@ -1,29 +1,29 @@
 import React from "react";
-import EditHeader from "./pageComponents/EditHeader";
 import FormField from "../../components/common/FormField";
 import SwitchToggle from "../../components/common/switchToggle";
 import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import TopBar from "../../components/common/TopBar";
 
-interface editProfileFormValues {
+interface editGeneralUserFormValues {
   name: string;
   email: string;
   address: string;
   addressIsPrivate: Boolean;
 }
 
-const initialValues: editProfileFormValues = {
+const initialValues: editGeneralUserFormValues = {
   name: "",
   email: "",
   address: "",
   addressIsPrivate: true,
 };
 
-const EditProfile: React.FC = () => {
+const EditGeneralUser: React.FC = () => {
   return (
     <>
-      <EditHeader name="Edit Profile" />
+      <TopBar text="Edit Profile" />
       <div className="mt-20 flex flex-col items-center mx-4">
         <Formik
           initialValues={initialValues}
@@ -80,4 +80,4 @@ const EditProfile: React.FC = () => {
     </>
   );
 };
-export default EditProfile;
+export default EditGeneralUser;
