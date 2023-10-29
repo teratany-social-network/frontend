@@ -22,8 +22,6 @@ function useLoadingButton(): LoadingButtonHookReturnType {
       return () => {
         clearTimeout(timer);
       };
-    } else if (!isRequestFinished) {
-    } else {
     }
   }, [isLoading, isRequestFinished]);
 

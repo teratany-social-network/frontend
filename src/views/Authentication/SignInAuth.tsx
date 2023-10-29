@@ -59,7 +59,7 @@ const SignInAuth: React.FC = () => {
           isAuthenticated: true,
         })
       );
-      navigate("/feed");
+      navigate("/");
       toast.success("Successfully logged in");
     }
   };

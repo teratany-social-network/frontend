@@ -3,6 +3,8 @@ import TopNavBarProfile from "../../components/TopNavBarProfile";
 import Button from "../../components/common/Button";
 import Publication from "../../components/Publication/Publication";
 import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
+import useFetchUser from "../../hooks/useFetchUser";
+import { IUser } from "../../types/user.type";
 
 const UserProfile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
@@ -14,6 +16,9 @@ const UserProfile: React.FC = () => {
   const closeDrawerBottom = () => {
     setOpenBottom(false);
   };
+
+  const user: IUser | undefined = useFetchUser();
+
   return (
     <>
       <div onClick={openDrawerBottom}>
@@ -28,7 +33,9 @@ const UserProfile: React.FC = () => {
         />
         <div className="flex flex-col">
           <div className="flex flex-col items-start">
-            <h2 className="text-xl font-normal mb-1">Rakotoarivelo Miandry</h2>
+            <h2 className="text-xl font-normal mb-1">
+              {user?.displayName ?? "User"}
+            </h2>
 
             <ul className="flex space-x-8 mb-2">
               <li>
