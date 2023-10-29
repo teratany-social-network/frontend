@@ -2,6 +2,7 @@ import React from "react";
 import { Drawer } from "@material-tailwind/react";
 import { HiOutlineXMark } from "react-icons/hi2";
 import Comments from "../views/Comments/Comments";
+import { useState, useEffect } from "react";
 
 type DrawerProps = {
   isOpen?: boolean;
@@ -12,6 +13,22 @@ export const DrawerContainer: React.FC<DrawerProps> = ({
   isOpen = false,
   onClose,
 }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  useEffect(() => {
+    setIsDrawerOpen(isOpen);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isDrawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isDrawerOpen]);
   return isOpen ? (
     <React.Fragment>
       <Drawer
