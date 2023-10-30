@@ -8,6 +8,7 @@ interface ButtonProps {
   isLoading?: boolean;
   className?: string;
   onClick?: (evt?: any) => void;
+  isDisabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,10 +18,12 @@ const Button: React.FC<ButtonProps> = ({
   isLoading,
   className,
   onClick,
+  isDisabled,
 }) => {
   if (!isLoading) {
     return (
       <button
+        disabled={isDisabled}
         type="submit"
         onClick={onClick}
         className={`${width} ${height} inline-flex justify-center  text-white bg-black font-medium rounded text-sm px-5 py-2.5 text-center mr-2 items-center ${className}`}

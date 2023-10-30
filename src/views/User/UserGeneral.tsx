@@ -24,9 +24,9 @@ interface GeneralUserInfo {
 
 const EditGeneralUser: React.FC = () => {
   const token = useToken();
-  const [isLoading, startLoading, endLoading] = useLoadingButton();
-  const [adressStatus, setAdressStatus] = useState<boolean>();
   const user: IUser | undefined = useFetchUser();
+  const [adressStatus, setAdressStatus] = useState<boolean>();
+  const [isLoading, startLoading, endLoading] = useLoadingButton();
 
   const initialValues: GeneralUserInfo = {
     name: user?.displayName,
@@ -53,7 +53,7 @@ const EditGeneralUser: React.FC = () => {
     if (error instanceof AxiosError) {
       endLoading();
       const error_message: string =
-        error?.response?.data.error.description ?? error.message;
+        error?.response?.data.description ?? error.message;
       toast.error(error_message);
     } else {
       endLoading();

@@ -5,6 +5,7 @@ import Publication from "../../components/Publication/Publication";
 import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
 import useFetchUser from "../../hooks/useFetchUser";
 import { IUser } from "../../types/user.type";
+import { FileServerURL } from "../../api/FileApi";
 
 const UserProfile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
@@ -28,7 +29,10 @@ const UserProfile: React.FC = () => {
         <img
           className="w-20 h-20 object-cover rounded-full
                border-2 border-pink-600 p-1"
-          src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+          src={
+            FileServerURL + user?.image ??
+            "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+          }
           alt="profile"
         />
         <div className="flex flex-col">
