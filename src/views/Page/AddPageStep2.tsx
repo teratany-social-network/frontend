@@ -1,5 +1,5 @@
 import MapContainerForm from "../../components/MapContainer";
-import { InfoModal } from "../../components/InfoModal";
+import { InfoModal } from "../../components/common/InfoModal";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
@@ -32,7 +32,7 @@ const AddPageStep2: React.FC = () => {
   const addPageSecondStep = () => {
     startLoading();
     setTimeout(() => {
-      navigate("/add-page/step-3");
+      navigate("/page/add/step-3");
     }, 2000);
   };
 
