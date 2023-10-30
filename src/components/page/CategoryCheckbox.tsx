@@ -7,9 +7,7 @@ interface Props {
 export const CheckboxButton: React.FC<Props> = ({ text }) => {
     const [isChecked, setIsChecked] = useState(false);
 
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
+    const handleCheckboxChange = () => setIsChecked(!isChecked)
 
     return (
         <label className="inline-flex items-center mt-3">

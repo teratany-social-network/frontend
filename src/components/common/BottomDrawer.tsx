@@ -1,18 +1,17 @@
 import React from "react"
 import { Drawer } from "@material-tailwind/react"
 import { HiOutlineXMark } from "react-icons/hi2"
-import Comments from "../views/Comments/Comments"
 import { useState, useEffect } from "react"
 
 type DrawerProps = {
   isOpen?: boolean
-  onClose: () => void
+  onClose: () => void,
+  content: JSX.Element,
+  title: string,
+  heightPercentage?: number
 }
 
-export const DrawerContainer: React.FC<DrawerProps> = ({
-  isOpen = false,
-  onClose,
-}) => {
+export const BottomDrawer: React.FC<DrawerProps> = ({ isOpen = false, onClose, content, title, heightPercentage }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   useEffect(() => { setIsDrawerOpen(isOpen) }, [isOpen])
 
@@ -23,12 +22,13 @@ export const DrawerContainer: React.FC<DrawerProps> = ({
 
   return isOpen ? (
     <React.Fragment>
-      <Drawer open={isOpen} onClose={onClose} className="p-4  rounded-l-2xl rounded-r-2xl !h-[90%] !max-h-[90%]" placement="bottom">
-        <div className=" flex flex-col items-end justify-between">
+      <Drawer open={isOpen} onClose={onClose} className={`p-4 bg-white rounded-l-2xl rounded-r-2xl !h-[${heightPercentage ? heightPercentage : 90}%] !max-h-[${heightPercentage ? heightPercentage : 90}%]`} placement="bottom">
+        <div className=" flex  items-center justify-between">
+          <h3 className="font-bold">{title}</h3>
           <HiOutlineXMark className="h-6 w-6 z-50" aria-hidden="true" onClick={onClose} />
         </div>
         <div className=" flex flex-col items-center justify-center">
-          <Comments />
+          {content}
         </div>
       </Drawer>
     </React.Fragment>

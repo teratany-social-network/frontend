@@ -6,7 +6,7 @@ import { GrAddCircle } from "@react-icons/all-files/gr/GrAddCircle";
 import { VscDebugDisconnect } from "@react-icons/all-files/vsc/VscDebugDisconnect";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/common/TopBar";
-import PageRepresent from "../../components/PageRepresent";
+import PageSwitchCard from "../../components/PageSwitchCard";
 
 const EditUser: React.FC = () => {
   const [accordionVisible, setVisibility] = useState(false);
@@ -19,10 +19,10 @@ const EditUser: React.FC = () => {
     <>
       <TopBar text="User settings" />
       <div className="mt-20 mx-4 ">
-        <EditType name="General" type="user" path="/user-general" />
-        <EditType name="Profile picture" type="user" path="/user-picture" />
-        <EditType name="Edit Password" type="user" path="/user-password" />
-        <EditType name="Location parameter" type="user" path="/user-location" />
+        <EditType name="General" type="user" path="/user/edit/general" />
+        <EditType name="Profile picture" type="user" path="/user/edit/picture" />
+        <EditType name="Edit Password" type="user" path="/user/edit/password" />
+        <EditType name="Location parameter" type="user" path="/user/edit/location" />
       </div>
       <div className="mx-2 my-4">
         <div
@@ -45,17 +45,17 @@ const EditUser: React.FC = () => {
           )}
         </div>
         {accordionVisible && (
-          <div className="h-52 overflow-y-auto mx-2 transition-transform ease-in-out ">
-            <PageRepresent name="Teratany" />
-            <PageRepresent name="Symbiozis" />
-            <PageRepresent name="Le Petit Nid" />
-            <PageRepresent name="Ampela Mijoro" />
+          <div className="h-52 w-[60%] overflow-y-auto">
+            <PageSwitchCard name="Teratany" desc="50k followers" />
+            <PageSwitchCard name="Symbiozis" desc="10k followers" />
+            <PageSwitchCard name="Ampela Mijoro" desc="20k followers" />
+            <PageSwitchCard name="Majunga Miray" desc="50k followers" />
           </div>
         )}
         <div
           className="flex items-center my-4 mx-1"
           onClick={() => {
-            navigate("/add-page");
+            navigate("/page/add/step-1");
           }}
         >
           <GrAddCircle size={28} />
