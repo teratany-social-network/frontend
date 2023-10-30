@@ -4,7 +4,7 @@ export type IUser = {
     account_date?: string;
     address?: ObjectValue;
     adminAndPage?: [];
-    coordonates?: Object;
+    coordonates?: CoordonateValue;
     country?: ObjectValue
     email?: string
     image?: string
@@ -17,5 +17,11 @@ export type IUser = {
 
 type ObjectValue = {
     value: string;
+    isPrivate: boolean;
+}
+
+type CoordonateValue = {
+    latitude: number;
+    longitude: number;
     isPrivate: boolean;
 }

@@ -44,7 +44,8 @@ const RegisterAuth: React.FC = () => {
 
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string = error?.response?.data.error.description ?? error.message;
+      const error_message: string =
+        error?.response?.data.error.description ?? error.message;
       toast.error(error_message);
       return;
     } else {
@@ -60,7 +61,7 @@ const RegisterAuth: React.FC = () => {
           isAuthenticated: true,
         })
       );
-      navigate("/feed");
+      navigate("/");
       toast.success("Account created successfully");
     }
   };

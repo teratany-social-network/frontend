@@ -4,7 +4,8 @@ const URLS = {
     getByToken: '/user/byToken',
     updateGeneralInfo: '/user/profile',
     updateProfileImage: "/user/profileImage",
-    updateUserPassword: "/user/password"
+    updateUserPassword: "/user/password",
+    updateCoordonates: "/user/coordonates",
 }
 
 export const getUserByToken = (token: string) => {
@@ -26,6 +27,19 @@ export const updateProfileImage = (token: string, imageUrl: any) => {
 
 export const updatePassword = (token: string, password: string, newPassword: string) => {
     return api.patch(URLS.updateUserPassword, { password, newPassword }, {
+        headers: { 'Authorization': token }
+    })
+}
+
+export const updateLocationParameter = (token: string, latitude: number, longitude: number, isPrivate: boolean) => {
+    return api.patch(URLS.updateCoordonates,
+        {
+            coordonates: {
+                latitude,
+                longitude,
+                isPrivate
+            }
+        }, {
         headers: { 'Authorization': token }
     })
 }

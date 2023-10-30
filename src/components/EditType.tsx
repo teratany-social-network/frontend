@@ -18,13 +18,13 @@ const EditType: React.FC<EditTypeProps> = ({ name, path, type }) => {
 
   if (name === "Edit Password") {
     icon = <MdSecurity size={23} />;
-    navigationPath = `/${type}-password`;
+    navigationPath = path;
   } else if (name === "Location parameter") {
     icon = <MdMyLocation size={23} />;
-    navigationPath = `/${type}-location`;
+    navigationPath = path;
   } else if (name === "Profile picture") {
     icon = <BiPhotoAlbum size={23} />;
-    navigationPath = `/${type}-picture`;
+    navigationPath = path;
   }
 
   return (
