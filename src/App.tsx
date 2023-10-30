@@ -44,10 +44,10 @@ const App: React.FC = () => {
                 {/* // authentication routes */}
                 <Route path="/signin" element={<SignInAuth />} />
                 <Route path="/register" element={<RegisterAuth />} />
-                <Route path="/add-page" element={<AddPageStep1 />} />
-                <Route path="/add-page/step-2" element={<AddPageStep2 />} />
-                <Route path="/add-page/step-3" element={<AddPageStep3 />} />
-                <Route path="/oneChat" element={<OneChat />} />
+                <Route path="/page/add/step-1" element={<AddPageStep1 />} />
+                <Route path="/page/add/step-2" element={<AddPageStep2 />} />
+                <Route path="/page/add/step-3" element={<AddPageStep3 />} />
+                <Route path="/chat/one" element={<OneChat />} />
               </Route>
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
@@ -58,35 +58,29 @@ const App: React.FC = () => {
                 {/* // Map */}
                 <Route path="/map" element={<Map />} />
                 {/* PAGE */}
-                <Route path="/page-profile" element={<PageProfile />} />
-                <Route path="/edit-menu" element={<EditPageMenu />} />
-                <Route path="/page-general" element={<EditGeneralPage />} />
-                <Route path="/page-picture" element={<EditPagePicture />} />
-                <Route path="/page-location" element={<EditPageLocation />} />
-                {/*CHAT*/}
-                <Route path="/discussions" element={<HomeChat />} />
+                <Route path="/page/profile" element={<PageProfile />} />
+                <Route path="/page/edit/menu" element={<EditPageMenu />} />
+                <Route path="/page/edit/general" element={<EditGeneralPage />} />
+                <Route path="/page/edit/picture" element={<EditPagePicture />} />
+                <Route path="/page/edit/location" element={<EditPageLocation />} />
                 <Route path="/pages" element={<PageList />} />
+                {/*CHAT*/}
+                <Route path="/chat/list" element={<HomeChat />} />
 
                 {/* USER */}
                 <Route path="/user" element={<UserProfile />} />
-                <Route path="/edit-user" element={<EditUserMenu />} />
-                <Route path="/user-general" element={<EditGeneralUser />} />
-                <Route path="/user-password" element={<EditUserPassword />} />
-                <Route path="/user-picture" element={<EditUserPicture />} />
-                <Route path="/user-location" element={<EditUserLocation />} />
+                <Route path="/user/edit/menu" element={<EditUserMenu />} />
+                <Route path="/user/edit/general" element={<EditGeneralUser />} />
+                <Route path="/user/edit/password" element={<EditUserPassword />} />
+                <Route path="/user/edit/picture" element={<EditUserPicture />} />
+                <Route path="/user/edit/location" element={<EditUserLocation />} />
                 {/* SEARCH */}
                 <Route path="/search" element={<Search />} />
                 <Route path="/search/result" element={<SearchResult />} />
                 {/* Notifications */}
                 <Route path="/notifications" element={<Notification />} />
-                <Route
-                  path="/search/result/publication"
-                  element={<SearchFilterResult />}
-                />
-                <Route
-                  path="/search/result/user"
-                  element={<SearchFilterResult />}
-                />
+                <Route path="/search/result/publication" element={<SearchFilterResult />} />
+                <Route path="/search/result/user" element={<SearchFilterResult />} />
               </Route>
             </Routes>
           </BrowserRouter>

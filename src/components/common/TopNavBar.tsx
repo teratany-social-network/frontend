@@ -29,7 +29,7 @@ const TopNavBar: React.FC<TopNavBarProps> = (props: any) => {
             </p>
           </div>
           <div className="relative px-2">
-            <BsChatDots size={26} onClick={() => navigate("/discussions")} />
+            <BsChatDots size={26} onClick={() => navigate("/chat/list")} />
             <p className="absolute -top-2 right-0 w-5 h-5 text-white text-xs bg-red-500 rounded-full">
               {props.messageCount}
             </p>
