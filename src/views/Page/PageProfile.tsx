@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import TopBar from "../../components/common/TopBar";
 import Button from "../../components/common/Button";
-import { DrawerPageDetail } from "../../components/page/DrawerDetail";
 import Publication from "../../components/Publication/Publication";
+import { BottomDrawer } from "../../components/common/BottomDrawer";
 
 const PageProfile: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
   const closeDrawer = () => setDrawerOpen(false)
   const changeDrawerStatus = () => setDrawerOpen(true)
-
+  const DetailsComponent = <Details />
   return (
     <>
       <TopBar text="Symbiozis" />
@@ -69,7 +69,7 @@ const PageProfile: React.FC = () => {
       <Publication />
       <Publication />
 
-      <DrawerPageDetail isOpen={drawerOpen} onClose={closeDrawer} />
+      <BottomDrawer isOpen={drawerOpen} onClose={closeDrawer} content={DetailsComponent} title="Details" />
     </>
   );
 };
@@ -82,15 +82,29 @@ interface IODD {
   text: string
 }
 export const ODD: React.FC<IODD> = ({ text }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-
   return (
     <label className="inline-flex items-center mt-1">
       <span className="text-gray-500 bg-white rounded-full border border-gray-200 text-sm font-medium px-5 py-2.5 mr-3">
         {text}
       </span>
-
     </label>
   );
 };
+
+const Details: React.FC = () => {
+  return (
+    <>
+      <div className=" flex flex-col items-center justify-center pb-16">
+        <div className="p-4 space-y-2">
+          <ODD text="No poverty" />
+          <ODD text="Zero hunger" />
+          <ODD text="Good health and well-being" />
+          <ODD text="Quality education" />
+          <ODD text="Gender equality" />
+          <ODD text="Clear water and sanitation" />
+          <ODD text="Affordable and clean energy" />
+          <ODD text="Decent work and growth" />
+        </div>
+      </div></>
+  )
+}
