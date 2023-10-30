@@ -5,7 +5,7 @@ import Button from "../../components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { InfoModal } from "../../components/InfoModal";
+import { InfoModal } from "../../components/common/InfoModal";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import ErrorMessageForm from "../../components/common/ErrorMessageForm";
 
@@ -32,7 +32,7 @@ const AddPageStep1: React.FC = () => {
   const addPageFirstStep = (values: addNewPageField) => {
     startLoading();
     setTimeout(() => {
-      navigate("/add-page/step-2");
+      navigate("/page/add/step-2");
     }, 2000);
   };
 

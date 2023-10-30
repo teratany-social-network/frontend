@@ -1,4 +1,4 @@
-import { CheckboxButton } from "../../components/CategoryCheckbox";
+import { CheckboxButton } from "../../components/page/CategoryCheckbox";
 import Button from "../../components/common/Button";
 import TopBar from "../../components/common/TopBar";
 import useLoadingButton from "../../hooks/useLoadingButton";

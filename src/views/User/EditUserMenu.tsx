@@ -19,10 +19,10 @@ const EditUser: React.FC = () => {
     <>
       <TopBar text="User settings" />
       <div className="mt-20 mx-4 ">
-        <EditType name="General" type="user" path="/user-general" />
-        <EditType name="Profile picture" type="user" path="/user-picture" />
-        <EditType name="Edit Password" type="user" path="/user-password" />
-        <EditType name="Location parameter" type="user" path="/user-location" />
+        <EditType name="General" type="user" path="/user/edit/general" />
+        <EditType name="Profile picture" type="user" path="/user/edit/picture" />
+        <EditType name="Edit Password" type="user" path="/user/edit/password" />
+        <EditType name="Location parameter" type="user" path="/user/edit/location" />
       </div>
       <div className="mx-2 my-4">
         <div
@@ -55,7 +55,7 @@ const EditUser: React.FC = () => {
         <div
           className="flex items-center my-4 mx-1"
           onClick={() => {
-            navigate("/add-page");
+            navigate("/page/add/step-1");
           }}
         >
           <GrAddCircle size={28} />
