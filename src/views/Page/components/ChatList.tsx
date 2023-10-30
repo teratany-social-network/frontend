@@ -12,7 +12,7 @@ const ChatList: React.FC<PageListCardsProps> = ({
 }) => {
   const navigate = useNavigate()
   const handleOpenChat = () => {
-    navigate('/oneChat')
+    navigate('/chat/one')
   }
   return (
     <div className={`mx-1 w-full p-2 mb-4 ${newMessage ? 'bg-gray-100' : ''}`} onClick={() => handleOpenChat()}>
