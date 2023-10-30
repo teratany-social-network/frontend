@@ -17,7 +17,7 @@ const UserProfile: React.FC = () => {
   return (
     <>
       <div onClick={openDrawerBottom}>
-        <TopNavBarProfile user="Miandry" path="/edit-user" />
+        <TopNavBarProfile user="Miandry" path="/user/edit/menu" />
       </div>
       <div className="mt-16 pb-3 flex w-full justify-evenly items-center border-b border-gray-200">
         <img
