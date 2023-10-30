@@ -20,9 +20,17 @@ const EditUser: React.FC = () => {
       <TopBar text="User settings" />
       <div className="mt-20 mx-4 ">
         <EditType name="General" type="user" path="/user/edit/general" />
-        <EditType name="Profile picture" type="user" path="/user/edit/picture" />
+        <EditType
+          name="Profile picture"
+          type="user"
+          path="/user/edit/picture"
+        />
         <EditType name="Edit Password" type="user" path="/user/edit/password" />
-        <EditType name="Location parameter" type="user" path="/user/edit/location" />
+        <EditType
+          name="Location parameter"
+          type="user"
+          path="/user/edit/location"
+        />
       </div>
       <div className="mx-2 my-4">
         <div
