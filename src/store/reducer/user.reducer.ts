@@ -17,7 +17,7 @@ const initialState: UserInitialState = {
 }
 
 export const userSlice = createSlice({
-    name: "user",
+    name: "teratany_user",
     initialState,
     reducers: {
         setAuthentication: (state, action: PayloadAction<UserInitialState>) => {
@@ -38,5 +38,5 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setAuthentication } = userSlice.actions;
+export const { setAuthentication, resetUserAuthentication } = userSlice.actions;
 export default userSlice.reducer;

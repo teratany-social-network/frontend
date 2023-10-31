@@ -5,7 +5,7 @@ type GetTokenType = string;
 
 function useToken(): GetTokenType {
   const token = useSelector<RootState, string>(
-    (state) => state.user.token as string
+    (state) => state.teratany_user.token as string
   );
 
   return token;

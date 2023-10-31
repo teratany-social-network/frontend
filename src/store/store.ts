@@ -1,18 +1,24 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userReducer from "store/reducer/userReducer";
+import userReducer from "store/reducer/user.reducer";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
+import pageReducer from "./reducer/page.reducer";
+
+
 
 const userPersistConfig = {
-    key: 'user',
-    storage
-}
+    key: "teratany_user",
+    storage,
+};
 
+
+const persistedReducer = persistReducer(userPersistConfig, userReducer);
 
 const rootReducer = combineReducers({
-    user: persistReducer(userPersistConfig, userReducer),
-})
+    teratany_user: persistedReducer,
+    teratany_page: pageReducer,
+});
 
 export const store = configureStore({
     reducer: rootReducer,
