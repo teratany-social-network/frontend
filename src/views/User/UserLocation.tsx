@@ -60,6 +60,8 @@ const EditUserLocation: React.FC = () => {
       } else {
         endLoading();
         toast.success("Location information updated!");
+        localStorage.removeItem("lat");
+        localStorage.removeItem("lng");
       }
     } else {
       toast.error("Coordonates information required!!!");

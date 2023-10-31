@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TopBar from "../../components/common/TopBar";
 import FormField from "../../components/common/FormField";
 import Button from "../../components/common/Button";
@@ -8,13 +8,18 @@ import { useNavigate } from "react-router-dom";
 import { InfoModal } from "../../components/common/InfoModal";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import ErrorMessageForm from "../../components/common/ErrorMessageForm";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { resetPageInfo, setPageInfo } from "../../store/reducer/page.reducer";
+import SelectCountryPage from "./components/SelectCountryPage";
 
 interface addNewPageField {
   name: string;
   email: string;
   phone: string;
-  website: string;
-  description: string;
+  website?: string;
+  country?: string;
+  deviantWalletId?: string;
 }
 
 const initialValues: addNewPageField = {
@@ -22,15 +27,41 @@ const initialValues: addNewPageField = {
   email: "",
   phone: "",
   website: "",
-  description: "",
+  country: "",
+  deviantWalletId: "",
 };
 
 const AddPageStep1: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [isLoading, startLoading] = useLoadingButton();
+  const [pageType, setPageType] = useState<string>("association");
+  const [country, setCountry] = useState<string>("MG");
+  const [description, setDescription] = useState<string>();
+
+  const handleChangePageType = (e: any) => {
+    setPageType(e.target.value);
+  };
+  const selectCountry = (e: any) => {
+    setCountry(e.target.value);
+  };
 
   const addPageFirstStep = (values: addNewPageField) => {
     startLoading();
+    dispatch(resetPageInfo());
+
+    dispatch(
+      setPageInfo({
+        name: values.name,
+        email: values.email,
+        phoneNumber: values.phone,
+        website: values.website,
+        deviantWalletID: values.deviantWalletId,
+        description,
+        country,
+        pageType,
+      })
+    );
     setTimeout(() => {
       navigate("/page/add/step-2");
     }, 2000);
@@ -53,6 +84,7 @@ const AddPageStep1: React.FC = () => {
               .email("Invalid email address")
               .required("Required"),
             phone: Yup.string().required("Required"),
+            deviantWalletId: Yup.string().required("Required"),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -72,6 +104,7 @@ const AddPageStep1: React.FC = () => {
               name="pageType"
               className="py-2 custom-border px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:text-gray-400"
               id="pageType"
+              onChange={handleChangePageType}
             >
               <option value="association">Association</option>
               <option value="entreprise">Entreprise</option>
@@ -82,8 +115,6 @@ const AddPageStep1: React.FC = () => {
               mark="name"
               height="py-2"
               width="w-full"
-              extra={false}
-              extraDesc="Name"
             />
             <ErrorMessageForm name="name" />
 
@@ -93,21 +124,26 @@ const AddPageStep1: React.FC = () => {
               mark="email"
               height="py-2"
               width="w-full"
-              extra={false}
-              extraDesc="Email"
             />
             <ErrorMessageForm name="email" />
 
+            <FormField
+              label="Address"
+              type="text"
+              mark="address"
+              height="py-2"
+              width="w-full"
+            />
+            <ErrorMessageForm name="address" />
             <FormField
               label="Phone number"
               type="phone"
               mark="phone"
               height="py-2"
               width="w-full"
-              extra={false}
-              extraDesc="Phone number"
             />
             <ErrorMessageForm name="phone" />
+            <SelectCountryPage onChange={selectCountry} />
 
             <FormField
               label="website (optional)"
@@ -115,9 +151,16 @@ const AddPageStep1: React.FC = () => {
               mark="website"
               height="py-2"
               width="w-full"
-              extra={false}
-              extraDesc="Website"
             />
+
+            <FormField
+              label="Deviant Wallet ID"
+              type="text"
+              mark="deviantWalletId"
+              height="py-2"
+              width="w-full"
+            />
+            <ErrorMessageForm name="deviantWalletId" />
 
             <label
               htmlFor="description"
@@ -130,6 +173,7 @@ const AddPageStep1: React.FC = () => {
               rows={4}
               className="py-2 custom-border px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:text-gray-400 h-24 max-h-24"
               id="description"
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
             <div className="my-6 w-full">
               <Button

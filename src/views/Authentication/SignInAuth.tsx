@@ -14,7 +14,7 @@ import ErrorMessageForm from "components/common/ErrorMessageForm";
 import {
   UserInitialState,
   setAuthentication,
-} from "../../store/reducer/userReducer";
+} from "../../store/reducer/user.reducer";
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
 import useLoadingButton from "../../hooks/useLoadingButton";

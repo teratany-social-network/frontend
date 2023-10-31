@@ -7,13 +7,21 @@ import { VscDebugDisconnect } from "@react-icons/all-files/vsc/VscDebugDisconnec
 import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/common/TopBar";
 import PageSwitchCard from "../../components/PageSwitchCard";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { resetUserAuthentication } from "../../store/reducer/user.reducer";
 
 const EditUser: React.FC = () => {
   const [accordionVisible, setVisibility] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const showAccordion = () => {
     setVisibility(!accordionVisible);
+  };
+  const logout = () => {
+    dispatch(resetUserAuthentication());
+    navigate("/signin");
   };
   return (
     <>
@@ -69,7 +77,7 @@ const EditUser: React.FC = () => {
           <GrAddCircle size={28} />
           <p className="px-3 text-lg">Add page</p>
         </div>
-        <div className="flex items-center my-4 mx-1">
+        <div className="flex items-center my-4 mx-1" onClick={logout}>
           <VscDebugDisconnect size={27} />
           <p className="px-3 text-lg">Disconnect</p>
         </div>

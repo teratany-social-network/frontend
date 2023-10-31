@@ -6,6 +6,10 @@ import { Marker, useMapEvents } from "react-leaflet";
 import { MARKER_ICON } from "../../constants/MarkerIcon";
 import Button from "../../components/common/Button";
 import useLoadingButton from "../../hooks/useLoadingButton";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { setPageCoordonates } from "../../store/reducer/page.reducer";
 
 type PositionMarkerType = {
   lat: number;
@@ -17,6 +21,8 @@ const LocationMarker = () => {
   useMapEvents({
     click(e) {
       setPosition(e.latlng);
+      localStorage.setItem("lat", String(e.latlng.lat));
+      localStorage.setItem("lng", String(e.latlng.lng));
     },
   });
 
@@ -28,12 +34,30 @@ const LocationMarker = () => {
 const AddPageStep2: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, startLoading] = useLoadingButton();
+  const dispatch = useDispatch<AppDispatch>();
 
   const addPageSecondStep = () => {
-    startLoading();
-    setTimeout(() => {
-      navigate("/page/add/step-3");
-    }, 2000);
+    const lat: number = Number(localStorage.getItem("lat"));
+    const lng: number = Number(localStorage.getItem("lng"));
+
+    if (lat && lng) {
+      startLoading();
+      dispatch(
+        setPageCoordonates({
+          coordonates: {
+            latitude: lat,
+            longitude: lng,
+          },
+        })
+      );
+      localStorage.removeItem("lat");
+      localStorage.removeItem("lng");
+      setTimeout(() => {
+        navigate("/page/add/step-3");
+      }, 2000);
+    } else {
+      toast.error("Coordonates information required!!!");
+    }
   };
 
   return (
