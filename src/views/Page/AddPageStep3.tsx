@@ -15,6 +15,7 @@ import {
 } from "../../store/reducer/page.reducer";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
+import { CategorieList } from "../../constants/PageCategory";
 
 const AddPageStep3: React.FC = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const AddPageStep3: React.FC = () => {
       addPage(
         token,
         page.name,
-        page.category,
+        categories.join(""),
         page.coordonates,
         page.pageType,
         page.address,
@@ -63,7 +64,7 @@ const AddPageStep3: React.FC = () => {
       toast.error(error_message);
     } else {
       endLoading();
-      toast.success("Page added successfully");
+      toast("Page added successfully");
       setTimeout(() => {
         navigate("/user");
         dispatch(resetPageInfo());
@@ -77,87 +78,15 @@ const AddPageStep3: React.FC = () => {
 
       <div className=" mt-16 0 flex items-center p-4 w-full flex-col">
         <div className="flex flex-wrap mb-8">
-          <CheckboxButton value="b" onClick={getCheckValue} text="No poverty" />
-          <CheckboxButton
-            value="c"
-            onClick={getCheckValue}
-            text="Zero hunger"
-          />
-          <CheckboxButton
-            value="d"
-            onClick={getCheckValue}
-            text="Good health and well-being"
-          />
-          <CheckboxButton
-            value="e"
-            onClick={getCheckValue}
-            text="Quality education"
-          />
-          <CheckboxButton
-            value="f"
-            onClick={getCheckValue}
-            text="Gender equality"
-          />
-          <CheckboxButton
-            value="g"
-            onClick={getCheckValue}
-            text="Clear water and sanitation"
-          />
-          <CheckboxButton
-            value="h"
-            onClick={getCheckValue}
-            text="Affordable and clean energy"
-          />
-          <CheckboxButton
-            value="i"
-            onClick={getCheckValue}
-            text="Decent work and growth"
-          />
-          <CheckboxButton
-            value="j"
-            onClick={getCheckValue}
-            text="Industry, innovation and infrastructure"
-          />
-          <CheckboxButton
-            value="k"
-            onClick={getCheckValue}
-            text="Reduce inequalities"
-          />
-          <CheckboxButton
-            value="l"
-            onClick={getCheckValue}
-            text="Sustainable cities and communities"
-          />
-          <CheckboxButton
-            value="m"
-            onClick={getCheckValue}
-            text="Responsable consumption and production"
-          />
-          <CheckboxButton
-            value="n"
-            onClick={getCheckValue}
-            text="Climate action"
-          />
-          <CheckboxButton
-            value="o"
-            onClick={getCheckValue}
-            text="Life below water"
-          />
-          <CheckboxButton
-            value="p"
-            onClick={getCheckValue}
-            text="Life on land"
-          />
-          <CheckboxButton
-            value="q"
-            onClick={getCheckValue}
-            text="Peace, justice"
-          />
-          <CheckboxButton
-            value="a"
-            onClick={getCheckValue}
-            text="Partenerships for other goals"
-          />
+          {CategorieList[page.pageType === "association" ? 0 : 1].map(
+            (category) => (
+              <CheckboxButton
+                value={category.value}
+                onClick={getCheckValue}
+                text={category.text}
+              />
+            )
+          )}
         </div>
         <Button
           isLoading={isLoading}
