@@ -11,9 +11,9 @@ const PageSwitchCard: React.FC<PageCardsProps> = ({ name, desc }) => {
   const lastSegment = pathSegments[pathSegments.length - 1];
   const isEditUser = lastSegment === "edit-user";
   return (
-    <div className="mx-1 w-full py-2 mb-2">
-      <div className="flex items-center">
-        <div className="w-16">
+    <div className="mx-1 py-2 mb-2">
+      <div className="flex w-full items-center">
+        <div className="w-20">
           <img
             alt="page"
             className=" !w-10 !h-10 rounded-full shadow-lg"
