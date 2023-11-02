@@ -19,7 +19,7 @@ interface addNewPageField {
   phone: string;
   website?: string;
   country?: string;
-  deviantWalletId?: string;
+  address?: string;
 }
 
 const initialValues: addNewPageField = {
@@ -28,19 +28,19 @@ const initialValues: addNewPageField = {
   phone: "",
   website: "",
   country: "",
-  deviantWalletId: "",
+  address: "",
 };
 
 const AddPageStep1: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, startLoading] = useLoadingButton();
-  const [pageType, setPageType] = useState<string>("association");
-  const [country, setCountry] = useState<string>("MG");
+  const [profileType, setProfileType] = useState<string>("association");
+  const [country, setCountry] = useState<string>("Madagascar");
   const [description, setDescription] = useState<string>();
 
   const handleChangePageType = (e: any) => {
-    setPageType(e.target.value);
+    setProfileType(e.target.value);
   };
   const selectCountry = (e: any) => {
     setCountry(e.target.value);
@@ -54,12 +54,12 @@ const AddPageStep1: React.FC = () => {
       setPageInfo({
         name: values.name,
         email: values.email,
+        address: values.address,
         phoneNumber: values.phone,
         website: values.website,
-        deviantWalletID: values.deviantWalletId,
         description,
         country,
-        pageType,
+        profileType,
       })
     );
     setTimeout(() => {
@@ -84,7 +84,6 @@ const AddPageStep1: React.FC = () => {
               .email("Invalid email address")
               .required("Required"),
             phone: Yup.string().required("Required"),
-            deviantWalletId: Yup.string().required("Required"),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -152,15 +151,6 @@ const AddPageStep1: React.FC = () => {
               height="py-2"
               width="w-full"
             />
-
-            <FormField
-              label="Deviant Wallet ID"
-              type="text"
-              mark="deviantWalletId"
-              height="py-2"
-              width="w-full"
-            />
-            <ErrorMessageForm name="deviantWalletId" />
 
             <label
               htmlFor="description"

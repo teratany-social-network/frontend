@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import pageReducer from "./reducer/page.reducer";
+import accountReducer from "./reducer/account.reducer";
 
 
 
@@ -11,13 +12,19 @@ const userPersistConfig = {
     key: "teratany_user",
     storage,
 };
+const acccountPersistConfig = {
+    key: "teratany_account",
+    storage,
+};
 
 
-const persistedReducer = persistReducer(userPersistConfig, userReducer);
+const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
+const accountPersistedReducer = persistReducer(acccountPersistConfig, accountReducer);
 
 const rootReducer = combineReducers({
-    teratany_user: persistedReducer,
+    teratany_user: userPersistedReducer,
     teratany_page: pageReducer,
+    teratany_account: accountPersistedReducer,
 });
 
 export const store = configureStore({

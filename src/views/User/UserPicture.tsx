@@ -35,7 +35,9 @@ const EditUserPicture: React.FC = () => {
       if (error instanceof AxiosError) {
         endLoading();
         const error_message: string =
-          error?.response?.data.description ?? error.message;
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
         toast.error(error_message);
       } else {
         return response?.data;
@@ -50,7 +52,9 @@ const EditUserPicture: React.FC = () => {
 
     const file = await uploadImageFile();
 
-    const { error } = await withAsync(() => updateProfileImage(token, file));
+    const { error } = await withAsync(() =>
+      updateProfileImage(token, user?._id, file)
+    );
     if (error instanceof AxiosError) {
       endLoading();
       const error_message: string =
@@ -65,7 +69,9 @@ const EditUserPicture: React.FC = () => {
   const user = useFetchUser();
 
   useEffect(() => {
-    setFileViewer(FileServerURL + user?.image);
+    if (user?.image) {
+      setFileViewer(FileServerURL + user?.image);
+    }
   }, [user]);
 
   return (

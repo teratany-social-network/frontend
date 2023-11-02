@@ -1,27 +1,30 @@
 export type IUser = {
     _id?: string
-    displayName?: string
-    account_date?: string;
-    address?: ObjectValue;
-    adminAndPage?: [];
-    coordonates?: CoordonateValue;
-    country?: ObjectValue
-    email?: string
+    name: string
+    localisation?: UserLocalisation;
+    contact?: UserContact;
+    deviantWalletId: string;
     image?: string
-    job?: []
-    publicator?: []
-    role?: number
-    status?: string
-    walletId?: ObjectValue
+    role?: number,
+    profileType?: string
+    administratedProfiles?: Array<string>
+    followers?: Array<string>
 };
 
-type ObjectValue = {
-    value: string;
-    isPrivate: boolean;
+type UserLocalisation = {
+    address: {
+        isPublic: boolean;
+        value: string;
+    }
+    coordonates: {
+        isPublic: boolean;
+        latitude: number;
+        longitude: number;
+    }
 }
 
-type CoordonateValue = {
-    latitude: number;
-    longitude: number;
-    isPrivate: boolean;
+type UserContact = {
+    email: string;
+    phone: string;
+    website: string;
 }

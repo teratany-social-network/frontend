@@ -30,16 +30,15 @@ const UserProfile: React.FC = () => {
           className="w-20 h-20 object-cover rounded-full
                border-2 border-pink-600 p-1"
           src={
-            FileServerURL + user?.image ??
-            "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+            user?.image
+              ? FileServerURL + user.image
+              : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
           }
           alt="profile"
         />
         <div className="flex flex-col">
           <div className="flex flex-col items-start">
-            <h2 className="text-xl font-normal mb-1">
-              {user?.displayName ?? "User"}
-            </h2>
+            <h2 className="text-xl font-normal mb-1">{user?.name ?? "User"}</h2>
 
             <ul className="flex space-x-8 mb-2">
               <li>

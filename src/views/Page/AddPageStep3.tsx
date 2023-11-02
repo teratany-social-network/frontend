@@ -44,23 +44,24 @@ const AddPageStep3: React.FC = () => {
       addPage(
         token,
         page.name,
+        page.profileType,
         categories.join(""),
         page.coordonates,
-        page.pageType,
+        page.description,
         page.address,
         page.email,
         page.phoneNumber,
         page.website,
-        page.description,
-        page.country,
-        page.deviantWalletID
+        page.country
       )
     );
 
     if (error instanceof AxiosError) {
       endLoading();
       const error_message: string =
-        error?.response?.data.description ?? error.message;
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
       toast.error(error_message);
     } else {
       endLoading();
@@ -78,7 +79,7 @@ const AddPageStep3: React.FC = () => {
 
       <div className=" mt-16 0 flex items-center p-4 w-full flex-col">
         <div className="flex flex-wrap mb-8">
-          {CategorieList[page.pageType === "association" ? 0 : 1].map(
+          {CategorieList[page.profileType === "association" ? 0 : 1].map(
             (category) => (
               <CheckboxButton
                 value={category.value}

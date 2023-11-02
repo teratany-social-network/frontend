@@ -50,12 +50,14 @@ const EditUserLocation: React.FC = () => {
     startLoading();
     if (lat && lng) {
       const { error } = await withAsync(() =>
-        updateLocationParameter(token, lat, lng, locationStatus!)
+        updateLocationParameter(token, user?._id, lat, lng, locationStatus!)
       );
       if (error instanceof AxiosError) {
         endLoading();
         const error_message: string =
-          error?.response?.data.description ?? error.message;
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
         toast.error(error_message);
       } else {
         endLoading();
@@ -76,8 +78,8 @@ const EditUserLocation: React.FC = () => {
         {user && (
           <Marker
             position={[
-              user?.coordonates?.latitude!,
-              user?.coordonates?.longitude!,
+              user?.localisation?.coordonates?.latitude!,
+              user?.localisation?.coordonates?.longitude!,
             ]}
             icon={MARKER_ICON}
           ></Marker>
@@ -94,7 +96,7 @@ const EditUserLocation: React.FC = () => {
         <div className="flex items-start mt-4">
           <SwitchToggle
             label="Show Location"
-            isChecked={user?.coordonates?.isPrivate}
+            isChecked={user?.localisation?.coordonates?.isPublic}
             onClick={changeLocationStatus}
           />
         </div>

@@ -2,21 +2,34 @@ import React from "react";
 import { Drawer, Typography, IconButton } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import PageSwitchCard from "./PageSwitchCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 interface DrawerProps {
   openBottom: any;
   closeBottom: any;
+  id?: string;
 }
 
 const SwitchAccountDrawer: React.FC<DrawerProps> = ({
   openBottom,
   closeBottom,
+  id,
 }) => {
   const handleClickClose = () => {
     // Appel de la fonction closeBottom du composant parent
     closeBottom();
   };
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  let accounts: any = useSelector<RootState>(
+    (state) => state.teratany_account.account
+  );
+
+  accounts = accounts.filter((account: any) => account.id !== id);
+
+  console.log("accounts => ", accounts);
+
   useEffect(() => {
     setIsDrawerOpen(openBottom);
   }, [openBottom]);
@@ -32,6 +45,7 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
       document.body.style.overflow = "auto";
     };
   }, [isDrawerOpen]);
+
   return (
     <>
       <React.Fragment>
@@ -70,10 +84,17 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
             </IconButton>
           </div>
           <div className=" h-[60%] w-full overflow-y-scroll">
-            <PageSwitchCard name="Teratany" desc="50k followers" />
-            <PageSwitchCard name="Symbiozis" desc="10k followers" />
-            <PageSwitchCard name="Ampela Mijoro" desc="20k followers" />
-            <PageSwitchCard name="Majunga Miray" desc="50k followers" />
+            {accounts.map((account: any) => (
+              <PageSwitchCard
+                id={account.id}
+                name={account.name}
+                desc={
+                  account.followers > 0
+                    ? account.followers + " Followers"
+                    : account.followers + " Follower"
+                }
+              />
+            ))}
           </div>
         </Drawer>
       </React.Fragment>
