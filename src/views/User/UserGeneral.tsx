@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import FormField from "../../components/common/FormField";
-import SwitchToggle from "../../components/common/switchToggle";
 import Button from "../../components/common/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -18,42 +17,31 @@ import useLoadingButton from "../../hooks/useLoadingButton";
 interface GeneralUserInfo {
   name: string | undefined;
   email: string | undefined;
-  address: string | undefined;
-  addressIsPrivate: boolean | undefined;
 }
 
 const EditGeneralUser: React.FC = () => {
   const token = useToken();
   const user: IUser | undefined = useFetchUser();
-  const [adressStatus, setAdressStatus] = useState<boolean>();
   const [isLoading, startLoading, endLoading] = useLoadingButton();
 
-  const initialValues: GeneralUserInfo = {
-    name: user?.displayName,
-    email: user?.email,
-    address: user?.address?.value,
-    addressIsPrivate: user?.address?.isPrivate,
-  };
+  console.log("user => ", user);
 
-  const changeAdressStatus = (status: any) => {
-    setAdressStatus(status.target.checked);
+  const initialValues: GeneralUserInfo = {
+    name: user?.name,
+    email: user?.contact?.email,
   };
 
   const updateUserGeneral = async (values: GeneralUserInfo) => {
     startLoading();
     const { error } = await withAsync(() =>
-      updateGeneralInfo(
-        token,
-        values.name,
-        values.email,
-        values.address,
-        adressStatus
-      )
+      updateGeneralInfo(token, user?._id, values.name, values.email)
     );
     if (error instanceof AxiosError) {
       endLoading();
       const error_message: string =
-        error?.response?.data.description ?? error.message;
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
       toast.error(error_message);
     } else {
       endLoading();
@@ -72,7 +60,6 @@ const EditGeneralUser: React.FC = () => {
           validationSchema={Yup.object({
             name: Yup.string().required("Required"),
             email: Yup.string().required("Required"),
-            address: Yup.string(),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -108,25 +95,6 @@ const EditGeneralUser: React.FC = () => {
               />
               <ErrorMessageForm name="email" />
 
-              <FormField
-                label="Address"
-                type="text"
-                mark="address"
-                height="py-2"
-                width="w-full"
-                extra={false}
-                value={formik.values.address}
-                onChange={formik.handleChange}
-              />
-              <ErrorMessageForm name="address" />
-
-              <div className="flex items-start mt-4">
-                <SwitchToggle
-                  label="Private Address"
-                  isChecked={initialValues.addressIsPrivate}
-                  onClick={changeAdressStatus}
-                />
-              </div>
               <div className="my-10 w-full">
                 <Button
                   height="py-3"

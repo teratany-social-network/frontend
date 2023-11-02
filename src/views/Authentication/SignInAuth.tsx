@@ -53,7 +53,7 @@ const SignInAuth: React.FC = () => {
       dispatch(
         setAuthentication({
           id: user.id,
-          displayName: user.displayName,
+          name: user.name,
           email: user.email,
           token,
           isAuthenticated: true,

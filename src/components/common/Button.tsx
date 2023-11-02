@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   onClick?: (evt?: any) => void;
   isDisabled?: boolean;
+  showLoadingText?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   onClick,
   isDisabled,
+  showLoadingText = true,
 }) => {
   if (!isLoading) {
     return (
@@ -35,12 +37,12 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <button
         type="button"
-        className={` ${width} ${height} inline-flex justify-center items-center py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded border border-gray-200 ${className}`}
+        className={` ${width} ${height} inline-flex justify-center items-center text-sm font-medium text-gray-900  px-5 py-2.5 text-center mr-2 bg-white rounded border border-gray-200 ${className}`}
       >
         <svg
           aria-hidden="true"
           role="status"
-          className="inline-flex justify-center items-center  mr-2 w-4 h-4 text-gray-200 animate-spin"
+          className="inline-flex justify-center items-center  mx-2.5 w-4 h-4 text-gray-200 animate-spin"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +56,7 @@ const Button: React.FC<ButtonProps> = ({
             fill="#000"
           ></path>
         </svg>
-        Loading...
+        {showLoadingText ? "Loading..." : ""}
       </button>
     );
   }

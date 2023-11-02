@@ -5,18 +5,20 @@ export type CoordonatesValue = {
     longitude?: number | null
 }
 
+
+
 export interface PageInitialState {
+    name?: string | null;
+    description?: string;
+    profileType?: string;
+    category?: string;
     email?: string | null;
     phoneNumber?: string | null;
     website?: string | null;
-    name?: string | null;
     coordonates?: CoordonatesValue;
-    description?: string;
     address?: string;
     country?: string;
     deviantWalletID?: string;
-    pageType?: string;
-    category?: string;
 }
 
 const initialState: PageInitialState = {
@@ -32,7 +34,7 @@ const initialState: PageInitialState = {
     address: '',
     country: '',
     deviantWalletID: '',
-    pageType: '',
+    profileType: '',
     category: '',
 }
 
@@ -50,7 +52,7 @@ export const pageSlice = createSlice({
             state.address = action.payload.address;
             state.country = action.payload.country;
             state.deviantWalletID = action.payload.deviantWalletID;
-            state.pageType = action.payload.pageType;
+            state.profileType = action.payload.profileType;
             state.category = action.payload.category;
 
         },
@@ -77,7 +79,7 @@ export const pageSlice = createSlice({
             state.address = '';
             state.country = '';
             state.deviantWalletID = '';
-            state.pageType = '';
+            state.profileType = '';
             state.category = '';
         }
 

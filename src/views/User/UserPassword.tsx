@@ -36,7 +36,9 @@ const EditUserPassword: React.FC = () => {
     if (error instanceof AxiosError) {
       endLoading();
       const error_message: string =
-        error?.response?.data.description ?? error.message;
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
       toast.error(error_message);
     } else {
       endLoading();
