@@ -20,16 +20,12 @@ import { useParams } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { setAccountConnected } from "../../store/reducer/account.reducer";
 
 const Profile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
   const [profile, setProfile] = React.useState<IUser>();
   const token = useToken();
-  const dispatch = useDispatch<AppDispatch>();
 
   const openDrawerBottom = () => {
     setOpenBottom(true);
@@ -59,26 +55,6 @@ const Profile: React.FC = () => {
       setProfile(response?.data as IUser);
     }
   };
-
-  const accountSwitcher: any[] = [];
-
-  accountSwitcher.push({
-    id: profile?._id,
-    name: profile?.name,
-    followers: profile?.followers?.length,
-    image: profile?.image,
-  });
-
-  profile?.administratedProfiles?.forEach((account: any) => {
-    accountSwitcher.push({
-      id: account?.id,
-      name: account?.name,
-      followers: account?.numberOfFollowers,
-      image: account?.image,
-    });
-  });
-
-  dispatch(setAccountConnected({ account: accountSwitcher }));
 
   useEffect(() => {
     fetchProfile();

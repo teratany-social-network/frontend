@@ -6,13 +6,20 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
 import { setAuthentication } from "../store/reducer/user.reducer";
 import useToken from "../hooks/useToken";
+import { FileServerURL } from "../api/FileApi";
 
 interface PageCardsProps {
   name: string;
   desc: string;
   id?: string;
+  image?: string;
 }
-const PageSwitchCard: React.FC<PageCardsProps> = ({ name, desc, id }) => {
+const PageSwitchCard: React.FC<PageCardsProps> = ({
+  name,
+  desc,
+  id,
+  image,
+}) => {
   const [isLoading, startLoading] = useLoadingButton();
   const currentPath = window.location.pathname;
   const pathSegments = currentPath.split("/");
@@ -45,7 +52,11 @@ const PageSwitchCard: React.FC<PageCardsProps> = ({ name, desc, id }) => {
           <img
             alt="page"
             className=" !w-10 !h-10 rounded-full shadow-lg"
-            src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+            src={
+              image
+                ? FileServerURL + image
+                : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+            }
           />
         </div>
         <div className="flex flex-col items-start px-3 w-full flex-5">

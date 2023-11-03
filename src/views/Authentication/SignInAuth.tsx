@@ -18,6 +18,8 @@ import {
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
 import useLoadingButton from "../../hooks/useLoadingButton";
+import { getById } from "../../api/UserApi";
+import { setAccountConnected } from "../../store/reducer/account.reducer";
 
 interface signinFormValues {
   email: string;
@@ -32,6 +34,20 @@ const SignInAuth: React.FC = () => {
   const initialValues: signinFormValues = {
     email: "",
     password: "",
+  };
+
+  const fetchProfile = async (token: string, id: string) => {
+    const { error, response } = await withAsync(() => getById(token, id));
+
+    if (error instanceof AxiosError) {
+      const error_message: string =
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
+      toast.error(error_message);
+    } else {
+      return response?.data;
+    }
   };
 
   const signInUser = async (values: signinFormValues) => {
@@ -59,6 +75,31 @@ const SignInAuth: React.FC = () => {
           isAuthenticated: true,
         })
       );
+
+      const profile: any = await fetchProfile(token, user.id as string);
+
+      const accountSwitcher: any[] = [];
+
+      console.log("profile ", profile);
+
+      accountSwitcher.push({
+        id: profile?._id,
+        name: profile?.name,
+        followers: profile?.followers?.length,
+        image: profile?.image,
+      });
+
+      profile?.administratedProfiles?.forEach((account: any) => {
+        accountSwitcher.push({
+          id: account?.id,
+          name: account?.name,
+          followers: account?.numberOfFollowers,
+          image: account?.image,
+        });
+      });
+
+      dispatch(setAccountConnected({ account: accountSwitcher }));
+
       navigate("/");
       toast.success("Successfully logged in");
     }
