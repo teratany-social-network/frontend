@@ -93,6 +93,7 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
                     ? account.followers + " Followers"
                     : account.followers + " Follower"
                 }
+                image={account.image}
               />
             ))}
           </div>
