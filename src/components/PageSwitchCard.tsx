@@ -32,16 +32,17 @@ const PageSwitchCard: React.FC<PageCardsProps> = ({
 
   const switchAccount = () => {
     startLoading();
+    dispatch(
+      setAuthentication({
+        id: id,
+        name: name,
+        token,
+        isAuthenticated: true,
+      })
+    );
     setTimeout(() => {
       navigate(`/profile/${id}`);
-      dispatch(
-        setAuthentication({
-          id: id,
-          name: name,
-          token,
-          isAuthenticated: true,
-        })
-      );
+
       window.location.reload();
     }, 2000);
   };
