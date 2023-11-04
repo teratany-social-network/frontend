@@ -27,6 +27,7 @@ import { HomeChat } from "./views/chat/HomeChat";
 import { OneChat } from "./views/chat/OneChat";
 import Profile from "./views/Profile/Profile";
 import ProfileCategory from "./views/User/ProfileCategory";
+import ProtectedRoute from "./services/ProtectedRoute";
 
 const App: React.FC = () => {
   return (
@@ -40,61 +41,184 @@ const App: React.FC = () => {
                 {/* // authentication routes */}
                 <Route path="/signin" element={<SignInAuth />} />
                 <Route path="/register" element={<RegisterAuth />} />
-                <Route path="/page/add/step-1" element={<AddPageStep1 />} />
-                <Route path="/page/add/step-2" element={<AddPageStep2 />} />
-                <Route path="/page/add/step-3" element={<AddPageStep3 />} />
-                <Route path="/chat/one" element={<OneChat />} />
+
+                <Route
+                  path="/page/add/step-1"
+                  element={
+                    <ProtectedRoute>
+                      <AddPageStep1 />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/page/add/step-2"
+                  element={
+                    <ProtectedRoute>
+                      <AddPageStep2 />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/page/add/step-3"
+                  element={
+                    <ProtectedRoute>
+                      <AddPageStep3 />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/chat/one"
+                  element={
+                    <ProtectedRoute>
+                      <OneChat />
+                    </ProtectedRoute>
+                  }
+                />
               </Route>
+
               <Route element={<WithNav />}>
                 <Route path="/" element={<Home />} />
 
                 {/* // publication */}
-                <Route path="/publication" element={<AddPublication />} />
+                <Route
+                  path="/publication"
+                  element={
+                    <ProtectedRoute>
+                      <AddPublication />
+                    </ProtectedRoute>
+                  }
+                />
                 {/* // Map */}
-                <Route path="/map" element={<Map />} />
+                <Route
+                  path="/map"
+                  element={
+                    <ProtectedRoute>
+                      <Map />
+                    </ProtectedRoute>
+                  }
+                />
 
-                <Route path="/pages" element={<PageList />} />
+                <Route
+                  path="/pages"
+                  element={
+                    <ProtectedRoute>
+                      <PageList />
+                    </ProtectedRoute>
+                  }
+                />
                 {/*CHAT*/}
-                <Route path="/chat/list" element={<HomeChat />} />
+                <Route
+                  path="/chat/list"
+                  element={
+                    <ProtectedRoute>
+                      <HomeChat />
+                    </ProtectedRoute>
+                  }
+                />
 
                 {/* SEARCH */}
-                <Route path="/search" element={<Search />} />
-                <Route path="/search/result" element={<SearchResult />} />
+                <Route
+                  path="/search"
+                  element={
+                    <ProtectedRoute>
+                      <Search />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/search/result"
+                  element={
+                    <ProtectedRoute>
+                      <SearchResult />
+                    </ProtectedRoute>
+                  }
+                />
                 {/* Notifications */}
-                <Route path="/notifications" element={<Notification />} />
+                <Route
+                  path="/notifications"
+                  element={
+                    <ProtectedRoute>
+                      <Notification />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/search/result/publication"
-                  element={<SearchFilterResult />}
+                  element={
+                    <ProtectedRoute>
+                      <SearchFilterResult />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/search/result/user"
-                  element={<SearchFilterResult />}
+                  element={
+                    <ProtectedRoute>
+                      <SearchFilterResult />
+                    </ProtectedRoute>
+                  }
                 />
 
                 {/* PROFILE */}
-                <Route path="/profile/edit/menu" element={<EditUserMenu />} />
+                <Route
+                  path="/profile/edit/menu"
+                  element={
+                    <ProtectedRoute>
+                      <EditUserMenu />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/profile/edit/general"
-                  element={<ProfileGeneral />}
+                  element={
+                    <ProtectedRoute>
+                      <ProfileGeneral />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/profile/edit/password"
-                  element={<ProfilePassword />}
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePassword />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/profile/edit/picture"
-                  element={<ProfilePicture />}
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePicture />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/profile/edit/location"
-                  element={<ProfileLocation />}
+                  element={
+                    <ProtectedRoute>
+                      <ProfileLocation />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/profile/edit/category"
-                  element={<ProfileCategory />}
+                  element={
+                    <ProtectedRoute>
+                      <ProfileCategory />
+                    </ProtectedRoute>
+                  }
                 />
 
-                <Route path="/profile/:id" element={<Profile />} />
+                <Route
+                  path="/profile/:id"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
               </Route>
             </Routes>
           </BrowserRouter>

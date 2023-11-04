@@ -9,12 +9,14 @@ interface DrawerProps {
   openBottom: any;
   closeBottom: any;
   id?: string;
+  showSwitchAccount?: boolean;
 }
 
 const SwitchAccountDrawer: React.FC<DrawerProps> = ({
   openBottom,
   closeBottom,
   id,
+  showSwitchAccount,
 }) => {
   const handleClickClose = () => {
     // Appel de la fonction closeBottom du composant parent
@@ -46,57 +48,59 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
 
   return (
     <>
-      <React.Fragment>
-        <Drawer
-          placement="bottom"
-          open={openBottom}
-          onClose={closeBottom}
-          className="p-4 rounded-3xl"
-        >
-          <div className="flex items-center justify-between w-full">
-            <Typography
-              className="text-lg font-semibold border-b border-b-1 border-gray-300"
-              color="black"
-            >
-              Switch account
-            </Typography>
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              onClick={handleClickClose}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5 absolute -top-3"
+      {showSwitchAccount && (
+        <React.Fragment>
+          <Drawer
+            placement="bottom"
+            open={openBottom}
+            onClose={closeBottom}
+            className="p-4 rounded-3xl"
+          >
+            <div className="flex items-center justify-between w-full">
+              <Typography
+                className="text-lg font-semibold border-b border-b-1 border-gray-300"
+                color="black"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
+                Switch account
+              </Typography>
+              <IconButton
+                variant="text"
+                color="blue-gray"
+                onClick={handleClickClose}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5 absolute -top-3"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconButton>
+            </div>
+            <div className=" h-[60%] w-full overflow-y-scroll">
+              {accounts.map((account: any) => (
+                <PageSwitchCard
+                  id={account.id}
+                  name={account.name}
+                  desc={
+                    account.followers > 0
+                      ? account.followers + " Followers"
+                      : account.followers + " Follower"
+                  }
+                  image={account.image}
                 />
-              </svg>
-            </IconButton>
-          </div>
-          <div className=" h-[60%] w-full overflow-y-scroll">
-            {accounts.map((account: any) => (
-              <PageSwitchCard
-                id={account.id}
-                name={account.name}
-                desc={
-                  account.followers > 0
-                    ? account.followers + " Followers"
-                    : account.followers + " Follower"
-                }
-                image={account.image}
-              />
-            ))}
-          </div>
-        </Drawer>
-      </React.Fragment>
+              ))}
+            </div>
+          </Drawer>
+        </React.Fragment>
+      )}
     </>
   );
 };

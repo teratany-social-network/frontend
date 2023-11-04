@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 
 interface horizontalCardsProps {
@@ -8,10 +7,8 @@ interface horizontalCardsProps {
 }
 
 const HorizontalCards: React.FC<horizontalCardsProps> = (props) => {
-  const navigate = useNavigate();
-
   return (
-    <div className="mx-1 w-full p-2 " onClick={() => navigate("/user")}>
+    <div className="mx-1 w-full p-2 ">
       <div className="flex items-center">
         <img
           alt=""

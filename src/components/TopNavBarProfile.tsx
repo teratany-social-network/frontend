@@ -6,21 +6,26 @@ import { useNavigate } from "react-router-dom";
 interface TopNavBarProps {
   user: string;
   path: string;
+  switchedAccount?: boolean;
 }
 
-const TopNavBarProfile: React.FC<TopNavBarProps> = (props: any) => {
+const TopNavBarProfile: React.FC<TopNavBarProps> = ({
+  user,
+  path,
+  switchedAccount,
+}) => {
   const navigate = useNavigate();
 
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-12 bg-white border-b border-gray-200">
       <div className="flex items-center justify-between h-full px-2 max-w-lg mx-auto font-medium">
         <div className="flex items-center">
-          <p className="pr-2 pl-3">{props.user}</p>
-          <HiOutlineChevronDown size={22} />
+          <p className="pr-2 pl-3">{user}</p>
+          {switchedAccount && <HiOutlineChevronDown size={22} />}
         </div>
         <button
           onClick={() => {
-            navigate(props.path);
+            navigate(path);
           }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 dark:hover-bg-gray-800 group"

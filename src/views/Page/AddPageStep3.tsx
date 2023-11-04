@@ -16,12 +16,14 @@ import {
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { CategorieList } from "../../constants/PageCategory";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const AddPageStep3: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, startLoading, endLoading] = useLoadingButton();
   const token = useToken();
   const dispatch = useDispatch<AppDispatch>();
+  const profile = useFetchProfile();
 
   const page: PageInitialState = useSelector<RootState>(
     (state) => state.teratany_page
@@ -67,7 +69,7 @@ const AddPageStep3: React.FC = () => {
       endLoading();
       toast("Page added successfully");
       setTimeout(() => {
-        navigate("/user");
+        navigate(`/profile/${profile?._id}`);
         dispatch(resetPageInfo());
       }, 2000);
     }
