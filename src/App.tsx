@@ -79,7 +79,14 @@ const App: React.FC = () => {
               </Route>
 
               <Route element={<WithNav />}>
-                <Route path="/" element={<Home />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Home />
+                    </ProtectedRoute>
+                  }
+                />
 
                 {/* // publication */}
                 <Route

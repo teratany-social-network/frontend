@@ -25,8 +25,8 @@ import useFetchProfile from "hooks/useFetchProfile";
 const Profile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
-  const [profile, setProfile] = React.useState<IProfile>();
   const profileConnectedUser = useFetchProfile();
+  const [profile, setProfile] = React.useState<IProfile>();
   const token = useToken();
 
   const openDrawerBottom = () => {
@@ -186,11 +186,13 @@ const Profile: React.FC = () => {
   return (
     <>
       <div>
-        <TopNavBarProfile
-          user={profileConnectedUser?.name as string}
-          path="/profile/edit/menu"
-          onClick={openDrawerBottom}
-        />
+        {profileConnectedUser && (
+          <TopNavBarProfile
+            user={profileConnectedUser?.name as string}
+            path="/profile/edit/menu"
+            onClick={openDrawerBottom}
+          />
+        )}
       </div>
 
       {profile?.profileType === "user" ? <UserProfile /> : <PageProfile />}
