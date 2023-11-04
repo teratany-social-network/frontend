@@ -49,7 +49,7 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
 
   return (
     <>
-      {userConnected?.administratedProfiles?.length! > 0 && (
+      {userConnected?.administratedProfiles?.length! > 0 ? (
         <React.Fragment>
           <Drawer
             placement="bottom"
@@ -101,7 +101,7 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
             </div>
           </Drawer>
         </React.Fragment>
-      )}
+      ) : null}
     </>
   );
 };

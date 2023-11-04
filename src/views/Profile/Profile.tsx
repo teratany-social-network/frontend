@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import TopNavBarProfile from "../../components/TopNavBarProfile";
-import Button from "../../components/common/Button";
-import Publication from "../../components/Publication/Publication";
-import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
-import { IProfile } from "../../types/profile.type";
-import { FileServerURL } from "../../api/FileApi";
-import { BottomDrawer } from "../../components/common/BottomDrawer";
+import TopNavBarProfile from "components/TopNavBarProfile";
+import Button from "components/common/Button";
+import Publication from "components/Publication/Publication";
+import SwitchAccountDrawer from "components/SwitchAccountDrawer";
+import { IProfile } from "types/profile.type";
+import { FileServerURL } from "api/FileApi";
+import { BottomDrawer } from "components/common/BottomDrawer";
 import { BsInfoCircle } from "@react-icons/all-files/bs/BsInfoCircle";
 import { IoMailUnreadOutline } from "@react-icons/all-files/io5/IoMailUnreadOutline";
 import { BsPhone } from "@react-icons/all-files/bs/BsPhone";
@@ -13,14 +13,14 @@ import { MdLocationCity } from "@react-icons/all-files/md/MdLocationCity";
 import { BsWallet } from "@react-icons/all-files/bs/BsWallet";
 import { GiWorld } from "@react-icons/all-files/gi/GiWorld";
 import { BiTargetLock } from "@react-icons/all-files/bi/BiTargetLock";
-import EditType from "../../components/EditType";
-import { withAsync } from "../../helpers/withAsync";
-import { getById } from "../../api/ProfileApi";
+import EditType from "components/EditType";
+import { withAsync } from "helpers/withAsync";
+import { getById } from "api/ProfileApi";
 import { useParams } from "react-router-dom";
-import useToken from "../../hooks/useToken";
+import useToken from "hooks/useToken";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import useFetchProfile from "../../hooks/useFetchProfile";
+import useFetchProfile from "hooks/useFetchProfile";
 
 const Profile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
@@ -185,10 +185,11 @@ const Profile: React.FC = () => {
 
   return (
     <>
-      <div onClick={openDrawerBottom}>
+      <div>
         <TopNavBarProfile
           user={profileConnectedUser?.name as string}
           path="/profile/edit/menu"
+          onClick={openDrawerBottom}
         />
       </div>
 

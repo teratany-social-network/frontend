@@ -174,7 +174,7 @@ const AddPageStep1: React.FC = () => {
               />
               <button
                 className="w-full text-gray-500 bg-white  rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 mt-4"
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/")}
               >
                 Cancel
               </button>
