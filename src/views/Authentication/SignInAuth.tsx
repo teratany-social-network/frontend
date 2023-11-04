@@ -18,7 +18,7 @@ import {
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
 import useLoadingButton from "../../hooks/useLoadingButton";
-import { getById } from "../../api/UserApi";
+import { getById } from "../../api/ProfileApi";
 import { setAccountConnected } from "../../store/reducer/account.reducer";
 
 interface signinFormValues {

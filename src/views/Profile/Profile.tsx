@@ -3,7 +3,7 @@ import TopNavBarProfile from "../../components/TopNavBarProfile";
 import Button from "../../components/common/Button";
 import Publication from "../../components/Publication/Publication";
 import SwitchAccountDrawer from "../../components/SwitchAccountDrawer";
-import { IUser } from "../../types/user.type";
+import { IProfile } from "../../types/profile.type";
 import { FileServerURL } from "../../api/FileApi";
 import { BottomDrawer } from "../../components/common/BottomDrawer";
 import { BsInfoCircle } from "@react-icons/all-files/bs/BsInfoCircle";
@@ -15,7 +15,7 @@ import { GiWorld } from "@react-icons/all-files/gi/GiWorld";
 import { BiTargetLock } from "@react-icons/all-files/bi/BiTargetLock";
 import EditType from "../../components/EditType";
 import { withAsync } from "../../helpers/withAsync";
-import { getById } from "../../api/UserApi";
+import { getById } from "../../api/ProfileApi";
 import { useParams } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { AxiosError } from "axios";
@@ -25,7 +25,7 @@ import useFetchProfile from "../../hooks/useFetchProfile";
 const Profile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
-  const [profile, setProfile] = React.useState<IUser>();
+  const [profile, setProfile] = React.useState<IProfile>();
   const profileConnectedUser = useFetchProfile();
   const token = useToken();
 
@@ -52,7 +52,7 @@ const Profile: React.FC = () => {
         error.message;
       toast.error(error_message);
     } else {
-      setProfile(response?.data as IUser);
+      setProfile(response?.data as IProfile);
     }
   };
 

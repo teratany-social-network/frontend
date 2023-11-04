@@ -6,7 +6,7 @@ import MapContainerForm from "../../components/MapContainer";
 import { Marker, useMapEvents } from "react-leaflet";
 import { MARKER_ICON } from "../../constants/MarkerIcon";
 import { withAsync } from "../../helpers/withAsync";
-import { updateLocationParameter } from "../../api/UserApi";
+import { updateLocationParameter } from "../../api/ProfileApi";
 import useToken from "../../hooks/useToken";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import { AxiosError } from "axios";

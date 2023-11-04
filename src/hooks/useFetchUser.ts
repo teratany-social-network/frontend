@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { withAsync } from "../helpers/withAsync";
-import { getUserByToken } from "../api/UserApi";
+import { getUserByToken } from "../api/ProfileApi";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { IUser } from "../types/user.type";
+import { IProfile } from "../types/profile.type";
 import useToken from "./useToken";
 
 
 
 
 const useFetchUser = () => {
-    const [user, setUser] = useState<IUser>();
+    const [user, setUser] = useState<IProfile>();
     const token = useToken()
 
 
@@ -26,7 +26,7 @@ const useFetchUser = () => {
                     error?.response?.data?.error?.description || error?.response?.data || error.message;
                 toast.error(error_message);
             } else {
-                setUser(response?.data as IUser);
+                setUser(response?.data as IProfile);
             }
 
         }
