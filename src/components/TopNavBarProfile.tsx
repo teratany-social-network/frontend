@@ -7,9 +7,14 @@ import useFetchUser from "../hooks/useFetchUser";
 interface TopNavBarProps {
   user: string;
   path: string;
+  onClick?: () => void;
 }
 
-const TopNavBarProfile: React.FC<TopNavBarProps> = ({ user, path }) => {
+const TopNavBarProfile: React.FC<TopNavBarProps> = ({
+  user,
+  path,
+  onClick,
+}) => {
   const navigate = useNavigate();
   const userConnected = useFetchUser();
 
@@ -19,7 +24,7 @@ const TopNavBarProfile: React.FC<TopNavBarProps> = ({ user, path }) => {
         <div className="flex items-center">
           <p className="pr-2 pl-3">{user}</p>
           {userConnected?.administratedProfiles?.length! > 0 && (
-            <HiOutlineChevronDown size={22} />
+            <HiOutlineChevronDown size={22} onClick={onClick} />
           )}
         </div>
         <button

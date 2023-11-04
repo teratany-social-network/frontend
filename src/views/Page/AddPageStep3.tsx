@@ -76,6 +76,14 @@ const AddPageStep3: React.FC = () => {
           image: account?.image,
         })
       );
+      dispatch(
+        addAccountConnected({
+          id: profile?._id!,
+          name: profile?.name!,
+          followers: profile?.followers?.length!,
+          image: profile?.image!,
+        })
+      );
       endLoading();
       toast("Page added successfully");
 
