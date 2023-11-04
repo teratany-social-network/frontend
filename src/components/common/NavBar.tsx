@@ -111,8 +111,8 @@ const NavBar: React.FC = () => {
         >
           <img
             src={
-              profileImageConnected.image
-                ? FileServerURL + profileImageConnected.image
+              profileImageConnected?.image
+                ? FileServerURL + profileImageConnected?.image
                 : ProfilePicture
             }
             className="w-8 h-8 border-2 rounded-full border-black"

@@ -76,8 +76,8 @@ const ProfileLocation: React.FC = () => {
       <TopBar text="Location parameter" />
       {profile && (
         <MapContainerForm
-          lat={profile?.localisation?.coordonates?.latitude}
-          lng={profile?.localisation?.coordonates?.longitude!}
+          lat={profile?.localisation?.coordonates?.latitude! as number}
+          lng={profile?.localisation?.coordonates?.longitude! as number}
           className="w-[90%] h-96 mx-auto mt-16 flex justify-center items-center"
         >
           <Marker

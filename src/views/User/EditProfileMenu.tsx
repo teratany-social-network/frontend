@@ -17,6 +17,7 @@ import { BiPhotoAlbum } from "@react-icons/all-files/bi/BiPhotoAlbum";
 import useFetchProfile from "../../hooks/useFetchProfile";
 import { TbCategory2 } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import { resetAccountConnected } from "../../store/reducer/account.reducer";
 
 const EditProfileMenu: React.FC = () => {
   const [accordionVisible, setVisibility] = useState(false);
@@ -42,6 +43,7 @@ const EditProfileMenu: React.FC = () => {
   };
   const logout = () => {
     dispatch(resetUserAuthentication());
+    dispatch(resetAccountConnected());
     navigate("/signin");
   };
   return (

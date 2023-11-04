@@ -22,7 +22,7 @@ const MapContainerForm: React.FC<MapProps> = ({
   return (
     <MapContainer
       className={className}
-      center={[lat ?? -18.91368, lng ?? 47.53613]}
+      center={[lat! !== 0 ? lat! : -18.91368, lng! !== 0 ? lng! : 47.53613]}
       zoom={13}
       style={{
         width,
