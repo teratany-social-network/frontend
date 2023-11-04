@@ -7,6 +7,8 @@ type MapProps = {
   className: string;
   width?: string;
   height?: string;
+  lat?: number;
+  lng?: number;
 };
 
 const MapContainerForm: React.FC<MapProps> = ({
@@ -14,11 +16,13 @@ const MapContainerForm: React.FC<MapProps> = ({
   className,
   width,
   height,
+  lat,
+  lng,
 }) => {
   return (
     <MapContainer
       className={className}
-      center={[-18.91368, 47.53613]}
+      center={[lat ?? -18.91368, lng ?? 47.53613]}
       zoom={13}
       style={{
         width,

@@ -7,6 +7,7 @@ const URLS = {
     updateProfileImage: "/profile/image",
     updateUserPassword: "/profile/password",
     updateCoordonates: "/profile/localisation",
+    updateCategory: "/profile/categories",
 }
 
 export const getById = (token: string, id: string | undefined) => {
@@ -20,8 +21,8 @@ export const getUserByToken = (token: string) => {
         headers: { 'Authorization': token }
     })
 }
-export const updateGeneralInfo = (token: string, id: string | undefined, name: string | undefined, email: string | undefined) => {
-    return api.patch(URLS.updateGeneralInfo, { id, name, email }, {
+export const updateGeneralInfo = (token: string, id: string | undefined, name: string | undefined, email: string | undefined, description?: string | undefined) => {
+    return api.patch(URLS.updateGeneralInfo, { id, name, email, description }, {
         headers: { 'Authorization': token }
     })
 }
@@ -34,6 +35,12 @@ export const updateProfileImage = (token: string, id: string | undefined, imageU
 
 export const updatePassword = (token: string, password: string, newPassword: string) => {
     return api.patch(URLS.updateUserPassword, { password, newPassword }, {
+        headers: { 'Authorization': token }
+    })
+}
+
+export const updateCategory = (token: string, id: string | undefined, categories: string | undefined) => {
+    return api.patch(URLS.updateCategory, { id, categories }, {
         headers: { 'Authorization': token }
     })
 }

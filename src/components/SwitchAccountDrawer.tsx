@@ -28,8 +28,6 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
 
   accounts = accounts.filter((account: any) => account.id !== id);
 
-  console.log("accounts => ", accounts);
-
   useEffect(() => {
     setIsDrawerOpen(openBottom);
   }, [openBottom]);

@@ -5,13 +5,13 @@ import TopBar from "../../components/common/TopBar";
 import MapContainerForm from "../../components/MapContainer";
 import { Marker, useMapEvents } from "react-leaflet";
 import { MARKER_ICON } from "../../constants/MarkerIcon";
-import useFetchUser from "../../hooks/useFetchUser";
 import { withAsync } from "../../helpers/withAsync";
 import { updateLocationParameter } from "../../api/UserApi";
 import useToken from "../../hooks/useToken";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 type PositionMarkerType = {
   lat: number;
@@ -33,9 +33,9 @@ const LocationMarker = () => {
   );
 };
 
-const EditUserLocation: React.FC = () => {
+const ProfileLocation: React.FC = () => {
   const token = useToken();
-  const user = useFetchUser();
+  const profile = useFetchProfile();
 
   const [isLoading, startLoading, endLoading] = useLoadingButton();
   const [locationStatus, setLocationStatus] = useState<boolean>();
@@ -50,7 +50,7 @@ const EditUserLocation: React.FC = () => {
     startLoading();
     if (lat && lng) {
       const { error } = await withAsync(() =>
-        updateLocationParameter(token, user?._id, lat, lng, locationStatus!)
+        updateLocationParameter(token, profile?._id, lat, lng, locationStatus!)
       );
       if (error instanceof AxiosError) {
         endLoading();
@@ -74,18 +74,22 @@ const EditUserLocation: React.FC = () => {
   return (
     <>
       <TopBar text="Location parameter" />
-      <MapContainerForm className="w-[90%] h-96 mx-auto mt-16 flex justify-center items-center">
-        {user && (
+      {profile && (
+        <MapContainerForm
+          lat={profile?.localisation?.coordonates?.latitude}
+          lng={profile?.localisation?.coordonates?.longitude!}
+          className="w-[90%] h-96 mx-auto mt-16 flex justify-center items-center"
+        >
           <Marker
             position={[
-              user?.localisation?.coordonates?.latitude!,
-              user?.localisation?.coordonates?.longitude!,
+              profile?.localisation?.coordonates?.latitude!,
+              profile?.localisation?.coordonates?.longitude!,
             ]}
             icon={MARKER_ICON}
           ></Marker>
-        )}
-        <LocationMarker />
-      </MapContainerForm>
+          <LocationMarker />
+        </MapContainerForm>
+      )}
 
       <div className="mt-4 flex flex-col items-center mx-4">
         <p className="font-medium">
@@ -96,7 +100,7 @@ const EditUserLocation: React.FC = () => {
         <div className="flex items-start mt-4">
           <SwitchToggle
             label="Show Location"
-            isChecked={user?.localisation?.coordonates?.isPublic}
+            isChecked={profile?.localisation?.coordonates?.isPublic}
             onClick={changeLocationStatus}
           />
         </div>
@@ -113,4 +117,4 @@ const EditUserLocation: React.FC = () => {
     </>
   );
 };
-export default EditUserLocation;
+export default ProfileLocation;

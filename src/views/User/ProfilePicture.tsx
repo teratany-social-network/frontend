@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
+import defaultProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import Button from "../../components/common/Button";
 import TopBar from "../../components/common/TopBar";
 import { withAsync } from "../../helpers/withAsync";
@@ -9,13 +9,13 @@ import { AxiosError } from "axios";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import { toast } from "react-toastify";
 import { FileServerURL, uploadFile } from "../../api/FileApi";
-import useFetchUser from "../../hooks/useFetchUser";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
-const EditUserPicture: React.FC = () => {
+const ProfilePicture: React.FC = () => {
   const token = useToken();
   const [file, setFile] = useState<any>();
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [fileViewer, setFileViewer] = useState<string>(ProfilePicture);
+  const [fileViewer, setFileViewer] = useState<string>(defaultProfilePicture);
   const [isLoading, startLoading, endLoading] = useLoadingButton();
 
   const handleChange = (e: any) => {
@@ -53,7 +53,7 @@ const EditUserPicture: React.FC = () => {
     const file = await uploadImageFile();
 
     const { error } = await withAsync(() =>
-      updateProfileImage(token, user?._id, file)
+      updateProfileImage(token, profile?._id, file)
     );
     if (error instanceof AxiosError) {
       endLoading();
@@ -66,13 +66,13 @@ const EditUserPicture: React.FC = () => {
     }
   };
 
-  const user = useFetchUser();
+  const profile = useFetchProfile();
 
   useEffect(() => {
-    if (user?.image) {
-      setFileViewer(FileServerURL + user?.image);
+    if (profile?.image) {
+      setFileViewer(FileServerURL + profile?.image);
     }
-  }, [user]);
+  }, [profile]);
 
   return (
     <>
@@ -103,4 +103,4 @@ const EditUserPicture: React.FC = () => {
     </>
   );
 };
-export default EditUserPicture;
+export default ProfilePicture;
