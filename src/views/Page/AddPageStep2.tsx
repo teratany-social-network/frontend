@@ -62,7 +62,11 @@ const AddPageStep2: React.FC = () => {
 
   return (
     <>
-      <MapContainerForm className="w-full h-screen">
+      <MapContainerForm
+        lat={-18.91368}
+        lng={47.53613}
+        className="w-full h-screen"
+      >
         <LocationMarker />
       </MapContainerForm>
       <div className="fixed bottom-0 z-1000 flex items-center justify-center p-4 w-full">

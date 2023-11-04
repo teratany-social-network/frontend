@@ -20,11 +20,13 @@ import { useParams } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const Profile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
   const [profile, setProfile] = React.useState<IUser>();
+  const profileConnectedUser = useFetchProfile();
   const token = useToken();
 
   const openDrawerBottom = () => {
@@ -174,7 +176,12 @@ const Profile: React.FC = () => {
     <>
       <div onClick={openDrawerBottom}>
         <TopNavBarProfile
-          user={profile?.name as string}
+          switchedAccount={
+            profileConnectedUser?.administratedProfiles?.length! > 0
+              ? true
+              : false
+          }
+          user={profileConnectedUser?.name as string}
           path="/profile/edit/menu"
         />
       </div>
@@ -189,6 +196,11 @@ const Profile: React.FC = () => {
           id={id}
           openBottom={openBottom}
           closeBottom={closeDrawerBottom}
+          showSwitchAccount={
+            profileConnectedUser?.administratedProfiles?.length! > 0
+              ? true
+              : false
+          }
         />
       ) : (
         <>
