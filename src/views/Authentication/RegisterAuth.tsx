@@ -18,6 +18,7 @@ import {
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
 import useLoadingButton from "../../hooks/useLoadingButton";
+import { resetAccountConnected } from "../../store/reducer/account.reducer";
 
 interface signupFormValues {
   email: string;
@@ -61,6 +62,7 @@ const RegisterAuth: React.FC = () => {
           isAuthenticated: true,
         })
       );
+      dispatch(resetAccountConnected());
       navigate("/");
       toast.success("Account created successfully");
     }

@@ -27,7 +27,11 @@ const Map = () => {
         </button>
       </div>
       <SlideOver isOpen={slideOpen} onClose={closeSlide} />
-      <MapContainerForm className="w-full h-screen">
+      <MapContainerForm
+        lat={-18.91368}
+        lng={47.53613}
+        className="w-full h-screen"
+      >
         <Marker icon={MARKER_ICON} position={[-18.91368, 47.53613]}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.

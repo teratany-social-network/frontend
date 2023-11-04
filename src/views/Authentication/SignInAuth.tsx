@@ -80,8 +80,6 @@ const SignInAuth: React.FC = () => {
 
       const accountSwitcher: any[] = [];
 
-      console.log("profile ", profile);
-
       accountSwitcher.push({
         id: profile?._id,
         name: profile?.name,
