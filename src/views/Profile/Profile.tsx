@@ -40,8 +40,6 @@ const Profile: React.FC = () => {
   const closeDrawer = () => setDrawerOpen(false);
   const changeDrawerStatus = () => setDrawerOpen(true);
 
-  const DetailsComponent = <Details />;
-
   const { id } = useParams();
 
   const fetchProfile = async () => {
@@ -57,6 +55,19 @@ const Profile: React.FC = () => {
       setProfile(response?.data as IUser);
     }
   };
+
+  const DetailsComponent = (
+    <Details
+      profileType={profile?.profileType}
+      address={profile?.localisation?.address.value}
+      description={profile?.description}
+      email={profile?.contact?.email}
+      location={profile?.localisation?.country.value}
+      phone={profile?.contact?.phone}
+      website={profile?.contact?.website}
+      wallet={profile?.deviantWalletId}
+    />
+  );
 
   useEffect(() => {
     fetchProfile();
@@ -176,11 +187,6 @@ const Profile: React.FC = () => {
     <>
       <div onClick={openDrawerBottom}>
         <TopNavBarProfile
-          switchedAccount={
-            profileConnectedUser?.administratedProfiles?.length! > 0
-              ? true
-              : false
-          }
           user={profileConnectedUser?.name as string}
           path="/profile/edit/menu"
         />
@@ -196,11 +202,6 @@ const Profile: React.FC = () => {
           id={id}
           openBottom={openBottom}
           closeBottom={closeDrawerBottom}
-          showSwitchAccount={
-            profileConnectedUser?.administratedProfiles?.length! > 0
-              ? true
-              : false
-          }
         />
       ) : (
         <>
@@ -236,19 +237,39 @@ export const ODD: React.FC<IODD> = ({ text }) => {
   );
 };
 
-const Details: React.FC = () => {
+interface DetailsProps {
+  profileType?: string;
+  description?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  address?: string;
+  website?: string;
+  wallet?: string;
+}
+
+const Details: React.FC<DetailsProps> = ({
+  profileType,
+  description,
+  email,
+  phone,
+  location,
+  address,
+  website,
+  wallet,
+}) => {
   const pageType = <BsInfoCircle size={23} />;
-  const phone = <BsPhone size={23} />;
-  const email = <IoMailUnreadOutline size={23} />;
-  const location = <BiTargetLock size={23} />;
-  const wallet = <BsWallet size={23} />;
-  const address = <MdLocationCity size={23} />;
-  const website = <GiWorld size={23} />;
+  const phoneIcon = <BsPhone size={23} />;
+  const emailIcon = <IoMailUnreadOutline size={23} />;
+  const locationIcon = <BiTargetLock size={23} />;
+  const walletIcon = <BsWallet size={23} />;
+  const addressIcon = <MdLocationCity size={23} />;
+  const websiteIcon = <GiWorld size={23} />;
   return (
     <>
       <div className="mt-2">
         <EditType
-          name="Entreprise"
+          name={profileType === "association" ? "Association" : "Entreprise"}
           type="page"
           path="/profile/edit/general"
           icon={pageType}
@@ -258,50 +279,54 @@ const Details: React.FC = () => {
             <h3 className="font-bold">Description</h3>
           </div>
 
-          <p className="flex text-left text-gray-600 mt-2">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. At ducimus
-            deserunt assumenda animi ullam nesciunt, nihil natus maxime, magni
-            qui repellat? Esse, odit animi! Accusantium voluptate consequatur
-            omnis perferendis perspiciatis optio dicta sapiente atque, tempora
-            vitae doloremque fugiat tenetur sunt.
-          </p>
+          <p className="flex text-left text-gray-600 mt-2">{description}</p>
         </div>
         <EditType
-          name="Symbiozis@gmail.com"
+          name={email!}
           type="page"
           path="/profile/edit/location"
-          icon={email}
+          icon={emailIcon}
         />
-        <EditType
-          name="+261 34 24 734 56"
-          type="page"
-          path="/profile/edit/picture"
-          icon={phone}
-        />
-        <EditType
-          name="Madagascar"
-          type="page"
-          path="/profile/edit/picture"
-          icon={location}
-        />
-        <EditType
-          name="Lot II C 89 Z Ivandry"
-          type="page"
-          path="/profile/edit/picture"
-          icon={address}
-        />
-        <EditType
-          name="https//Symbiozis.ca"
-          type="page"
-          path="/profile/edit/picture"
-          icon={website}
-        />
-        <EditType
-          name="Wallet ID"
-          type="page"
-          path="/profile/edit/picture"
-          icon={wallet}
-        />
+        {phone && (
+          <EditType
+            name={phone!}
+            type="page"
+            path="/profile/edit/picture"
+            icon={phoneIcon}
+          />
+        )}
+        {location && (
+          <EditType
+            name={location!}
+            type="page"
+            path="/profile/edit/picture"
+            icon={locationIcon}
+          />
+        )}
+        {address && (
+          <EditType
+            name={address!}
+            type="page"
+            path="/profile/edit/picture"
+            icon={addressIcon}
+          />
+        )}
+        {website && (
+          <EditType
+            name={website!}
+            type="page"
+            path="/profile/edit/picture"
+            icon={websiteIcon}
+          />
+        )}
+        {wallet && (
+          <EditType
+            name={wallet!}
+            type="page"
+            path="/profile/edit/picture"
+            icon={walletIcon}
+          />
+        )}
       </div>
     </>
   );

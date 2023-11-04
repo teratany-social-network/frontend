@@ -25,6 +25,10 @@ type UserLocalisation = {
         latitude: number;
         longitude: number;
     }
+    country: {
+        isPublic: boolean;
+        value: string;
+    }
 }
 
 type UserContact = {
