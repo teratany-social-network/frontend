@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import TopBar from "../../components/common/TopBar";
 import ErrorMessageForm from "../../components/common/ErrorMessageForm";
 import { withAsync } from "../../helpers/withAsync";
-import { updateGeneralInfo } from "../../api/UserApi";
+import { updateGeneralInfo } from "../../api/ProfileApi";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import useToken from "../../hooks/useToken";

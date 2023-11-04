@@ -10,11 +10,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
 import AddPublication from "./components/Publication/AddPublication";
 import Map from "./views/Map/Map";
-import EditUserMenu from "./views/User/EditProfileMenu";
-import ProfileGeneral from "./views/User/ProfileGeneral";
-import ProfilePassword from "./views/User/ProfilePassword";
-import ProfilePicture from "./views/User/ProfilePicture";
-import ProfileLocation from "./views/User/ProfileLocation";
+import EditUserMenu from "./views/Profile/EditProfileMenu";
+import ProfileGeneral from "./views/Profile/ProfileGeneral";
+import ProfilePassword from "./views/Profile/ProfilePassword";
+import ProfilePicture from "./views/Profile/ProfilePicture";
+import ProfileLocation from "./views/Profile/ProfileLocation";
 import Search from "./views/Search/Search";
 import AddPageStep1 from "./views/Page/AddPageStep1";
 import SearchResult from "./views/Search/SearchResultPage";
@@ -26,7 +26,7 @@ import AddPageStep3 from "./views/Page/AddPageStep3";
 import { HomeChat } from "./views/chat/HomeChat";
 import { OneChat } from "./views/chat/OneChat";
 import Profile from "./views/Profile/Profile";
-import ProfileCategory from "./views/User/ProfileCategory";
+import ProfileCategory from "./views/Profile/ProfileCategory";
 import ProtectedRoute from "./services/ProtectedRoute";
 
 const App: React.FC = () => {

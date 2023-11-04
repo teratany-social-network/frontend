@@ -5,7 +5,7 @@ import useFetchProfile from "../../hooks/useFetchProfile";
 import TopBar from "../../components/common/TopBar";
 import Button from "../../components/common/Button";
 import { withAsync } from "../../helpers/withAsync";
-import { updateCategory } from "../../api/UserApi";
+import { updateCategory } from "../../api/ProfileApi";
 import useToken from "../../hooks/useToken";
 import useLoadingButton from "../../hooks/useLoadingButton";
 import { toast } from "react-toastify";

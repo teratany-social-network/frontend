@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { withAsync } from "../helpers/withAsync";
-import { getById } from "../api/UserApi";
+import { getById } from "../api/ProfileApi";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { IUser } from "../types/user.type";
+import { IProfile } from "../types/profile.type";
 import useToken from "./useToken";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -14,7 +14,7 @@ import { RootState } from "../store/store";
 
 const useFetchProfile = () => {
 
-    const [profile, setProfile] = useState<IUser>();
+    const [profile, setProfile] = useState<IProfile>();
     const token = useToken()
     const profileId = useSelector<RootState>((state) => state.teratany_user.id) as string
 
@@ -29,7 +29,7 @@ const useFetchProfile = () => {
                     error?.response?.data?.error?.description || error?.response?.data || error.message;
                 toast.error(error_message);
             } else {
-                setProfile(response?.data as IUser);
+                setProfile(response?.data as IProfile);
             }
 
         }

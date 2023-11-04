@@ -1,4 +1,4 @@
-export type IUser = {
+export type IProfile = {
     _id?: string
     name: string
     localisation?: UserLocalisation;

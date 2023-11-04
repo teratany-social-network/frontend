@@ -3,7 +3,7 @@ import defaultProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-18
 import Button from "../../components/common/Button";
 import TopBar from "../../components/common/TopBar";
 import { withAsync } from "../../helpers/withAsync";
-import { updateProfileImage } from "../../api/UserApi";
+import { updateProfileImage } from "../../api/ProfileApi";
 import useToken from "../../hooks/useToken";
 import { AxiosError } from "axios";
 import useLoadingButton from "../../hooks/useLoadingButton";
