@@ -9,6 +9,10 @@ export type IUser = {
     profileType?: string
     administratedProfiles?: Array<string>
     followers?: Array<string>
+    following?: Array<string>
+    publications?: Array<string>
+    description?: string
+    categories?: string
 };
 
 type UserLocalisation = {
@@ -28,3 +32,4 @@ type UserContact = {
     phone: string;
     website: string;
 }
+

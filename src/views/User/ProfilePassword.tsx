@@ -24,7 +24,7 @@ const initialValues: editPasswordFormValues = {
   confirmPassword: "",
 };
 
-const EditUserPassword: React.FC = () => {
+const ProfilePassword: React.FC = () => {
   const token = useToken();
   const [isLoading, startLoading, endLoading] = useLoadingButton();
 
@@ -113,4 +113,4 @@ const EditUserPassword: React.FC = () => {
     </>
   );
 };
-export default EditUserPassword;
+export default ProfilePassword;

@@ -108,7 +108,11 @@ const Profile: React.FC = () => {
           <div className="flex flex-col">
             <img
               className="w-20 h-20 object-cover rounded-full  border-2 border-pink-600 p-1"
-              src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+              src={
+                profile?.image
+                  ? FileServerURL + profile.image
+                  : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+              }
               alt="profile"
             />
             <p className="text-lg mb-3">{profile?.name}</p>
@@ -171,7 +175,7 @@ const Profile: React.FC = () => {
       <div onClick={openDrawerBottom}>
         <TopNavBarProfile
           user={profile?.name as string}
-          path="/user/edit/menu"
+          path="/profile/edit/menu"
         />
       </div>
 
@@ -234,7 +238,7 @@ const Details: React.FC = () => {
         <EditType
           name="Entreprise"
           type="page"
-          path="/user/edit/general"
+          path="/profile/edit/general"
           icon={pageType}
         />
         <div className=" rounded-md p-3 border my-2 ">
@@ -253,37 +257,37 @@ const Details: React.FC = () => {
         <EditType
           name="Symbiozis@gmail.com"
           type="page"
-          path="/user/edit/location"
+          path="/profile/edit/location"
           icon={email}
         />
         <EditType
           name="+261 34 24 734 56"
           type="page"
-          path="/user/edit/picture"
+          path="/profile/edit/picture"
           icon={phone}
         />
         <EditType
           name="Madagascar"
           type="page"
-          path="/user/edit/picture"
+          path="/profile/edit/picture"
           icon={location}
         />
         <EditType
           name="Lot II C 89 Z Ivandry"
           type="page"
-          path="/user/edit/picture"
+          path="/profile/edit/picture"
           icon={address}
         />
         <EditType
           name="https//Symbiozis.ca"
           type="page"
-          path="/user/edit/picture"
+          path="/profile/edit/picture"
           icon={website}
         />
         <EditType
           name="Wallet ID"
           type="page"
-          path="/user/edit/picture"
+          path="/profile/edit/picture"
           icon={wallet}
         />
       </div>

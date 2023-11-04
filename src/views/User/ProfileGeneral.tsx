@@ -4,8 +4,6 @@ import Button from "../../components/common/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import TopBar from "../../components/common/TopBar";
-import useFetchUser from "../../hooks/useFetchUser";
-import { IUser } from "../../types/user.type";
 import ErrorMessageForm from "../../components/common/ErrorMessageForm";
 import { withAsync } from "../../helpers/withAsync";
 import { updateGeneralInfo } from "../../api/UserApi";
@@ -13,28 +11,35 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import useToken from "../../hooks/useToken";
 import useLoadingButton from "../../hooks/useLoadingButton";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 interface GeneralUserInfo {
   name: string | undefined;
   email: string | undefined;
+  description?: string | undefined;
 }
 
-const EditGeneralUser: React.FC = () => {
+const ProfileGeneral: React.FC = () => {
   const token = useToken();
-  const user: IUser | undefined = useFetchUser();
+  const profile = useFetchProfile();
   const [isLoading, startLoading, endLoading] = useLoadingButton();
 
-  console.log("user => ", user);
-
   const initialValues: GeneralUserInfo = {
-    name: user?.name,
-    email: user?.contact?.email,
+    name: profile?.name,
+    email: profile?.contact?.email,
+    description: profile?.description,
   };
 
   const updateUserGeneral = async (values: GeneralUserInfo) => {
     startLoading();
     const { error } = await withAsync(() =>
-      updateGeneralInfo(token, user?._id, values.name, values.email)
+      updateGeneralInfo(
+        token,
+        profile?._id,
+        values.name,
+        values.email,
+        values.description
+      )
     );
     if (error instanceof AxiosError) {
       endLoading();
@@ -60,6 +65,7 @@ const EditGeneralUser: React.FC = () => {
           validationSchema={Yup.object({
             name: Yup.string().required("Required"),
             email: Yup.string().required("Required"),
+            description: Yup.string(),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -94,6 +100,24 @@ const EditGeneralUser: React.FC = () => {
                 onChange={formik.handleChange}
               />
               <ErrorMessageForm name="email" />
+              {profile?.profileType !== "user" && (
+                <>
+                  <label
+                    htmlFor="description"
+                    className="text-left block text-sm white:text-white my-2"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    name="description"
+                    rows={4}
+                    value={formik.values.description}
+                    className="py-2 custom-border px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:text-gray-400 h-24 max-h-24"
+                    id="description"
+                    onChange={formik.handleChange}
+                  ></textarea>
+                </>
+              )}
 
               <div className="my-10 w-full">
                 <Button
@@ -110,4 +134,4 @@ const EditGeneralUser: React.FC = () => {
     </>
   );
 };
-export default EditGeneralUser;
+export default ProfileGeneral;

@@ -17,19 +17,19 @@ const EditPage: React.FC = () => {
         <EditType
           name="General"
           type="page"
-          path="/user/edit/general"
+          path="/profile/edit/general"
           icon={userIcon}
         />
         <EditType
           name="Profile picture"
           type="page"
-          path="/user/edit/picture"
+          path="/profile/edit/picture"
           icon={profilePicture}
         />
         <EditType
           name="Location parameter"
           type="page"
-          path="/user/edit/location"
+          path="/profile/edit/location"
           icon={locationIcon}
         />
       </div>
