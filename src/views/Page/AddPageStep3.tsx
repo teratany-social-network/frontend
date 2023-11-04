@@ -17,6 +17,7 @@ import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { CategorieList } from "../../constants/PageCategory";
 import useFetchProfile from "../../hooks/useFetchProfile";
+import { addAccountConnected } from "../../store/reducer/account.reducer";
 
 const AddPageStep3: React.FC = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const AddPageStep3: React.FC = () => {
   const addPageLastStep = async () => {
     startLoading();
 
-    const { error } = await withAsync(() =>
+    const { error, response } = await withAsync(() =>
       addPage(
         token,
         page.name,
@@ -66,8 +67,18 @@ const AddPageStep3: React.FC = () => {
         error.message;
       toast.error(error_message);
     } else {
+      const account: any = response?.data;
+      dispatch(
+        addAccountConnected({
+          id: account?._id,
+          name: account?.name,
+          followers: 0,
+          image: account?.image,
+        })
+      );
       endLoading();
       toast("Page added successfully");
+
       setTimeout(() => {
         navigate(`/profile/${profile?._id}`);
         dispatch(resetPageInfo());

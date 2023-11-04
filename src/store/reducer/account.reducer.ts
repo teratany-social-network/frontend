@@ -23,6 +23,10 @@ export const accountSlice = createSlice({
 
             state.account = action.payload.account
         },
+        addAccountConnected: (state, action: PayloadAction<AccountType>) => {
+
+            state.account.push(action.payload)
+        },
         resetAccountConnected: (state) => {
             state.account = []
         }
@@ -30,5 +34,5 @@ export const accountSlice = createSlice({
     }
 })
 
-export const { setAccountConnected, resetAccountConnected } = accountSlice.actions;
+export const { setAccountConnected, resetAccountConnected, addAccountConnected } = accountSlice.actions;
 export default accountSlice.reducer;
