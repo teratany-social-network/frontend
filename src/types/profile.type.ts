@@ -1,4 +1,4 @@
-export type IProfile = {
+export interface IProfile {
     _id?: string
     name: string
     localisation?: UserLocalisation;
