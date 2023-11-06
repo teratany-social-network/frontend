@@ -71,7 +71,6 @@ const Profile: React.FC = () => {
           error.message;
         toast.error(error_message);
       } else {
-        console.log(response?.data);
         setPublications(response?.data as Array<IPublication>);
       }
     }
@@ -175,7 +174,9 @@ const Profile: React.FC = () => {
                 </p>
               </div>
               <div className="flex flex-col ">
-                <p className="text-lg font-medium">MG</p>
+                <p className="text-lg font-medium">
+                  {profile?.localisation?.country?.value}
+                </p>
                 <p className="">Location</p>
               </div>
             </div>
@@ -230,12 +231,12 @@ const Profile: React.FC = () => {
       </div>
 
       {profile?.profileType === "user" ? <UserProfile /> : <PageProfile />}
-
-      {publications?.map((pub) => (
-        <>
+      <div className="flex flex-col-reverse">
+        {publications?.map((pub) => (
           <Publication
             key={pub?._id}
             _id={pub?._id}
+            profileId={pub?.profile?._id}
             profileName={pub?.profile?.name}
             profileImage={pub?.profile?.image}
             date={pub?.date}
@@ -245,8 +246,8 @@ const Profile: React.FC = () => {
             images={pub?.images!}
             isReacted={pub.isReacted}
           />
-        </>
-      ))}
+        ))}
+      </div>
 
       {profile?.profileType === "user" ? (
         <SwitchAccountDrawer

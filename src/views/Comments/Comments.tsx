@@ -3,8 +3,8 @@ import Button from "../../components/common/Button";
 
 const Comments = () => {
   return (
-    <div className="w-full bg-white rounded-lg -mt-6 my-4 mx-6">
-      <h3 className="font-bold mb-3">Commentaires</h3>
+    <div className="w-full bg-white rounded-lg -mt-6 my-4 mx-6 z-50">
+      <h3 className="font-bold -mt-6 pb-2">Commentaires</h3>
       <div className="flex flex-col overflow-y-auto custom-height-comment">
         <form>
           <div className="flex flex-col">
