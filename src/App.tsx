@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
-import AddPublication from "./components/Publication/AddPublication";
+import AddPublication from "./views/Publication/AddPublication";
 import Map from "./views/Map/Map";
 import EditUserMenu from "./views/Profile/EditProfileMenu";
 import ProfileGeneral from "./views/Profile/ProfileGeneral";

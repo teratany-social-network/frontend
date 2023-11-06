@@ -4,7 +4,7 @@ const URLS = {
     uploadFile: "/upload"
 }
 
-export const uploadFile = (images: FormData) => {
+export const uploadFile = (images: any) => {
     return api.post(URLS.uploadFile, images)
 }
 

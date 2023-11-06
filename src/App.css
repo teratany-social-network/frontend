@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.text-container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.truncated-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+}

@@ -21,12 +21,15 @@ import useToken from "hooks/useToken";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import useFetchProfile from "hooks/useFetchProfile";
+import { getPublicationByProfile } from "../../api/PublicationApi";
+import { IPublication } from "../../types/publication.type";
 
 const Profile: React.FC = () => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
   const profileConnectedUser = useFetchProfile();
   const [profile, setProfile] = React.useState<IProfile>();
+  const [publications, setPublications] = React.useState<IPublication[]>();
   const token = useToken();
 
   const openDrawerBottom = () => {
@@ -56,6 +59,24 @@ const Profile: React.FC = () => {
     }
   };
 
+  const fetchPublications = async () => {
+    if (profileConnectedUser) {
+      const { error, response } = await withAsync(() =>
+        getPublicationByProfile(token, id!, profileConnectedUser?._id!)
+      );
+      if (error instanceof AxiosError) {
+        const error_message: string =
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
+        toast.error(error_message);
+      } else {
+        console.log(response?.data);
+        setPublications(response?.data as Array<IPublication>);
+      }
+    }
+  };
+
   const DetailsComponent = (
     <Details
       profileType={profile?.profileType}
@@ -71,8 +92,9 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     fetchProfile();
+    fetchPublications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id, profileConnectedUser?._id]);
 
   const UserProfile: React.FC = () => {
     return (
@@ -95,13 +117,17 @@ const Profile: React.FC = () => {
 
             <ul className="flex space-x-8 mb-2">
               <li>
-                <span className="font-semibold">136 </span>
-                posts
+                <span className="font-semibold">
+                  {profile?.publications?.length!}{" "}
+                </span>
+                {profile?.publications?.length! > 1 ? "Posts" : "Post"}
               </li>
 
               <li>
-                <span className="font-semibold">40.5k </span>
-                followers
+                <span className="font-semibold">
+                  {profile?.followers?.length!}{" "}
+                </span>
+                {profile?.followers?.length! > 1 ? "Followers" : "Follower"}
               </li>
             </ul>
           </div>
@@ -133,12 +159,20 @@ const Profile: React.FC = () => {
           <div className="flex flex-col">
             <div className="flex">
               <div className="flex flex-col ">
-                <p className="text-lg font-medium">18</p>
-                <p className="">Posts</p>
+                <p className="text-lg font-medium">
+                  {profile?.publications?.length!}
+                </p>
+                <p className="">
+                  {profile?.publications?.length! > 1 ? "Posts" : "Post"}
+                </p>
               </div>
               <div className="flex flex-col mx-6">
-                <p className="text-lg font-medium">354</p>
-                <p className="">Followers</p>
+                <p className="text-lg font-medium">
+                  {profile?.followers?.length!}
+                </p>
+                <p className="">
+                  {profile?.followers?.length! > 1 ? "Followers" : "Follower"}
+                </p>
               </div>
               <div className="flex flex-col ">
                 <p className="text-lg font-medium">MG</p>
@@ -197,9 +231,23 @@ const Profile: React.FC = () => {
 
       {profile?.profileType === "user" ? <UserProfile /> : <PageProfile />}
 
-      <Publication />
-      <Publication />
-      <Publication />
+      {publications?.map((pub) => (
+        <>
+          <Publication
+            key={pub?._id}
+            _id={pub?._id}
+            profileName={pub?.profile?.name}
+            profileImage={pub?.profile?.image}
+            date={pub?.date}
+            comments={pub?.comments?.length!}
+            reactions={pub?.reactions?.length!}
+            content={pub?.content}
+            images={pub?.images!}
+            isReacted={pub.isReacted}
+          />
+        </>
+      ))}
+
       {profile?.profileType === "user" ? (
         <SwitchAccountDrawer
           id={id}
