@@ -12,9 +12,11 @@ import useToken from "../../hooks/useToken";
 import useFetchProfile from "../../hooks/useFetchProfile";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-
+import moment from "moment";
+import { MenuPublication } from "../../views/Publication/components/MenuPublication";
 interface PublicationProps {
   _id?: string;
+  profileId?: string;
   profileName?: string;
   date?: string;
   profileImage?: string;
@@ -27,6 +29,7 @@ interface PublicationProps {
 
 const Publication: React.FC<PublicationProps> = ({
   _id,
+  profileId,
   profileName,
   date,
   profileImage,
@@ -38,6 +41,7 @@ const Publication: React.FC<PublicationProps> = ({
 }) => {
   const [isPostLiked, setIsPostLiked] = useState<Boolean>(isReacted!);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [isFullContent, setIsFullContent] = useState<boolean>(false);
   const [react, setReact] = useState<number>(reactions!);
   const token = useToken();
   const profile = useFetchProfile();
@@ -68,6 +72,10 @@ const Publication: React.FC<PublicationProps> = ({
   };
   const closeDrawer = () => {
     setDrawerOpen(false);
+  };
+
+  const togglePubContentDetails = () => {
+    setIsFullContent(!isFullContent);
   };
 
   return (
@@ -103,6 +111,7 @@ const Publication: React.FC<PublicationProps> = ({
               </div>
             </div>
           </div>
+          {profileId === profile?._id && <MenuPublication id={_id!} />}
         </div>
         <div className="">
           {images && (
@@ -150,16 +159,26 @@ const Publication: React.FC<PublicationProps> = ({
               <p
                 className={
                   images?.length! > 0
-                    ? "white:text-slate-200 text-left truncated-text"
-                    : "white:text-slate-200 text-left mb-4 truncated-text"
+                    ? `white:text-slate-200 text-left ${
+                        !isFullContent ? "truncated-text" : ""
+                      } `
+                    : `white:text-slate-200 text-left ${
+                        !isFullContent ? "truncated-text" : ""
+                      } `
                 }
               >
                 {content}
               </p>
+              {!isFullContent && (
+                <p
+                  className="text-left  text-gray-400 font-normal"
+                  onClick={togglePubContentDetails}
+                >
+                  plus
+                </p>
+              )}
             </div>
           </div>
-
-          <p className="text-left  text-gray-400 font-normal">plus</p>
 
           <p
             onClick={changeDrawerStatus}
@@ -168,7 +187,7 @@ const Publication: React.FC<PublicationProps> = ({
             Show {comments} comments
           </p>
           <p className="text-left text-xs text-gray-400 font-normal">
-            14 DAYS AGO
+            {moment(date).startOf("second").fromNow()}
           </p>
         </div>
         <DrawerContainer isOpen={drawerOpen} onClose={closeDrawer} />

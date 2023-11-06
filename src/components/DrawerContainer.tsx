@@ -1,36 +1,45 @@
-import React from "react"
-import { Drawer } from "@material-tailwind/react"
-import { HiOutlineXMark } from "react-icons/hi2"
-import Comments from "../views/Comments/Comments"
-import { useState, useEffect } from "react"
+import React from "react";
+import { Drawer } from "@material-tailwind/react";
+import { HiOutlineXMark } from "react-icons/hi2";
+import Comments from "../views/Comments/Comments";
+import { useState, useEffect } from "react";
 
 type DrawerProps = {
-  isOpen?: boolean
-  onClose: () => void
-}
+  isOpen?: boolean;
+  onClose: () => void;
+};
 
 export const DrawerContainer: React.FC<DrawerProps> = ({
   isOpen = false,
   onClose,
 }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  useEffect(() => { setIsDrawerOpen(isOpen) }, [isOpen])
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  useEffect(() => {
+    setIsDrawerOpen(isOpen);
+  }, [isOpen]);
 
   useEffect(() => {
-    document.body.style.overflow = isDrawerOpen ? "hidden" : "auto"
-    return () => { document.body.style.overflow = "auto" }
-  }, [isDrawerOpen])
+    document.body.style.overflow = isDrawerOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isDrawerOpen]);
 
   return isOpen ? (
     <React.Fragment>
-      <Drawer open={isOpen} onClose={onClose} className="p-4  rounded-l-2xl rounded-r-2xl !h-[90%] !max-h-[90%]" placement="bottom">
+      <Drawer
+        open={isOpen}
+        onClose={onClose}
+        className="p-4 z-1000 rounded-l-2xl rounded-r-2xl !h-[90%] !max-h-[90%]"
+        placement="bottom"
+      >
         <div className=" flex flex-col items-end justify-between">
-          <HiOutlineXMark className="h-6 w-6 z-50" aria-hidden="true" onClick={onClose} />
+          <HiOutlineXMark className="h-6 w-6 z-1000" onClick={onClose} />X
         </div>
         <div className=" flex flex-col items-center justify-center">
           <Comments />
         </div>
       </Drawer>
     </React.Fragment>
-  ) : null
-}
+  ) : null;
+};

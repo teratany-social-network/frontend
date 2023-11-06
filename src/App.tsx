@@ -28,6 +28,7 @@ import { OneChat } from "./views/chat/OneChat";
 import Profile from "./views/Profile/Profile";
 import ProfileCategory from "./views/Profile/ProfileCategory";
 import ProtectedRoute from "./services/ProtectedRoute";
+import EditPublication from "./views/Publication/EditPublication";
 
 const App: React.FC = () => {
   return (
@@ -94,6 +95,14 @@ const App: React.FC = () => {
                   element={
                     <ProtectedRoute>
                       <AddPublication />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/publication/:id"
+                  element={
+                    <ProtectedRoute>
+                      <EditPublication />
                     </ProtectedRoute>
                   }
                 />
