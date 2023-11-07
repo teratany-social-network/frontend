@@ -2,13 +2,19 @@ import React, { useEffect } from "react";
 import Button from "../../components/common/Button";
 import { withAsync } from "../../helpers/withAsync";
 import useToken from "../../hooks/useToken";
-import { getComments, postComment } from "../../api/CommentApi";
+import { deleteComment, getComments, postComment } from "../../api/CommentApi";
 import useFetchProfile from "../../hooks/useFetchProfile";
 import { IComment } from "../../types/comment.type";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { FileServerURL } from "../../api/FileApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import moment from "moment";
+import {
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+} from "@material-tailwind/react";
 
 interface CommentProps {
   publicationId: string;
@@ -19,6 +25,7 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
   const [content, setContent] = React.useState<string>();
   const [comments, setComments] = React.useState<IComment[]>();
   const profile = useFetchProfile();
+  const navigate = useNavigate();
 
   const addComment = async () => {
     const { error } = await withAsync(() =>
@@ -30,6 +37,20 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
         error?.response?.data ||
         error.message;
       toast.error(error_message);
+    }
+  };
+
+  const removeComment = async (commentId: string) => {
+    const { error } = await withAsync(() => deleteComment(token, commentId));
+    if (error instanceof AxiosError) {
+      const error_message: string =
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
+      toast.error(error_message);
+    } else {
+      toast.success("Comment removed");
+      navigate("/");
     }
   };
 
@@ -84,17 +105,46 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
                 <p className="flex text-left text-gray-600 mt-2">
                   {comment.content}
                 </p>
+                <div className="flex">
+                  <p className="text-left text-xs text-gray-400 font-normal mr-2">
+                    {moment(comment.date).startOf("second").fromNow()}
+                  </p>
+
+                  <Popover
+                    animate={{
+                      mount: { scale: 1, y: 0 },
+                      unmount: { scale: 0, y: 25 },
+                    }}
+                  >
+                    <PopoverHandler>
+                      <p className="text-left text-xs hover:underline font-normal text-red-500 cursor-pointer">
+                        delete
+                      </p>
+                    </PopoverHandler>
+                    <PopoverContent className="ml-4 z-1000 shadow-2xl">
+                      Are you sure to delete this comment ?
+                      <div className="flex">
+                        <p
+                          className="text-left text-xs hover:underline font-normal text-red-500 cursor-pointer"
+                          onClick={() => removeComment(comment._id!)}
+                        >
+                          Yes I'm sure
+                        </p>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             ))}
           </div>
 
           <div className="bg-white w-full custom-form-comment">
-            <input
+            <textarea
               className="bg-gray-100 rounded  border leading-normal resize-none w-full h-20 py-2 pl-3 font-normal placeholder-gray-700 focus:outline-none focus:bg-white"
               name="body"
               placeholder="Your comment..."
               onChange={(e) => setContent(e.target.value)}
-            />
+            ></textarea>
 
             <Button
               name="Post comment"

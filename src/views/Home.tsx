@@ -27,7 +27,6 @@ const Home = () => {
           error.message;
         toast.error(error_message);
       } else {
-        console.log("Feed pub ", response?.data);
         setPublications(response?.data as Array<IPublication>);
       }
     }
