@@ -72,6 +72,8 @@ const Profile: React.FC = () => {
         toast.error(error_message);
       } else {
         setPublications(response?.data as Array<IPublication>);
+
+        console.log("Publications ", response?.data);
       }
     }
   };
@@ -240,8 +242,8 @@ const Profile: React.FC = () => {
             profileName={pub?.profile?.name}
             profileImage={pub?.profile?.image}
             date={pub?.date}
-            comments={pub?.comments?.length!}
-            reactions={pub?.reactions?.length!}
+            comments={pub?.numberOfComments}
+            reactions={pub?.numberOfReactions}
             content={pub?.content}
             images={pub?.images!}
             isReacted={pub.isReacted}

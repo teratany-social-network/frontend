@@ -180,12 +180,14 @@ const Publication: React.FC<PublicationProps> = ({
             </div>
           </div>
 
-          <p
-            onClick={changeDrawerStatus}
-            className="text-left  text-gray-400 font-normal"
-          >
-            Show {comments} comments
-          </p>
+          {comments! > 0 && (
+            <p
+              onClick={changeDrawerStatus}
+              className="text-left  text-gray-400 font-normal"
+            >
+              Show {comments} comments
+            </p>
+          )}
           <p className="text-left text-xs text-gray-400 font-normal">
             {moment(date).startOf("second").fromNow()}
           </p>
