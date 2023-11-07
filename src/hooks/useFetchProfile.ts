@@ -23,7 +23,7 @@ const useFetchProfile = () => {
 
 
         async function fetchUser() {
-            const { error, response } = await withAsync(() => getById(token, profileId));
+            const { error, response } = await withAsync(() => getById(token, profileId, profileId));
             if (error instanceof AxiosError) {
                 const error_message: string =
                     error?.response?.data?.error?.description || error?.response?.data || error.message;

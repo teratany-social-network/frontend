@@ -13,6 +13,8 @@ export interface IProfile {
     publications?: Array<string>
     description?: string
     categories?: string
+    isFollowed: boolean
+
 };
 
 type UserLocalisation = {

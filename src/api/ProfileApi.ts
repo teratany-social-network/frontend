@@ -2,7 +2,7 @@ import api from "api/api";
 
 const URLS = {
     getByToken: '/profile/byToken',
-    getById: '/profile/',
+    getById: '/profile',
     updateGeneralInfo: '/profile/general',
     updateProfileImage: "/profile/image",
     updateUserPassword: "/profile/password",
@@ -18,9 +18,9 @@ export const searchProfile = (token: string, filter: string | undefined, ownId: 
         headers: { 'Authorization': token }
     })
 }
-export const getById = (token: string, id: string | undefined) => {
+export const getById = (token: string, id: string | undefined, ownId: string | undefined) => {
 
-    return api.get(URLS.getById + id, {
+    return api.get(`${URLS.getById}/${id}/${ownId}`, {
         headers: { 'Authorization': token }
     })
 }

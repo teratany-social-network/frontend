@@ -25,12 +25,13 @@ import { getPublicationByProfile } from "../../api/PublicationApi";
 import { IPublication } from "../../types/publication.type";
 
 const Profile: React.FC = () => {
-  const [openBottom, setOpenBottom] = React.useState<boolean>(false);
-  const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
+  const token = useToken();
   const profileConnectedUser = useFetchProfile();
   const [profile, setProfile] = React.useState<IProfile>();
+  const [openBottom, setOpenBottom] = React.useState<boolean>(false);
+  const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
+  const [followText, setFollowText] = React.useState<string>();
   const [publications, setPublications] = React.useState<IPublication[]>();
-  const token = useToken();
 
   const openDrawerBottom = () => {
     setOpenBottom(true);
@@ -46,18 +47,22 @@ const Profile: React.FC = () => {
   const { id } = useParams();
 
   const fetchProfile = async () => {
-    const { error, response } = await withAsync(() => getById(token, id));
+    if (profileConnectedUser) {
+      const { error, response } = await withAsync(() =>
+        getById(token, id, profileConnectedUser?._id)
+      );
 
-    if (error instanceof AxiosError) {
-      const error_message: string =
-        error?.response?.data.description ||
-        error?.response?.data ||
-        error.message;
-      toast.error(error_message);
-    } else {
-      console.log("profileFetched ", response?.data);
-
-      setProfile(response?.data as IProfile);
+      if (error instanceof AxiosError) {
+        const error_message: string =
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
+        toast.error(error_message);
+      } else {
+        setProfile(response?.data as IProfile);
+        const isProfileFollowed = response?.data as IProfile;
+        setFollowText(isProfileFollowed.isFollowed ? "UnFollow" : "Follow");
+      }
     }
   };
 
@@ -79,6 +84,7 @@ const Profile: React.FC = () => {
   };
 
   const follow = async () => {
+    setFollowText(followText === "Follow" ? "UnFollow" : "Follow");
     const { error } = await withAsync(() =>
       followProfile(token, profileConnectedUser?._id, id)
     );
@@ -149,7 +155,7 @@ const Profile: React.FC = () => {
             <Button
               width="w-full"
               height="h-7"
-              name="Unfollow"
+              name={followText!}
               onClick={follow}
             />
             <Button width="w-1/3" height="h-7" name="Message" />
@@ -225,7 +231,12 @@ const Profile: React.FC = () => {
         </div>
 
         <div className="flex items-center mx-2">
-          <Button width="w-1/2" height="h-7" name="Unfollow" onClick={follow} />
+          <Button
+            width="w-1/2"
+            height="h-7"
+            name={followText!}
+            onClick={follow}
+          />
           <Button width="w-1/2" height="h-7" name="message" />
           <Button
             width=""
