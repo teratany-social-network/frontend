@@ -37,3 +37,12 @@ type UserContact = {
     website: string;
 }
 
+export type ProfileFilter = {
+    image: string
+    isFollowed: boolean
+    localisation: UserLocalisation
+    name: string
+    numberOfFollowers: number
+    profileType: string
+    _id: string
+}

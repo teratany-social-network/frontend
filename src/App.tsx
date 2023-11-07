@@ -144,7 +144,7 @@ const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path="/search/result"
+                  path="/search/result/:query"
                   element={
                     <ProtectedRoute>
                       <SearchResult />

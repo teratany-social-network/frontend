@@ -8,8 +8,16 @@ const URLS = {
     updateUserPassword: "/profile/password",
     updateCoordonates: "/profile/localisation",
     updateCategory: "/profile/categories",
+    followProfile: "/profile/follow",
+    searchProfile: "/profile"
 }
 
+
+export const searchProfile = (token: string, filter: string | undefined, ownId: string | undefined) => {
+    return api.get(`${URLS.searchProfile}/?filter=${filter}&ownId=${ownId}`, {
+        headers: { 'Authorization': token }
+    })
+}
 export const getById = (token: string, id: string | undefined) => {
 
     return api.get(URLS.getById + id, {
@@ -21,6 +29,15 @@ export const getUserByToken = (token: string) => {
         headers: { 'Authorization': token }
     })
 }
+
+
+export const followProfile = (token: string, currentProfileId: string | undefined, toFollowId: string | undefined) => {
+
+    return api.post(URLS.followProfile, { currentProfileId, toFollowId }, {
+        headers: { 'Authorization': token }
+    })
+}
+
 export const updateGeneralInfo = (token: string, id: string | undefined, name: string | undefined, email: string | undefined, description?: string | undefined) => {
     return api.patch(URLS.updateGeneralInfo, { id, name, email, description }, {
         headers: { 'Authorization': token }

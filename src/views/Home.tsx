@@ -4,7 +4,7 @@ import Publication from "../components/Publication/Publication";
 import PageTopList from "../views/Page/PageTopList";
 import { IPublication } from "../types/publication.type";
 import useFetchProfile from "../hooks/useFetchProfile";
-import { getPublicationByProfile } from "../api/PublicationApi";
+import { getFeedPublication } from "../api/PublicationApi";
 import { withAsync } from "../helpers/withAsync";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -18,11 +18,7 @@ const Home = () => {
   const fetchPublications = async () => {
     if (profileConnectedUser) {
       const { error, response } = await withAsync(() =>
-        getPublicationByProfile(
-          token,
-          profileConnectedUser?._id!,
-          profileConnectedUser?._id!
-        )
+        getFeedPublication(token, profileConnectedUser?._id!)
       );
       if (error instanceof AxiosError) {
         const error_message: string =
@@ -31,6 +27,7 @@ const Home = () => {
           error.message;
         toast.error(error_message);
       } else {
+        console.log("Feed pub ", response?.data);
         setPublications(response?.data as Array<IPublication>);
       }
     }
@@ -44,7 +41,7 @@ const Home = () => {
     <div className="bg-gray-100 flex flex-col items-center justify-center h-full w-full mt-12">
       <TopNavBar notifCount={9} messageCount={8} />
       <PageTopList />
-      <div className="flex flex-col-reverse">
+      <div className="flex flex-col-reverse w-full">
         {publications?.map((pub) => (
           <Publication
             key={pub?._id}
