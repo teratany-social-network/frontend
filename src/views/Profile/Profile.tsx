@@ -15,7 +15,7 @@ import { GiWorld } from "@react-icons/all-files/gi/GiWorld";
 import { BiTargetLock } from "@react-icons/all-files/bi/BiTargetLock";
 import EditType from "components/EditType";
 import { withAsync } from "helpers/withAsync";
-import { getById } from "api/ProfileApi";
+import { followProfile, getById } from "api/ProfileApi";
 import { useParams } from "react-router-dom";
 import useToken from "hooks/useToken";
 import { AxiosError } from "axios";
@@ -55,6 +55,8 @@ const Profile: React.FC = () => {
         error.message;
       toast.error(error_message);
     } else {
+      console.log("profileFetched ", response?.data);
+
       setProfile(response?.data as IProfile);
     }
   };
@@ -72,9 +74,20 @@ const Profile: React.FC = () => {
         toast.error(error_message);
       } else {
         setPublications(response?.data as Array<IPublication>);
-
-        console.log("Publications ", response?.data);
       }
+    }
+  };
+
+  const follow = async () => {
+    const { error } = await withAsync(() =>
+      followProfile(token, profileConnectedUser?._id, id)
+    );
+    if (error instanceof AxiosError) {
+      const error_message: string =
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
+      toast.error(error_message);
     }
   };
 
@@ -133,7 +146,12 @@ const Profile: React.FC = () => {
             </ul>
           </div>
           <div className="flex items-center w-full">
-            <Button width="w-full" height="h-7" name="Unfollow" />
+            <Button
+              width="w-full"
+              height="h-7"
+              name="Unfollow"
+              onClick={follow}
+            />
             <Button width="w-1/3" height="h-7" name="Message" />
           </div>
         </div>
@@ -207,7 +225,7 @@ const Profile: React.FC = () => {
         </div>
 
         <div className="flex items-center mx-2">
-          <Button width="w-1/2" height="h-7" name="Unfollow" />
+          <Button width="w-1/2" height="h-7" name="Unfollow" onClick={follow} />
           <Button width="w-1/2" height="h-7" name="message" />
           <Button
             width=""
