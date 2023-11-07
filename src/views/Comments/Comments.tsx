@@ -8,7 +8,7 @@ import { IComment } from "../../types/comment.type";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { FileServerURL } from "../../api/FileApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import {
   Popover,
@@ -25,7 +25,6 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
   const [content, setContent] = React.useState<string>();
   const [comments, setComments] = React.useState<IComment[]>();
   const profile = useFetchProfile();
-  const navigate = useNavigate();
 
   const addComment = async () => {
     const { error } = await withAsync(() =>
@@ -37,6 +36,17 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
         error?.response?.data ||
         error.message;
       toast.error(error_message);
+    } else {
+      const newCom = {
+        content,
+        date: Date.now(),
+        profile: {
+          name: profile?.name,
+          image: profile?.image,
+        },
+      };
+      setComments((com: any) => [...com, newCom]);
+      setContent("");
     }
   };
 
@@ -49,8 +59,10 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
         error.message;
       toast.error(error_message);
     } else {
-      toast.success("Comment removed");
-      navigate("/");
+      window.location.replace("/");
+      setTimeout(() => {
+        toast.success("Comment removed");
+      }, 1000);
     }
   };
 
@@ -65,8 +77,8 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
         error.message;
       toast.error(error_message);
     } else {
+      console.log("comments ", response?.data);
       setComments(response?.data as Array<IComment>);
-      console.log(response?.data);
     }
   };
 
@@ -79,37 +91,37 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
     <div className="w-full bg-white rounded-lg -mt-6 my-4 mx-6 z-50">
       <h3 className="font-bold -mt-6 pb-2">Commentaires</h3>
       <div className="flex flex-col overflow-y-auto custom-height-comment">
-        <form>
-          <div className="flex flex-col">
-            {comments?.map((comment) => (
-              <div className=" rounded-md p-3 border my-1 ">
-                <div className="flex gap-3 items-center">
-                  <Link
-                    className="flex gap-3 items-center"
-                    to={`/profile/${comment.profile._id}`}
-                  >
-                    <img
-                      src={
-                        comment.profile.image
-                          ? FileServerURL + comment.profile.image
-                          : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-                      }
-                      className="object-cover w-8 h-8 rounded-full   shadow-emerald-400 "
-                      alt="comments"
-                    />
+        <div className="flex flex-col">
+          {comments?.map((comment) => (
+            <div className=" rounded-md p-3 border my-1 ">
+              <div className="flex gap-3 items-center">
+                <Link
+                  className="flex gap-3 items-center"
+                  to={`/profile/${comment.profile._id}`}
+                >
+                  <img
+                    src={
+                      comment.profile.image
+                        ? FileServerURL + comment.profile.image
+                        : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                    }
+                    className="object-cover w-8 h-8 rounded-full   shadow-emerald-400 "
+                    alt="comments"
+                  />
 
-                    <h3 className="font-bold">{comment.profile.name}</h3>
-                  </Link>
-                </div>
+                  <h3 className="font-bold">{comment.profile.name}</h3>
+                </Link>
+              </div>
 
-                <p className="flex text-left text-gray-600 mt-2">
-                  {comment.content}
+              <p className="flex text-left text-gray-600 mt-2">
+                {comment.content}
+              </p>
+              <div className="flex">
+                <p className="text-left text-xs text-gray-400 font-normal mr-2">
+                  {moment(comment.date).startOf("second").fromNow()}
                 </p>
-                <div className="flex">
-                  <p className="text-left text-xs text-gray-400 font-normal mr-2">
-                    {moment(comment.date).startOf("second").fromNow()}
-                  </p>
 
+                {comment.profile._id === profile?._id && (
                   <Popover
                     animate={{
                       mount: { scale: 1, y: 0 },
@@ -133,27 +145,28 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
                       </div>
                     </PopoverContent>
                   </Popover>
-                </div>
+                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="bg-white w-full custom-form-comment">
-            <textarea
-              className="bg-gray-100 rounded  border leading-normal resize-none w-full h-20 py-2 pl-3 font-normal placeholder-gray-700 focus:outline-none focus:bg-white"
-              name="body"
-              placeholder="Your comment..."
-              onChange={(e) => setContent(e.target.value)}
-            ></textarea>
+        <div className="bg-white w-full custom-form-comment">
+          <textarea
+            className="bg-gray-100 rounded  border leading-normal resize-none w-full h-20 py-2 pl-3 font-normal placeholder-gray-700 focus:outline-none focus:bg-white"
+            name="body"
+            placeholder="Your comment..."
+            onChange={(e) => setContent(e.target.value)}
+            value={content}
+          ></textarea>
 
-            <Button
-              name="Post comment"
-              className="w-full flex justify-end px-3 mt-2"
-              onClick={addComment}
-              isDisabled={!content ? true : false}
-            />
-          </div>
-        </form>
+          <Button
+            name="Post comment"
+            className="w-full flex justify-end px-3 mt-2"
+            onClick={addComment}
+            isDisabled={!content ? true : false}
+          />
+        </div>
       </div>
     </div>
   );

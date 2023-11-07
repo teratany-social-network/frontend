@@ -63,9 +63,10 @@ const SearchResult: React.FC = () => {
           <p className="mx-3 mt-2 font-medium ">Users</p>
           {results?.profiles?.map((user) => (
             <HorizontalCards
+              _id={user._id}
               name={user.name}
               image={user.image!}
-              // desc="50k Followers - Antananarivo"
+              isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
               desc={`${user?.numberOfFollowers} Followers`}
             />
           ))}

@@ -37,7 +37,7 @@ const SignInAuth: React.FC = () => {
   };
 
   const fetchProfile = async (token: string, id: string) => {
-    const { error, response } = await withAsync(() => getById(token, id));
+    const { error, response } = await withAsync(() => getById(token, id, id));
 
     if (error instanceof AxiosError) {
       const error_message: string =
