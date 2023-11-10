@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
-import AddPublication from "./components/Publication/AddPublication";
+import AddPublication from "./views/Publication/AddPublication";
 import Map from "./views/Map/Map";
 import EditUserMenu from "./views/Profile/EditProfileMenu";
 import ProfileGeneral from "./views/Profile/ProfileGeneral";
@@ -28,6 +28,9 @@ import { OneChat } from "./views/chat/OneChat";
 import Profile from "./views/Profile/Profile";
 import ProfileCategory from "./views/Profile/ProfileCategory";
 import ProtectedRoute from "./services/ProtectedRoute";
+import EditPublication from "./views/Publication/EditPublication";
+import ForgotPassword from "./views/Authentication/ForgotPassword";
+import ResetPassword from "./views/Authentication/ResetPassword";
 
 const App: React.FC = () => {
   return (
@@ -41,6 +44,8 @@ const App: React.FC = () => {
                 {/* // authentication routes */}
                 <Route path="/signin" element={<SignInAuth />} />
                 <Route path="/register" element={<RegisterAuth />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
                 <Route
                   path="/page/add/step-1"
@@ -79,7 +84,14 @@ const App: React.FC = () => {
               </Route>
 
               <Route element={<WithNav />}>
-                <Route path="/" element={<Home />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Home />
+                    </ProtectedRoute>
+                  }
+                />
 
                 {/* // publication */}
                 <Route
@@ -87,6 +99,14 @@ const App: React.FC = () => {
                   element={
                     <ProtectedRoute>
                       <AddPublication />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/publication/:id"
+                  element={
+                    <ProtectedRoute>
+                      <EditPublication />
                     </ProtectedRoute>
                   }
                 />
@@ -128,7 +148,7 @@ const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path="/search/result"
+                  path="/search/result/:query"
                   element={
                     <ProtectedRoute>
                       <SearchResult />

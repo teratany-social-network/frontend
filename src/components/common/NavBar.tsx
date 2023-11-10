@@ -11,9 +11,8 @@ import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.p
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchUser from "../../hooks/useFetchUser";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import { FileServerURL } from "../../api/FileApi";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
@@ -21,14 +20,7 @@ const NavBar: React.FC = () => {
 
   const user = useFetchUser();
 
-  const profileId = useSelector<RootState>((state) => state.teratany_user.id);
-  const { account }: any = useSelector<RootState>(
-    (state) => state.teratany_account
-  );
-
-  const profileImageConnected = account.find(
-    (account: any) => account.id === profileId
-  );
+  const profile = useFetchProfile();
 
   const handleButtonClick = (buttonName: any) => {
     setActiveButton(buttonName);
@@ -104,16 +96,14 @@ const NavBar: React.FC = () => {
         <button
           onClick={() => {
             handleButtonClick("");
-            navigate(`/profile/${profileId ?? user?._id}`);
+            navigate(`/profile/${profile?._id ?? user?._id}`);
           }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5"
         >
           <img
             src={
-              profileImageConnected?.image
-                ? FileServerURL + profileImageConnected?.image
-                : ProfilePicture
+              profile?.image ? FileServerURL + profile?.image : ProfilePicture
             }
             className="w-8 h-8 border-2 rounded-full border-black object-cover"
             alt=""
