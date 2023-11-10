@@ -162,7 +162,7 @@ const Publication: React.FC<PublicationProps> = ({
               <p
                 className={
                   images?.length! > 0
-                    ? `white:text-slate-200 text-left ${
+                    ? `white:text-slate-200 text-start break-words ${
                         !isFullContent ? "truncated-text" : ""
                       } `
                     : `white:text-slate-200 text-justify mb-2 ${

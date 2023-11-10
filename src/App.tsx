@@ -29,6 +29,8 @@ import Profile from "./views/Profile/Profile";
 import ProfileCategory from "./views/Profile/ProfileCategory";
 import ProtectedRoute from "./services/ProtectedRoute";
 import EditPublication from "./views/Publication/EditPublication";
+import ForgotPassword from "./views/Authentication/ForgotPassword";
+import ResetPassword from "./views/Authentication/ResetPassword";
 
 const App: React.FC = () => {
   return (
@@ -42,6 +44,8 @@ const App: React.FC = () => {
                 {/* // authentication routes */}
                 <Route path="/signin" element={<SignInAuth />} />
                 <Route path="/register" element={<RegisterAuth />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
                 <Route
                   path="/page/add/step-1"
