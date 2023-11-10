@@ -1,4 +1,4 @@
-export type IProfile = {
+export interface IProfile {
     _id?: string
     name: string
     localisation?: UserLocalisation;
@@ -13,6 +13,8 @@ export type IProfile = {
     publications?: Array<string>
     description?: string
     categories?: string
+    isFollowed: boolean
+
 };
 
 type UserLocalisation = {
@@ -37,3 +39,12 @@ type UserContact = {
     website: string;
 }
 
+export type ProfileFilter = {
+    image: string
+    isFollowed: boolean
+    localisation: UserLocalisation
+    name: string
+    numberOfFollowers: number
+    profileType: string
+    _id: string
+}
