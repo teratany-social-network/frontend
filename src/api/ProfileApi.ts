@@ -9,9 +9,14 @@ const URLS = {
     updateCoordonates: "/profile/localisation",
     updateCategory: "/profile/categories",
     followProfile: "/profile/follow",
-    searchProfile: "/profile"
+    searchProfile: "/profile",
+    passwordRecovery: "/profile/password/recovery",
 }
 
+
+export const sendEmailRecovery = (email: string | undefined) => {
+    return api.get(`${URLS.passwordRecovery}/?email=${email}`)
+}
 
 export const searchProfile = (token: string, filter: string | undefined, ownId: string | undefined) => {
     return api.get(`${URLS.searchProfile}/?filter=${filter}&ownId=${ownId}`, {
@@ -73,6 +78,12 @@ export const updateLocationParameter = (token: string, id: string | undefined, l
             }
         }, {
         headers: { 'Authorization': token }
+    })
+}
+
+export const resetPassword = (email: string | undefined, password: string | undefined, code: string | undefined) => {
+    return api.patch(`${URLS.passwordRecovery}`, {
+        email, password, code
     })
 }
 
