@@ -37,7 +37,7 @@ const SignInAuth: React.FC = () => {
   };
 
   const fetchProfile = async (token: string, id: string) => {
-    const { error, response } = await withAsync(() => getById(token, id));
+    const { error, response } = await withAsync(() => getById(token, id, id));
 
     if (error instanceof AxiosError) {
       const error_message: string =
@@ -166,23 +166,13 @@ const SignInAuth: React.FC = () => {
                       />
                       <ErrorMessageForm name="password" />
 
-                      <div className="flex items-center">
-                        <div className="flex">
-                          <input
-                            id="remember-me"
-                            name="remember-me"
-                            type="checkbox"
-                            className="shrink-0 mt-0.5 border border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 white:bg-gray-800 white:border-gray-700 white:checked:bg-blue-500 white:checked:border-blue-500 white:focus:ring-offset-gray-800"
-                          />
-                        </div>
-                        <div className="ml-3">
-                          <label
-                            htmlFor="remember-me"
-                            className="text-sm white:text-white"
-                          >
-                            Remember me
-                          </label>
-                        </div>
+                      <div className="flex items-center ">
+                        <Link
+                          className="text-gray-500 text-sm decoration-2 hover:underline font-normal ml-1"
+                          to="/forgot-password"
+                        >
+                          forgot password?
+                        </Link>
                       </div>
                       <Button
                         isLoading={isLoading}

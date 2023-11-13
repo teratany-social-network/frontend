@@ -4,13 +4,67 @@ import { FaRegComment } from "@react-icons/all-files/fa/FaRegComment";
 import { FiSend } from "@react-icons/all-files/fi/FiSend";
 import { useState } from "react";
 import { DrawerContainer } from "../DrawerContainer";
+import { FileServerURL } from "../../api/FileApi";
+import { convertDate } from "../../helpers/DateConverter";
+import { withAsync } from "../../helpers/withAsync";
+import { toggleReactPublication } from "../../api/PublicationApi";
+import useToken from "../../hooks/useToken";
+import useFetchProfile from "../../hooks/useFetchProfile";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import moment from "moment";
+import { MenuPublication } from "../../views/Publication/components/MenuPublication";
+import { Link } from "react-router-dom";
+interface PublicationProps {
+  _id?: string;
+  profileId?: string;
+  profileName?: string;
+  date?: string;
+  profileImage?: string;
+  images?: string[];
+  content?: string;
+  reactions?: number;
+  comments?: number;
+  isReacted?: boolean;
+}
 
-const Publication = () => {
-  const [isPostLiked, setIsPostLiked] = useState<Boolean>(false);
+const Publication: React.FC<PublicationProps> = ({
+  _id,
+  profileId,
+  profileName,
+  date,
+  profileImage,
+  images,
+  content,
+  reactions,
+  comments,
+  isReacted,
+}) => {
+  const [isPostLiked, setIsPostLiked] = useState<Boolean>(isReacted!);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [isFullContent, setIsFullContent] = useState<boolean>(false);
+  const [react, setReact] = useState<number>(reactions!);
+  const token = useToken();
+  const profile = useFetchProfile();
 
-  const handleClickLikePost = () => {
+  const handleClickLikePost = async (_id: string) => {
     setIsPostLiked(!isPostLiked);
+    if (isPostLiked) {
+      setReact((react) => react - 1);
+    } else {
+      setReact((react) => react + 1);
+    }
+
+    const { error } = await withAsync(() =>
+      toggleReactPublication(token, profile?._id!, _id)
+    );
+    if (error instanceof AxiosError) {
+      const error_message: string =
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
+      toast.error(error_message);
+    }
   };
 
   const changeDrawerStatus = () => {
@@ -21,94 +75,127 @@ const Publication = () => {
     setDrawerOpen(false);
   };
 
+  const togglePubContentDetails = () => {
+    setIsFullContent(!isFullContent);
+  };
+
   return (
     // <!-- Wrapper-->
     <div className="wrapper my-2 w-full sm:w-[30%] flex flex-col items-center bg-white rounded-lg shadow-md">
       {/* <!-- Card--> */}
       <article className="mb-4 break-inside rounded-xl bg-white white:bg-slate-800 flex flex-col bg-clip-border w-full">
-        <div className="flex  p-4 items-center justify-between">
+        <div
+          className={
+            images?.length! > 0
+              ? "flex p-4 items-center justify-between"
+              : "flex px-4 pt-4 pb-0 items-center justify-between"
+          }
+        >
           <div className="flex">
-            <a className="inline-block mr-4" href="/">
+            <Link className="flex" to={`/profile/${profileId}`}>
               <img
-                alt=""
-                className="rounded-full max-w-none w-12 h-12"
-                src="https://randomuser.me/api/portraits/men/35.jpg"
+                alt="profilePubImage"
+                className="rounded-full max-w-none w-12 h-12 mr-4"
+                src={
+                  profileImage
+                    ? FileServerURL + profileImage
+                    : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                }
               />
-            </a>
-            <div className="flex flex-col">
-              <div>
-                <a
-                  className="inline-block text-base font-bold white:text-white"
-                  href="/"
-                >
-                  Wade Warren
-                </a>
+              <div className="flex flex-col">
+                <div>
+                  <p className="flex text-base font-bold white:text-white">
+                    {profileName}
+                  </p>
+                </div>
+                <div className="flex text-sm text-slate-500 white:text-slate-300 white:text-slate-400">
+                  {convertDate(date!)}
+                </div>
               </div>
-              <div className="flex text-sm text-slate-500 white:text-slate-300 white:text-slate-400">
-                July 17, 2018
-              </div>
-            </div>
+            </Link>
           </div>
+          {profileId === profile?._id && <MenuPublication id={_id!} />}
         </div>
         <div className="">
-          <div className="flex justify-between gap-1 mb-1">
-            <a className="flex" href="/">
-              <img
-                alt=""
-                className="w-full"
-                src="https://images.pexels.com/photos/92866/pexels-photo-92866.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-              />
-            </a>
-          </div>
-        </div>
-        <div className="p-4">
-          <div className="flex flex-col justify-start">
-            <div className="inline-flex items-center">
-              <span className="mr-4">
-                {isPostLiked ? (
-                  <AiFillHeart
-                    onClick={handleClickLikePost}
-                    size={30}
-                    color="#FF3040"
-                    className="active:scale-75 transition-transform cursor-pointer"
-                  />
-                ) : (
-                  <AiOutlineHeart
-                    onClick={handleClickLikePost}
-                    size={30}
-                    className="active:scale-75 transition-transform cursor-pointer"
-                  />
-                )}
-              </span>
-              <span className="mr-4">
-                <FaRegComment size={24} onClick={changeDrawerStatus} />
-              </span>
-              <span className="mr-4">
-                <FiSend size={24} />
-              </span>
+          {images && (
+            <div className="flex justify-between gap-1 mb-1">
+              <img alt="" className="w-full" src={FileServerURL + images[0]} />
             </div>
-            <p className="text-left py-2 text-gray-800 font-medium">
-              1 929 J'aime
-            </p>
-          </div>
-          <p className="white:text-slate-200 text-left">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua...
-          </p>
-
-          <p className="text-left  text-gray-400 font-normal">plus</p>
-
-          <p
-            onClick={changeDrawerStatus}
-            className="text-left  text-gray-400 font-normal"
+          )}
+        </div>
+        <div className="p-4 pb-0">
+          <div
+            className={
+              images?.length! > 0 ? "flex flex-col" : "flex flex-col-reverse"
+            }
           >
-            Afficher les 32 commentaires
-          </p>
+            <div className="flex flex-col justify-start">
+              <div className="inline-flex items-center">
+                <span className="mr-4">
+                  {isPostLiked ? (
+                    <AiFillHeart
+                      onClick={() => handleClickLikePost(_id!)}
+                      size={30}
+                      color="#FF3040"
+                      className="active:scale-75 transition-transform cursor-pointer"
+                    />
+                  ) : (
+                    <AiOutlineHeart
+                      onClick={() => handleClickLikePost(_id!)}
+                      size={30}
+                      className="active:scale-75 transition-transform cursor-pointer"
+                    />
+                  )}
+                </span>
+                <span className="mr-4">
+                  <FaRegComment size={24} onClick={changeDrawerStatus} />
+                </span>
+                <span className="mr-4">
+                  <FiSend size={24} />
+                </span>
+              </div>
+              <p className="text-left py-2 text-gray-800 font-medium">
+                {react > 1 ? react + " Likes" : react + " Like"}
+              </p>
+            </div>
+            <div className="text-container">
+              <p
+                className={
+                  images?.length! > 0
+                    ? `white:text-slate-200 text-start break-words ${
+                        !isFullContent ? "truncated-text" : ""
+                      } `
+                    : `white:text-slate-200 text-justify mb-2 ${
+                        !isFullContent ? "truncated-text" : ""
+                      } `
+                }
+              >
+                {content}
+              </p>
+              {!isFullContent && content?.length! > 150 && (
+                <p
+                  className="text-left  text-gray-400 font-normal mb-2"
+                  onClick={togglePubContentDetails}
+                >
+                  plus
+                </p>
+              )}
+            </div>
+          </div>
+
+          {comments! > 0 && (
+            <p
+              onClick={changeDrawerStatus}
+              className="text-left  text-gray-400 font-normal"
+            >
+              Show {comments} comments
+            </p>
+          )}
           <p className="text-left text-xs text-gray-400 font-normal">
-            IL Y A 14 JOURS
+            {moment(date).startOf("second").fromNow()}
           </p>
         </div>
-        <DrawerContainer isOpen={drawerOpen} onClose={closeDrawer} />
+        <DrawerContainer _id={_id} isOpen={drawerOpen} onClose={closeDrawer} />
       </article>
     </div>
   );
