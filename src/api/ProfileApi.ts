@@ -2,17 +2,30 @@ import api from "api/api";
 
 const URLS = {
     getByToken: '/profile/byToken',
-    getById: '/profile/',
+    getById: '/profile',
     updateGeneralInfo: '/profile/general',
     updateProfileImage: "/profile/image",
     updateUserPassword: "/profile/password",
     updateCoordonates: "/profile/localisation",
     updateCategory: "/profile/categories",
+    followProfile: "/profile/follow",
+    searchProfile: "/profile",
+    passwordRecovery: "/profile/password/recovery",
 }
 
-export const getById = (token: string, id: string | undefined) => {
 
-    return api.get(URLS.getById + id, {
+export const sendEmailRecovery = (email: string | undefined) => {
+    return api.get(`${URLS.passwordRecovery}/?email=${email}`)
+}
+
+export const searchProfile = (token: string, filter: string | undefined, ownId: string | undefined) => {
+    return api.get(`${URLS.searchProfile}/?filter=${filter}&ownId=${ownId}`, {
+        headers: { 'Authorization': token }
+    })
+}
+export const getById = (token: string, id: string | undefined, ownId: string | undefined) => {
+
+    return api.get(`${URLS.getById}/${id}/${ownId}`, {
         headers: { 'Authorization': token }
     })
 }
@@ -21,6 +34,15 @@ export const getUserByToken = (token: string) => {
         headers: { 'Authorization': token }
     })
 }
+
+
+export const followProfile = (token: string, currentProfileId: string | undefined, toFollowId: string | undefined) => {
+
+    return api.post(URLS.followProfile, { currentProfileId, toFollowId }, {
+        headers: { 'Authorization': token }
+    })
+}
+
 export const updateGeneralInfo = (token: string, id: string | undefined, name: string | undefined, email: string | undefined, description?: string | undefined) => {
     return api.patch(URLS.updateGeneralInfo, { id, name, email, description }, {
         headers: { 'Authorization': token }
@@ -56,6 +78,12 @@ export const updateLocationParameter = (token: string, id: string | undefined, l
             }
         }, {
         headers: { 'Authorization': token }
+    })
+}
+
+export const resetPassword = (email: string | undefined, password: string | undefined, code: string | undefined) => {
+    return api.patch(`${URLS.passwordRecovery}`, {
+        email, password, code
     })
 }
 

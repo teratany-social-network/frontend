@@ -15,19 +15,23 @@ import { GiWorld } from "@react-icons/all-files/gi/GiWorld";
 import { BiTargetLock } from "@react-icons/all-files/bi/BiTargetLock";
 import EditType from "components/EditType";
 import { withAsync } from "helpers/withAsync";
-import { getById } from "api/ProfileApi";
+import { followProfile, getById } from "api/ProfileApi";
 import { useParams } from "react-router-dom";
 import useToken from "hooks/useToken";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import useFetchProfile from "hooks/useFetchProfile";
+import { getPublicationByProfile } from "../../api/PublicationApi";
+import { IPublication } from "../../types/publication.type";
 
 const Profile: React.FC = () => {
+  const token = useToken();
+  const profileConnectedUser = useFetchProfile();
+  const [profile, setProfile] = React.useState<IProfile>();
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
-  const [profile, setProfile] = React.useState<IProfile>();
-  const profileConnectedUser = useFetchProfile();
-  const token = useToken();
+  const [followText, setFollowText] = React.useState<string>();
+  const [publications, setPublications] = React.useState<IPublication[]>();
 
   const openDrawerBottom = () => {
     setOpenBottom(true);
@@ -43,16 +47,53 @@ const Profile: React.FC = () => {
   const { id } = useParams();
 
   const fetchProfile = async () => {
-    const { error, response } = await withAsync(() => getById(token, id));
+    if (profileConnectedUser) {
+      const { error, response } = await withAsync(() =>
+        getById(token, id, profileConnectedUser?._id)
+      );
 
+      if (error instanceof AxiosError) {
+        const error_message: string =
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
+        toast.error(error_message);
+      } else {
+        setProfile(response?.data as IProfile);
+        const isProfileFollowed = response?.data as IProfile;
+        setFollowText(isProfileFollowed.isFollowed ? "UnFollow" : "Follow");
+      }
+    }
+  };
+
+  const fetchPublications = async () => {
+    if (profileConnectedUser) {
+      const { error, response } = await withAsync(() =>
+        getPublicationByProfile(token, id!, profileConnectedUser?._id!)
+      );
+      if (error instanceof AxiosError) {
+        const error_message: string =
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
+        toast.error(error_message);
+      } else {
+        setPublications(response?.data as Array<IPublication>);
+      }
+    }
+  };
+
+  const follow = async () => {
+    setFollowText(followText === "Follow" ? "UnFollow" : "Follow");
+    const { error } = await withAsync(() =>
+      followProfile(token, profileConnectedUser?._id, id)
+    );
     if (error instanceof AxiosError) {
       const error_message: string =
         error?.response?.data.description ||
         error?.response?.data ||
         error.message;
       toast.error(error_message);
-    } else {
-      setProfile(response?.data as IProfile);
     }
   };
 
@@ -71,8 +112,9 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     fetchProfile();
+    fetchPublications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id, profileConnectedUser?._id]);
 
   const UserProfile: React.FC = () => {
     return (
@@ -95,18 +137,27 @@ const Profile: React.FC = () => {
 
             <ul className="flex space-x-8 mb-2">
               <li>
-                <span className="font-semibold">136 </span>
-                posts
+                <span className="font-semibold">
+                  {profile?.publications?.length!}{" "}
+                </span>
+                {profile?.publications?.length! > 1 ? "Posts" : "Post"}
               </li>
 
               <li>
-                <span className="font-semibold">40.5k </span>
-                followers
+                <span className="font-semibold">
+                  {profile?.followers?.length!}{" "}
+                </span>
+                {profile?.followers?.length! > 1 ? "Followers" : "Follower"}
               </li>
             </ul>
           </div>
           <div className="flex items-center w-full">
-            <Button width="w-full" height="h-7" name="Unfollow" />
+            <Button
+              width="w-full"
+              height="h-7"
+              name={followText!}
+              onClick={follow}
+            />
             <Button width="w-1/3" height="h-7" name="Message" />
           </div>
         </div>
@@ -133,15 +184,25 @@ const Profile: React.FC = () => {
           <div className="flex flex-col">
             <div className="flex">
               <div className="flex flex-col ">
-                <p className="text-lg font-medium">18</p>
-                <p className="">Posts</p>
+                <p className="text-lg font-medium">
+                  {profile?.publications?.length!}
+                </p>
+                <p className="">
+                  {profile?.publications?.length! > 1 ? "Posts" : "Post"}
+                </p>
               </div>
               <div className="flex flex-col mx-6">
-                <p className="text-lg font-medium">354</p>
-                <p className="">Followers</p>
+                <p className="text-lg font-medium">
+                  {profile?.followers?.length!}
+                </p>
+                <p className="">
+                  {profile?.followers?.length! > 1 ? "Followers" : "Follower"}
+                </p>
               </div>
               <div className="flex flex-col ">
-                <p className="text-lg font-medium">MG</p>
+                <p className="text-lg font-medium">
+                  {profile?.localisation?.country?.value}
+                </p>
                 <p className="">Location</p>
               </div>
             </div>
@@ -170,7 +231,12 @@ const Profile: React.FC = () => {
         </div>
 
         <div className="flex items-center mx-2">
-          <Button width="w-1/2" height="h-7" name="Unfollow" />
+          <Button
+            width="w-1/2"
+            height="h-7"
+            name={followText!}
+            onClick={follow}
+          />
           <Button width="w-1/2" height="h-7" name="message" />
           <Button
             width=""
@@ -186,18 +252,34 @@ const Profile: React.FC = () => {
   return (
     <>
       <div>
-        <TopNavBarProfile
-          user={profileConnectedUser?.name as string}
-          path="/profile/edit/menu"
-          onClick={openDrawerBottom}
-        />
+        {profileConnectedUser && (
+          <TopNavBarProfile
+            user={profileConnectedUser?.name as string}
+            path="/profile/edit/menu"
+            onClick={openDrawerBottom}
+          />
+        )}
       </div>
 
       {profile?.profileType === "user" ? <UserProfile /> : <PageProfile />}
+      <div className="flex flex-col-reverse">
+        {publications?.map((pub) => (
+          <Publication
+            key={pub?._id}
+            _id={pub?._id}
+            profileId={pub?.profile?._id}
+            profileName={pub?.profile?.name}
+            profileImage={pub?.profile?.image}
+            date={pub?.date}
+            comments={pub?.numberOfComments}
+            reactions={pub?.numberOfReactions}
+            content={pub?.content}
+            images={pub?.images!}
+            isReacted={pub.isReacted}
+          />
+        ))}
+      </div>
 
-      <Publication />
-      <Publication />
-      <Publication />
       {profile?.profileType === "user" ? (
         <SwitchAccountDrawer
           id={id}
