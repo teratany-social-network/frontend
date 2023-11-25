@@ -14,6 +14,7 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { MenuPublication } from "../../views/Publication/components/MenuPublication";
+import { Link } from "react-router-dom";
 interface PublicationProps {
   _id?: string;
   profileId?: string;
@@ -91,25 +92,27 @@ const Publication: React.FC<PublicationProps> = ({
           }
         >
           <div className="flex">
-            <img
-              alt="profilePubImage"
-              className="rounded-full max-w-none w-12 h-12 mr-4"
-              src={
-                profileImage
-                  ? FileServerURL + profileImage
-                  : "https://randomuser.me/api/portraits/men/35.jpg"
-              }
-            />
-            <div className="flex flex-col">
-              <div>
-                <p className="flex text-base font-bold white:text-white">
-                  {profileName}
-                </p>
+            <Link className="flex" to={`/profile/${profileId}`}>
+              <img
+                alt="profilePubImage"
+                className="rounded-full max-w-none w-12 h-12 mr-4"
+                src={
+                  profileImage
+                    ? FileServerURL + profileImage
+                    : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                }
+              />
+              <div className="flex flex-col">
+                <div>
+                  <p className="flex text-base font-bold white:text-white">
+                    {profileName}
+                  </p>
+                </div>
+                <div className="flex text-sm text-slate-500 white:text-slate-300 white:text-slate-400">
+                  {convertDate(date!)}
+                </div>
               </div>
-              <div className="flex text-sm text-slate-500 white:text-slate-300 white:text-slate-400">
-                {convertDate(date!)}
-              </div>
-            </div>
+            </Link>
           </div>
           {profileId === profile?._id && <MenuPublication id={_id!} />}
         </div>
@@ -120,7 +123,7 @@ const Publication: React.FC<PublicationProps> = ({
             </div>
           )}
         </div>
-        <div className="p-4">
+        <div className="p-4 pb-0">
           <div
             className={
               images?.length! > 0 ? "flex flex-col" : "flex flex-col-reverse"
@@ -159,19 +162,19 @@ const Publication: React.FC<PublicationProps> = ({
               <p
                 className={
                   images?.length! > 0
-                    ? `white:text-slate-200 text-left ${
+                    ? `white:text-slate-200 text-start break-words ${
                         !isFullContent ? "truncated-text" : ""
                       } `
-                    : `white:text-slate-200 text-left ${
+                    : `white:text-slate-200 text-justify mb-2 ${
                         !isFullContent ? "truncated-text" : ""
                       } `
                 }
               >
                 {content}
               </p>
-              {!isFullContent && (
+              {!isFullContent && content?.length! > 150 && (
                 <p
-                  className="text-left  text-gray-400 font-normal"
+                  className="text-left  text-gray-400 font-normal mb-2"
                   onClick={togglePubContentDetails}
                 >
                   plus
@@ -180,17 +183,19 @@ const Publication: React.FC<PublicationProps> = ({
             </div>
           </div>
 
-          <p
-            onClick={changeDrawerStatus}
-            className="text-left  text-gray-400 font-normal"
-          >
-            Show {comments} comments
-          </p>
+          {comments! > 0 && (
+            <p
+              onClick={changeDrawerStatus}
+              className="text-left  text-gray-400 font-normal"
+            >
+              Show {comments} comments
+            </p>
+          )}
           <p className="text-left text-xs text-gray-400 font-normal">
             {moment(date).startOf("second").fromNow()}
           </p>
         </div>
-        <DrawerContainer isOpen={drawerOpen} onClose={closeDrawer} />
+        <DrawerContainer _id={_id} isOpen={drawerOpen} onClose={closeDrawer} />
       </article>
     </div>
   );

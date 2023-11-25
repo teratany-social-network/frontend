@@ -6,9 +6,17 @@ const URLS = {
     getOnePublication: '/publication/one',
     getPublicationDetails: '/publication/one',
     toggleReactPublication: '/publication/reaction/toggle',
+    getFeedPublication: '/publication/feed',
 }
 
 
+export const getFeedPublication = (token: string, ownId: string) => {
+    return api.get(`${URLS.getFeedPublication}/${ownId}`, {
+        headers: {
+            'Authorization': token
+        }
+    })
+}
 export const getPublicationByProfile = (token: string, profileId: string, ownId: string) => {
     return api.get(`${URLS.getPublicationByProfile}/?profileId=${profileId}&ownId=${ownId}`, {
         headers: {
