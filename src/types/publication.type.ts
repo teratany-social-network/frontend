@@ -3,8 +3,8 @@ export interface IPublication {
     profile: ProfileType
     content: string
     images?: string[]
-    comments?: string[]
-    reactions?: string[]
+    numberOfComments?: number;
+    numberOfReactions?: number;
     date: string;
     isReacted: boolean
 }

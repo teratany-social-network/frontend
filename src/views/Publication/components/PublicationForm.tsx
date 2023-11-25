@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { editPublication, postPublication } from "api/PublicationApi";
 import useToken from "hooks/useToken";
 import { useNavigate } from "react-router-dom";
-
+import InputEmoji from "react-input-emoji";
 interface PublicationFormProps {
   _id?: string;
   content?: string;
@@ -148,21 +148,25 @@ const PublicationForm: React.FC<PublicationFormProps> = ({
               ? FileServerURL + profile?.image
               : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
           }
-          alt=""
+          alt="profileImage"
         />
         <p className="flex font-medium">{profile?.name}</p>
       </div>
-      <textarea
-        id="message"
-        rows={4}
-        value={publicationText}
-        className="block my-4 p-2.5 w-[90%] text-sm text-gray-900 bg-gray-50 rounded-lg border   white:bg-gray-700 white:border-gray-600 white:placeholder-gray-400 white:text-white white:focus:ring-blue-500 white:focus:border-blue-500"
+      <InputEmoji
+        value={publicationText!}
+        onChange={setPublicationText}
+        cleanOnEnter
         placeholder="Write your thoughts here..."
-        onChange={(e) => setPublicationText(e.target.value)}
-      ></textarea>
+        inputClass="custom-emoji-style"
+        keepOpened={true}
+      />
+
       {isNewPub && (
-        <div className="flex justify-start items-center w-[90%]">
-          <label htmlFor="image" className="flex justify-start items-center">
+        <div className="flex justify-start z-50 items-center w-[90%]">
+          <label
+            htmlFor="image"
+            className="flex justify-start items-center -mt-11"
+          >
             <BiPhotoAlbum size={30} />
             <p className="ml-2">{selectedPhoto}</p>
           </label>
@@ -187,7 +191,7 @@ const PublicationForm: React.FC<PublicationFormProps> = ({
       <Button
         className="mt-2.5"
         name={btnText}
-        width="w-[90%]"
+        width="w-[90%] !mr-0"
         isLoading={isLoading}
         onClick={isNewPub ? AddPost : EditPost}
       />

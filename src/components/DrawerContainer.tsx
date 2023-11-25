@@ -7,11 +7,13 @@ import { useState, useEffect } from "react";
 type DrawerProps = {
   isOpen?: boolean;
   onClose: () => void;
+  _id?: string;
 };
 
 export const DrawerContainer: React.FC<DrawerProps> = ({
   isOpen = false,
   onClose,
+  _id,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   useEffect(() => {
@@ -37,7 +39,7 @@ export const DrawerContainer: React.FC<DrawerProps> = ({
           <HiOutlineXMark className="h-6 w-6 z-1000" onClick={onClose} />X
         </div>
         <div className=" flex flex-col items-center justify-center">
-          <Comments />
+          <Comments publicationId={_id!} />
         </div>
       </Drawer>
     </React.Fragment>

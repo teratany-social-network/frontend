@@ -27,3 +27,40 @@
 .custom-height-comment {
   height: calc(82vh - 5rem) !important;
 }
+
+.custom-emoji-style {
+  height: 10rem;
+}
+
+.react-input-emoji--container {
+  border-color: rgb(234, 234, 234);
+  font-size: 15px;
+  padding: 0 !important;
+  margin: 1rem 0 !important;
+  width: 100% !important;
+  border-radius: 3px !important;
+}
+.react-emoji {
+  display: flex;
+  align-items: flex-end !important;
+  width: 90% !important;
+  flex-direction: column !important;
+  margin-bottom: 0.5rem !important;
+}
+.react-input-emoji--placeholder {
+  bottom: 58px !important;
+  left: 12px !important;
+}
+.react-input-emoji--button {
+  padding: 0 2px !important;
+}
+.react-input-emoji--button--icon {
+  fill: #f9c533 !important;
+}
+
+.react-emoji-picker--wrapper {
+  height: 36rem !important;
+}
+.react-emoji-picker {
+  top: 8rem !important;
+}

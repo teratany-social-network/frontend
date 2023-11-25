@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SearchBar = (props: any) => {
+interface SearchBarProps {}
+
+const SearchBar: React.FC<SearchBarProps> = () => {
+  const [query, setQuery] = useState<string>();
   const navigate = useNavigate();
   return (
     <>
@@ -12,11 +16,14 @@ const SearchBar = (props: any) => {
               id="search-dropdown"
               className="block p-2.5 w-full z-20 text-sm text-gray-900 rounded-lg border border-1"
               placeholder="Search..."
-              required
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
             />
             <button
+              disabled={!query ? true : false}
               onClick={() => {
-                navigate("/search/result");
+                if (query) navigate(`/search/result/${query}`);
               }}
               className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-black rounded-r-lg border border-black"
             >
