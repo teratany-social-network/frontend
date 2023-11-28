@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 // Default config for the axios instance
 const axiosParams = {
     // Set different base URL based on the environment
-    baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '/',
+    baseURL: process.env.NODE_ENV === 'development' ? 'http://192.168.178.85:8080' : '/',
 };
 // Create axios instance with default params
 const axiosInstance = axios.create(axiosParams);
