@@ -39,6 +39,7 @@ const SignInAuth: React.FC = () => {
   const fetchProfile = async (token: string, id: string) => {
     const { error, response } = await withAsync(() => getById(token, id, id));
 
+
     if (error instanceof AxiosError) {
       const error_message: string =
         error?.response?.data.description ||
@@ -56,6 +57,8 @@ const SignInAuth: React.FC = () => {
       signinAuth(values.email, values.password)
     );
 
+    console.log("error ===> ", error);
+    console.log("response ===> ", response);
     if (error instanceof AxiosError) {
       endLoading();
       const error_message: string =

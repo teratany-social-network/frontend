@@ -32,6 +32,13 @@ import EditPublication from "./views/Publication/EditPublication";
 import ForgotPassword from "./views/Authentication/ForgotPassword";
 import ResetPassword from "./views/Authentication/ResetPassword";
 
+// Désactive le traitement passif pour tous les événements tactiles
+document.addEventListener('touchstart', function () { }, { passive: false });
+document.addEventListener('touchmove', function () { }, { passive: false });
+document.addEventListener('touchend', function () { }, { passive: false });
+document.addEventListener('touchcancel', function () { }, { passive: false });
+
+
 const App: React.FC = () => {
   return (
     <div className="App">
