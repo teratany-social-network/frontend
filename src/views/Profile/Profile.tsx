@@ -100,10 +100,10 @@ const Profile: React.FC = () => {
   const DetailsComponent = (
     <Details
       profileType={profile?.profileType}
-      address={profile?.localisation?.address.value}
+      address={profile?.localisation?.address?.value}
       description={profile?.description}
       email={profile?.contact?.email}
-      location={profile?.localisation?.country.value}
+      location={profile?.localisation?.country?.value}
       phone={profile?.contact?.phone}
       website={profile?.contact?.website}
       wallet={profile?.deviantWalletId}
