@@ -16,6 +16,9 @@ const config: CapacitorConfig = {
       iconColor: "#488AFF"
     }
   },
+  android: {
+    iconPath: 'src/assets/icon/android/ic_launcher.png', // Update to the path of your new icon file
+  },
 };
 
 export default config;
