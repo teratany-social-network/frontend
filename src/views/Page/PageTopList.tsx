@@ -1,87 +1,71 @@
+import { AxiosError } from "axios";
+import { getFollowedProfile } from "../../api/ProfileApi";
+import { withAsync } from "../../helpers/withAsync";
+import useFetchProfile from "../../hooks/useFetchProfile";
+import useToken from "../../hooks/useToken";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { IProfile } from "../../types/profile.type";
+import { FileServerURL } from "../../api/FileApi";
+import { Link } from "react-router-dom";
+import FeedNoPage from "../NoPage/FeedNoPage";
+
 const PageTopList = () => {
+  const profileConnectedUser = useFetchProfile();
+  const token = useToken();
+  const [profileFollowed, setProfileFollowed] = useState<IProfile[]>();
+
+  const fetchFollowedProfile = async () => {
+    if (profileConnectedUser) {
+      const { error, response } = await withAsync(() =>
+        getFollowedProfile(token, profileConnectedUser?._id! ?? "")
+      );
+      if (error instanceof AxiosError) {
+        const error_message: string =
+          error?.response?.data.description ||
+          error?.response?.data ||
+          error.message;
+        toast.error(error_message);
+      } else {
+        setProfileFollowed(response?.data as IProfile[]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchFollowedProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileConnectedUser?._id]);
+
+  console.log(profileFollowed);
+
   return (
-    <div className="flex my-2 overflow-x-scroll no-scrollbar  w-full sm:w-[30%] p-2 pl-4 ">
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/36.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/37.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/38.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/39.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/40.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/41.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/42.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/43.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/44.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-      <div className="flex flex-col w-16 h-16 mr-4">
-        <img
-          className="w-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-          src="https://randomuser.me/api/portraits/men/45.jpg"
-          alt="Bordered avatar"
-        />
-        <p>Avatar</p>
-      </div>
-    </div>
+    <>
+      {profileFollowed?.length! > 0 ? (
+        <div className="flex my-2 overflow-x-scroll no-scrollbar  w-full sm:w-[30%] p-2 pl-4 ">
+          {profileFollowed?.map((profile) => (
+            <div className="flex flex-col items-center mr-4">
+              <Link to={`/profile/${profile?._id}`}>
+                <img
+                  className="w-16 h-16 max-w-16 max-h-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                  src={
+                    profile?.image
+                      ? FileServerURL + profile?.image
+                      : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                  }
+                  alt="profile"
+                />
+              </Link>
+              <p className="truncated-name text-center">{profile?.name}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-[calc(100vh-8rem)]">
+          <FeedNoPage />
+        </div>
+      )}
+    </>
   );
 };
 

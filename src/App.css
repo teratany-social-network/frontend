@@ -50,6 +50,15 @@
   -webkit-box-orient: vertical;
 }
 
+.truncated-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  max-width: 5rem;
+}
+
 .bg-opacity-60 {
   position: fixed;
   top: 0;
