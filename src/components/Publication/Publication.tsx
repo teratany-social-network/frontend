@@ -95,7 +95,7 @@ const Publication: React.FC<PublicationProps> = ({
             <Link className="flex" to={`/profile/${profileId}`}>
               <img
                 alt="profilePubImage"
-                className="rounded-full max-w-none w-12 h-12 mr-4"
+                className="rounded-full max-w-[3rem] max-h-[3rem] min-h-[3rem] min-w-[3rem] w-12 h-12 mr-4 object-cover"
                 src={
                   profileImage
                     ? FileServerURL + profileImage
