@@ -121,7 +121,7 @@ const Profile: React.FC = () => {
       <div className="mt-16 pb-3 flex w-full justify-evenly items-center border-b border-gray-200">
         <img
           className="w-20 h-20 object-cover rounded-full
-               border-2 border-pink-600 p-1"
+               border-2 border-pink-600 p-1 mr-2"
           src={
             profile?.image
               ? FileServerURL + profile.image
@@ -151,15 +151,17 @@ const Profile: React.FC = () => {
               </li>
             </ul>
           </div>
-          <div className="flex items-center w-full">
-            <Button
-              width="w-full"
-              height="h-7"
-              name={followText!}
-              onClick={follow}
-            />
-            <Button width="w-1/3" height="h-7" name="Message" />
-          </div>
+          {profileConnectedUser?._id !== id && (
+            <div className="flex items-center w-full">
+              <Button
+                width="w-full"
+                height="h-7"
+                name={followText!}
+                onClick={follow}
+              />
+              <Button width="w-1/3" height="h-7" name="Message" />
+            </div>
+          )}
         </div>
       </div>
     );

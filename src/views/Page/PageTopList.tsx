@@ -47,7 +47,7 @@ const PageTopList = () => {
             <div className="flex flex-col items-center mr-4">
               <Link to={`/profile/${profile?._id}`}>
                 <img
-                  className="w-16 h-16 max-w-16 max-h-16  p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                  className="w-16 h-16 max-w-16 max-h-16 min-w-[3rem] min-h-[3rem] p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
                   src={
                     profile?.image
                       ? FileServerURL + profile?.image
