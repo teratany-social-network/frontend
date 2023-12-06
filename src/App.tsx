@@ -31,15 +31,31 @@ import ProtectedRoute from "./services/ProtectedRoute";
 import EditPublication from "./views/Publication/EditPublication";
 import ForgotPassword from "./views/Authentication/ForgotPassword";
 import ResetPassword from "./views/Authentication/ResetPassword";
+import { App as CapacitorApp } from "@capacitor/app";
+import { useEffect } from "react";
 
 // Désactive le traitement passif pour tous les événements tactiles
-document.addEventListener('touchstart', function () { }, { passive: false });
-document.addEventListener('touchmove', function () { }, { passive: false });
-document.addEventListener('touchend', function () { }, { passive: false });
-document.addEventListener('touchcancel', function () { }, { passive: false });
-
+document.addEventListener("touchstart", function () {}, { passive: false });
+document.addEventListener("touchmove", function () {}, { passive: false });
+document.addEventListener("touchend", function () {}, { passive: false });
+document.addEventListener("touchcancel", function () {}, { passive: false });
 
 const App: React.FC = () => {
+  useEffect(() => {
+    const handleBackButton = () => {
+      const currentPath = window.location.pathname;
+      if (currentPath === "/" || currentPath === "/signin") {
+        CapacitorApp.exitApp();
+      } else {
+        window.history.back();
+      }
+    };
+    document.addEventListener("backbutton", handleBackButton);
+    return () => {
+      document.removeEventListener("backbutton", handleBackButton);
+    };
+  }, []);
+
   return (
     <div className="App">
       <Provider store={store}>
