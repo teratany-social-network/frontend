@@ -8,29 +8,31 @@ import { Provider } from "react-redux";
 import { store, persistor } from "store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ToastNotification from "components/common/ToastNotification";
-import AddPublication from "views/Publication/AddPublication";
-import Map from "views/Map/Map";
-import EditUserMenu from "views/Profile/EditProfileMenu";
-import ProfileGeneral from "views/Profile/ProfileGeneral";
-import ProfilePassword from "views/Profile/ProfilePassword";
-import ProfilePicture from "views/Profile/ProfilePicture";
-import ProfileLocation from "views/Profile/ProfileLocation";
-import Search from "views/Search/Search";
-import AddPageStep1 from "views/Page/AddPageStep1";
-import SearchResult from "views/Search/SearchResultPage";
-import Notification from "views/Notification/Notification";
-import SearchFilterResult from "views/Search/SearchFilterResult";
-import PageList from "views/Page/PageList";
-import AddPageStep2 from "views/Page/AddPageStep2";
-import AddPageStep3 from "views/Page/AddPageStep3";
-import { HomeChat } from "views/chat/HomeChat";
-import { OneChat } from "views/chat/OneChat";
-import Profile from "views/Profile/Profile";
-import ProfileCategory from "views/Profile/ProfileCategory";
-import ProtectedRoute from "services/ProtectedRoute";
-import EditPublication from "views/Publication/EditPublication";
-import ForgotPassword from "views/Authentication/ForgotPassword";
-import ResetPassword from "views/Authentication/ResetPassword";
+import AddPublication from "./views/Publication/AddPublication";
+import Map from "./views/Map/Map";
+import EditUserMenu from "./views/Profile/EditProfileMenu";
+import ProfileGeneral from "./views/Profile/ProfileGeneral";
+import ProfilePassword from "./views/Profile/ProfilePassword";
+import ProfilePicture from "./views/Profile/ProfilePicture";
+import ProfileLocation from "./views/Profile/ProfileLocation";
+import Search from "./views/Search/Search";
+import AddPageStep1 from "./views/Page/AddPageStep1";
+import SearchResult from "./views/Search/SearchResultPage";
+import Notification from "./views/Notification/Notification";
+import SearchFilterResult from "./views/Search/SearchFilterResult";
+import PageList from "./views/Page/PageList";
+import AddPageStep2 from "./views/Page/AddPageStep2";
+import AddPageStep3 from "./views/Page/AddPageStep3";
+import { HomeChat } from "./views/chat/HomeChat";
+import { OneChat } from "./views/chat/OneChat";
+import Profile from "./views/Profile/Profile";
+import ProfileCategory from "./views/Profile/ProfileCategory";
+import ProtectedRoute from "./services/ProtectedRoute";
+import EditPublication from "./views/Publication/EditPublication";
+import ForgotPassword from "./views/Authentication/ForgotPassword";
+import ResetPassword from "./views/Authentication/ResetPassword";
+import { App as CapacitorApp } from "@capacitor/app";
+import { useEffect } from "react";
 
 // Désactive le traitement passif pour tous les événements tactiles
 document.addEventListener("touchstart", function () {}, { passive: false });
@@ -39,6 +41,21 @@ document.addEventListener("touchend", function () {}, { passive: false });
 document.addEventListener("touchcancel", function () {}, { passive: false });
 
 const App: React.FC = () => {
+  useEffect(() => {
+    const handleBackButton = () => {
+      const currentPath = window.location.pathname;
+      if (currentPath === "/" || currentPath === "/signin") {
+        CapacitorApp.exitApp();
+      } else {
+        window.history.back();
+      }
+    };
+    document.addEventListener("backbutton", handleBackButton);
+    return () => {
+      document.removeEventListener("backbutton", handleBackButton);
+    };
+  }, []);
+
   return (
     <div className="App">
       <Provider store={store}>
