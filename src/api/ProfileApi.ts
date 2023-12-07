@@ -11,9 +11,16 @@ const URLS = {
     followProfile: "/profile/follow",
     searchProfile: "/profile",
     passwordRecovery: "/profile/password/recovery",
+    followedProfile: "/profile/follow/list",
+
 }
 
 
+export const getFollowedProfile = (token: string, id: string | undefined) => {
+    return api.get(`${URLS.followedProfile}/${id}`, {
+        headers: { 'Authorization': token }
+    })
+}
 export const sendEmailRecovery = (email: string | undefined) => {
     return api.get(`${URLS.passwordRecovery}/?email=${email}`)
 }

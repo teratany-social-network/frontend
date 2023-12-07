@@ -45,10 +45,10 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
   return (
     <div className="mx-1 w-full p-2 ">
       <div className="flex items-center">
-        <Link to={`/profile/${_id}`}>
+        <Link to={`/profile/${_id}`} className="mr-4">
           <img
-            alt=""
-            className="rounded-full w-16 h-12 object-cover"
+            alt="profile"
+            className="rounded-full w-12 h-12 max-h-12 max-w-12 min-w-12 min-h-12 object-cover mr-4"
             src={
               image
                 ? FileServerURL + image
@@ -56,17 +56,19 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
             }
           />
         </Link>
-        <div className="flex flex-col items-start px-4 w-full">
+        <div className="flex flex-col items-start pr-4 w-full">
           <Link to={`/profile/${_id}`}>
             <p className="font-medium">{name}</p>
           </Link>
           <p className="text-sm text-gray-500 mb-1">{desc}</p>
-          <Button
-            width="w-full"
-            height="py-2"
-            name={followText}
-            onClick={follow}
-          />
+          {profileConnectedUser?._id !== _id && (
+            <Button
+              width="w-full"
+              height="py-2"
+              name={followText}
+              onClick={follow}
+            />
+          )}
         </div>
       </div>
     </div>
