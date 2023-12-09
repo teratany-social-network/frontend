@@ -4,12 +4,17 @@ import Publication from "../../components/Publication/Publication";
 import HorizontalCards from "../../components/HorizontalCards";
 import DropDown from "../../components/common/dropDown";
 import TopBar from "../../components/common/TopBar";
+import useFetchSearchByQuery from "../../hooks/useFetchSearchByQuery";
+import { useParams } from "react-router-dom";
 
 const SearchFilterResult: React.FC = () => {
   const currentPath = window.location.pathname;
   const choices = ["Followed", "not followed"];
   const [dropDownIsVisible, setVisibility] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState(choices[0]);
+  const { query } = useParams();
+
+  const results = useFetchSearchByQuery(query!);
 
   const showDropDown = () => {
     setVisibility(!dropDownIsVisible);
@@ -20,7 +25,7 @@ const SearchFilterResult: React.FC = () => {
   };
 
   const pathSegments = currentPath.split("/");
-  const lastSegment = pathSegments[pathSegments.length - 1];
+  const lastSegment = pathSegments[pathSegments.length - 2];
   const isPublication = lastSegment === "publication";
   return (
     <>
@@ -42,27 +47,35 @@ const SearchFilterResult: React.FC = () => {
           />
         )}
       </div>
-      {isPublication ? (
-        <div>
-          <Publication />
-          <Publication />
-        </div>
-      ) : (
-        <div>
-          <HorizontalCards
-            name="Rakotoarivelo Miandry"
-            desc="50k Followers - Antananarivo"
-          />
-          <HorizontalCards
-            name="Ny Hasina Finaritra"
-            desc="60k Followers - Majunga"
-          />
-          <HorizontalCards
-            name="Andritiana Steve"
-            desc="70k Followers - Diego"
-          />
-        </div>
-      )}
+      {isPublication
+        ? results?.publications?.length! > 0 && (
+            <div className="flex flex-col items-start">
+              {results?.publications?.map((pub) => (
+                <Publication
+                  key={pub?._id}
+                  _id={pub?._id}
+                  profileId={pub?.profile?._id}
+                  profileName={pub?.profile?.name}
+                  profileImage={pub?.profile?.image}
+                  date={pub?.date}
+                  comments={pub?.numberOfComments}
+                  reactions={pub?.numberOfReactions}
+                  content={pub?.content}
+                  images={pub?.images!}
+                  isReacted={pub.isReacted}
+                />
+              ))}
+            </div>
+          )
+        : results?.profiles?.map((user) => (
+            <HorizontalCards
+              _id={user._id}
+              name={user.name}
+              image={user.image!}
+              isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
+              desc={`${user?.numberOfFollowers} Followers`}
+            />
+          ))}
     </>
   );
 };

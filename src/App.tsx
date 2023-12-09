@@ -33,11 +33,10 @@ import ForgotPassword from "./views/Authentication/ForgotPassword";
 import ResetPassword from "./views/Authentication/ResetPassword";
 
 // Désactive le traitement passif pour tous les événements tactiles
-document.addEventListener('touchstart', function () { }, { passive: false });
-document.addEventListener('touchmove', function () { }, { passive: false });
-document.addEventListener('touchend', function () { }, { passive: false });
-document.addEventListener('touchcancel', function () { }, { passive: false });
-
+document.addEventListener("touchstart", function () {}, { passive: false });
+document.addEventListener("touchmove", function () {}, { passive: false });
+document.addEventListener("touchend", function () {}, { passive: false });
+document.addEventListener("touchcancel", function () {}, { passive: false });
 
 const App: React.FC = () => {
   return (
@@ -172,7 +171,7 @@ const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path="/search/result/publication"
+                  path="/search/result/publication/:query"
                   element={
                     <ProtectedRoute>
                       <SearchFilterResult />
@@ -180,7 +179,7 @@ const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path="/search/result/user"
+                  path="/search/result/user/:query"
                   element={
                     <ProtectedRoute>
                       <SearchFilterResult />

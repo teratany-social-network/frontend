@@ -61,7 +61,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
             <p className="font-medium">{name}</p>
           </Link>
           <p className="text-sm text-gray-500 mb-1">{desc}</p>
-          {profileConnectedUser?._id !== _id && (
+          {profileConnectedUser?._id === _id ? null : (
             <Button
               width="w-full"
               height="py-2"
