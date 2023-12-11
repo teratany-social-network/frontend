@@ -10,10 +10,9 @@ import useToken from "./useToken";
 
 
 
-const useFetchUser = () => {
+const useFetchUserByToken = () => {
     const [user, setUser] = useState<IProfile>();
     const token = useToken()
-
 
     useEffect(() => {
 
@@ -39,4 +38,4 @@ const useFetchUser = () => {
 
 }
 
-export default useFetchUser
+export default useFetchUserByToken
