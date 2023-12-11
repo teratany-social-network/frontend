@@ -2,7 +2,7 @@ import React from "react";
 import { IoSettingsOutline } from "@react-icons/all-files/io5/IoSettingsOutline";
 import { HiOutlineChevronDown } from "@react-icons/all-files/hi/HiOutlineChevronDown";
 import { useNavigate } from "react-router-dom";
-import useFetchUser from "../hooks/useFetchUser";
+import useFetchUserByToken from "../hooks/useFetchUserByToken";
 
 interface TopNavBarProps {
   user: string;
@@ -16,7 +16,7 @@ const TopNavBarProfile: React.FC<TopNavBarProps> = ({
   onClick,
 }) => {
   const navigate = useNavigate();
-  const userConnected = useFetchUser();
+  const userConnected = useFetchUserByToken();
 
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-12 bg-white border-b border-gray-200">

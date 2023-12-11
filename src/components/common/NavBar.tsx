@@ -10,15 +10,12 @@ import { BsPlusSquare } from "@react-icons/all-files/bs/BsPlusSquare";
 import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useFetchUser from "../../hooks/useFetchUser";
 import { FileServerURL } from "../../api/FileApi";
 import useFetchProfile from "../../hooks/useFetchProfile";
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("home");
-
-  const user = useFetchUser();
 
   const profile = useFetchProfile();
 
@@ -96,7 +93,7 @@ const NavBar: React.FC = () => {
         <button
           onClick={() => {
             handleButtonClick("");
-            navigate(`/profile/${profile?._id ?? user?._id}`);
+            navigate(`/profile/${profile?._id}`);
           }}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5"
