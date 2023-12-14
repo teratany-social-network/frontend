@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import PageSwitchCard from "./PageSwitchCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import useFetchUser from "../hooks/useFetchUser";
+import useFetchUserByToken from "../hooks/useFetchUserByToken";
+import useFetchProfile from "../hooks/useFetchProfile";
 
 interface DrawerProps {
   openBottom: any;
@@ -23,13 +24,17 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
   };
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const userConnected = useFetchUser();
+  const userConnected = useFetchUserByToken();
 
   let accounts: any = useSelector<RootState>(
     (state) => state.teratany_account.account
   );
 
-  accounts = accounts.filter((account: any) => account.id !== id);
+  const profileConnectedUser = useFetchProfile();
+
+  accounts = accounts.filter(
+    (account: any) => account.id !== profileConnectedUser?._id
+  );
 
   useEffect(() => {
     setIsDrawerOpen(openBottom);
@@ -45,7 +50,7 @@ const SwitchAccountDrawer: React.FC<DrawerProps> = ({
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isDrawerOpen]);
+  }, [isDrawerOpen, openBottom]);
 
   return (
     <>
