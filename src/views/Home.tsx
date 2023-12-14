@@ -6,9 +6,8 @@ import { IPublication } from "../types/publication.type";
 import useFetchProfile from "../hooks/useFetchProfile";
 import { getFeedPublication } from "../api/PublicationApi";
 import { withAsync } from "../helpers/withAsync";
-import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 import useToken from "../hooks/useToken";
+import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
 
 const Home = () => {
   const [publications, setPublications] = React.useState<IPublication[]>();
@@ -20,12 +19,8 @@ const Home = () => {
       const { error, response } = await withAsync(() =>
         getFeedPublication(token, profileConnectedUser?._id!)
       );
-      if (error instanceof AxiosError) {
-        const error_message: string =
-          error?.response?.data.description ||
-          error?.response?.data ||
-          error.message;
-        toast.error(error_message);
+      if (error) {
+        ThrowErrorHandler(error as ErrorData);
       } else {
         setPublications(response?.data as Array<IPublication>);
       }

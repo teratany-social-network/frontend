@@ -1,36 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { withAsync } from "../helpers/withAsync";
-import { getById } from "../api/ProfileApi";
+import { getUserByToken } from "../api/ProfileApi";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { IProfile } from "../types/profile.type";
 import useToken from "./useToken";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 
 
 
 
-const useFetchProfile = () => {
-
-    const [profile, setProfile] = useState<IProfile>();
+const useFetchUserByToken = () => {
+    const [user, setUser] = useState<IProfile>();
     const token = useToken()
-    const profileId = useSelector<RootState>((state) => state.teratany_user.id) as string
-
 
     useEffect(() => {
 
 
         async function fetchUser() {
-            if (profileId) {
-                const { error, response } = await withAsync(() => getById(token, profileId, profileId));
+            if (token) {
+                const { error, response } = await withAsync(() => getUserByToken(token));
                 if (error instanceof AxiosError) {
+                    console.log(error)
                     const error_message: string =
                         error?.response?.data?.error?.description || error?.response?.data || error.message;
                     toast.error(error_message);
                 } else {
-                    setProfile(response?.data as IProfile);
+                    setUser(response?.data as IProfile);
                 }
             }
         }
@@ -39,8 +35,8 @@ const useFetchProfile = () => {
     }, [])
 
 
-    return profile;
+    return user;
 
 }
 
-export default useFetchProfile
+export default useFetchUserByToken
