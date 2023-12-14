@@ -8,8 +8,6 @@ import { withAsync } from "helpers/withAsync";
 import { followProfile, getById } from "api/ProfileApi";
 import { useParams } from "react-router-dom";
 import useToken from "hooks/useToken";
-import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 import useFetchProfile from "hooks/useFetchProfile";
 import { getPublicationByProfile } from "../../api/PublicationApi";
 import { IPublication } from "../../types/publication.type";
