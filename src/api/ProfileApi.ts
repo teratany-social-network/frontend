@@ -12,9 +12,16 @@ const URLS = {
     searchProfile: "/profile",
     passwordRecovery: "/profile/password/recovery",
     followedProfile: "/profile/follow/list",
+    profileWithCoordonates: "/profile/withCoordonates",
 
 }
 
+
+export const getProfileWithCoordonates = (token: string) => {
+    return api.get(`${URLS.profileWithCoordonates}`, {
+        headers: { 'Authorization': token }
+    })
+}
 
 export const getFollowedProfile = (token: string, id: string | undefined) => {
     return api.get(`${URLS.followedProfile}/${id}`, {
