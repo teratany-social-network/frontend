@@ -16,6 +16,7 @@ import { IPublication } from "../../types/publication.type";
 import UserProfile from "./UserProfile";
 import PageProfile from "./PageProfile";
 import DetailsPage from "./DetailsPage";
+import { ErrorData, ThrowErrorHandler } from "../../helpers/HandleError";
 
 const Profile: React.FC = () => {
   const token = useToken();
@@ -46,12 +47,8 @@ const Profile: React.FC = () => {
         getById(token, id, profileConnectedUser?._id)
       );
 
-      if (error instanceof AxiosError) {
-        const error_message: string =
-          error?.response?.data.description ||
-          error?.response?.data ||
-          error.message;
-        toast.error(error_message);
+      if (error) {
+        ThrowErrorHandler(error as ErrorData);
       } else {
         setProfile(response?.data as IProfile);
         const isProfileFollowed = response?.data as IProfile;
@@ -65,12 +62,8 @@ const Profile: React.FC = () => {
       const { error, response } = await withAsync(() =>
         getPublicationByProfile(token, id!, profileConnectedUser?._id!)
       );
-      if (error instanceof AxiosError) {
-        const error_message: string =
-          error?.response?.data.description ||
-          error?.response?.data ||
-          error.message;
-        toast.error(error_message);
+      if (error) {
+        ThrowErrorHandler(error as ErrorData);
       } else {
         setPublications(response?.data as Array<IPublication>);
       }
@@ -82,12 +75,8 @@ const Profile: React.FC = () => {
     const { error } = await withAsync(() =>
       followProfile(token, profileConnectedUser?._id, id)
     );
-    if (error instanceof AxiosError) {
-      const error_message: string =
-        error?.response?.data.description ||
-        error?.response?.data ||
-        error.message;
-      toast.error(error_message);
+    if (error) {
+      ThrowErrorHandler(error as ErrorData);
     }
   };
 

@@ -23,15 +23,16 @@ const useFetchProfile = () => {
 
 
         async function fetchUser() {
-            const { error, response } = await withAsync(() => getById(token, profileId, profileId));
-            if (error instanceof AxiosError) {
-                const error_message: string =
-                    error?.response?.data?.error?.description || error?.response?.data || error.message;
-                toast.error(error_message);
-            } else {
-                setProfile(response?.data as IProfile);
+            if (profileId) {
+                const { error, response } = await withAsync(() => getById(token, profileId, profileId));
+                if (error instanceof AxiosError) {
+                    const error_message: string =
+                        error?.response?.data?.error?.description || error?.response?.data || error.message;
+                    toast.error(error_message);
+                } else {
+                    setProfile(response?.data as IProfile);
+                }
             }
-
         }
         fetchUser()
 

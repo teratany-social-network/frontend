@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
-import useLoadingButton from "../../hooks/useLoadingButton";
-import { withAsync } from "../../helpers/withAsync";
-import { sendEmailRecovery } from "../../api/ProfileApi";
+import Button from "components/common/Button";
+import useLoadingButton from "hooks/useLoadingButton";
+import { withAsync } from "helpers/withAsync";
+import { sendEmailRecovery } from "api/ProfileApi";
 import { AxiosError } from "axios";
-import { toast } from "react-toastify";
+import { ErrorData, ThrowErrorHandler } from "helpers/HandleError";
 
 const ForgotPassword = () => {
   const [isLoading, startLoading, endLoading] = useLoadingButton();
@@ -17,11 +17,7 @@ const ForgotPassword = () => {
     const { error } = await withAsync(() => sendEmailRecovery(email!));
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string =
-        error?.response?.data.description ||
-        error?.response?.data ||
-        error.message;
-      toast.error(error_message);
+      ThrowErrorHandler(error as ErrorData);
     } else {
       navigate("/reset-password");
     }

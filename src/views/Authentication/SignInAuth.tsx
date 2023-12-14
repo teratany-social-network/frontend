@@ -20,6 +20,7 @@ import { AxiosError } from "axios";
 import useLoadingButton from "hooks/useLoadingButton";
 import { getById } from "api/ProfileApi";
 import { setAccountConnected } from "store/reducer/account.reducer";
+import { ErrorData, ThrowErrorHandler } from "helpers/HandleError";
 
 interface signinFormValues {
   email: string;
@@ -39,12 +40,8 @@ const SignInAuth: React.FC = () => {
   const fetchProfile = async (token: string, id: string) => {
     const { error, response } = await withAsync(() => getById(token, id, id));
 
-    if (error instanceof AxiosError) {
-      const error_message: string =
-        error?.response?.data.description ||
-        error?.response?.data ||
-        error.message;
-      toast.error(error_message);
+    if (error) {
+      ThrowErrorHandler(error as ErrorData);
     } else {
       return response?.data;
     }
@@ -58,9 +55,7 @@ const SignInAuth: React.FC = () => {
 
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string =
-        error?.response?.data.error.description ?? error.message;
-      toast.error(error_message);
+      ThrowErrorHandler(error as ErrorData);
       return;
     } else {
       endLoading();

@@ -1,16 +1,16 @@
-import React from "react";
-import Button from "../../components/common/Button";
+import Button from "components/common/Button";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import FormField from "../../components/common/FormField";
-import ErrorMessageForm from "../../components/common/ErrorMessageForm";
-import useLoadingButton from "../../hooks/useLoadingButton";
+import FormField from "components/common/FormField";
+import ErrorMessageForm from "components/common/ErrorMessageForm";
+import useLoadingButton from "hooks/useLoadingButton";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { withAsync } from "../../helpers/withAsync";
-import { resetPassword } from "../../api/ProfileApi";
+import { withAsync } from "helpers/withAsync";
+import { resetPassword } from "api/ProfileApi";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { ErrorData, ThrowErrorHandler } from "helpers/HandleError";
 
 interface resetPasswordFormValues {
   email: string;
@@ -36,11 +36,7 @@ const ResetPassword = () => {
 
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string =
-        error?.response?.data.description ||
-        error?.response?.data ||
-        error.message;
-      toast.error(error_message);
+      ThrowErrorHandler(error as ErrorData);
     } else {
       endLoading();
       navigate("/signin");
