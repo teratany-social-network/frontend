@@ -1,25 +1,26 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { withAsync } from "../../helpers/withAsync";
-import { signinAuth } from "../../api/AuthenticationApi";
+import { withAsync } from "helpers/withAsync";
+import { signinAuth } from "api/AuthenticationApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store/store";
 import { toast } from "react-toastify";
-import TeratanyLogo from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
-import FormField from "../../components/common/FormField";
-import Button from "../../components/common/Button";
+import TeratanyLogo from "assets/Teratany_ico/apple-touch-icon-180x180.png";
+import FormField from "components/common/FormField";
+import Button from "components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import ErrorMessageForm from "components/common/ErrorMessageForm";
 import {
   UserInitialState,
   setAuthentication,
-} from "../../store/reducer/user.reducer";
+} from "store/reducer/user.reducer";
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
-import useLoadingButton from "../../hooks/useLoadingButton";
-import { getById } from "../../api/ProfileApi";
-import { setAccountConnected } from "../../store/reducer/account.reducer";
+import useLoadingButton from "hooks/useLoadingButton";
+import { getById } from "api/ProfileApi";
+import { setAccountConnected } from "store/reducer/account.reducer";
+import { ErrorData, ThrowErrorHandler } from "helpers/HandleError";
 
 interface signinFormValues {
   email: string;
@@ -39,12 +40,8 @@ const SignInAuth: React.FC = () => {
   const fetchProfile = async (token: string, id: string) => {
     const { error, response } = await withAsync(() => getById(token, id, id));
 
-    if (error instanceof AxiosError) {
-      const error_message: string =
-        error?.response?.data.description ||
-        error?.response?.data ||
-        error.message;
-      toast.error(error_message);
+    if (error) {
+      ThrowErrorHandler(error as ErrorData);
     } else {
       return response?.data;
     }
@@ -56,13 +53,9 @@ const SignInAuth: React.FC = () => {
       signinAuth(values.email, values.password)
     );
 
-    console.log("error ===> ", error);
-    console.log("response ===> ", response);
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string =
-        error?.response?.data.error.description ?? error.message;
-      toast.error(error_message);
+      ThrowErrorHandler(error as ErrorData);
       return;
     } else {
       endLoading();

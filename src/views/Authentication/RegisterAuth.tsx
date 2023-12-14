@@ -1,24 +1,25 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import teratanyLogo from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
+import teratanyLogo from "assets/Teratany_ico/apple-touch-icon-180x180.png";
 import FormField from "components/common/FormField";
 import Button from "components/common/Button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import ErrorMessageForm from "components/common/ErrorMessageForm";
-import { withAsync } from "../../helpers/withAsync";
-import { registerAuth } from "../../api/AuthenticationApi";
+import { withAsync } from "helpers/withAsync";
+import { registerAuth } from "api/AuthenticationApi";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store/store";
 import {
   UserInitialState,
   setAuthentication,
-} from "../../store/reducer/user.reducer";
+} from "store/reducer/user.reducer";
 import jwtDecode from "jwt-decode";
 import { AxiosError } from "axios";
-import useLoadingButton from "../../hooks/useLoadingButton";
-import { resetAccountConnected } from "../../store/reducer/account.reducer";
+import useLoadingButton from "hooks/useLoadingButton";
+import { resetAccountConnected } from "store/reducer/account.reducer";
+import { ErrorData, ThrowErrorHandler } from "helpers/HandleError";
 
 interface signupFormValues {
   email: string;
@@ -45,9 +46,7 @@ const RegisterAuth: React.FC = () => {
 
     if (error instanceof AxiosError) {
       endLoading();
-      const error_message: string =
-        error?.response?.data.error.description ?? error.message;
-      toast.error(error_message);
+      ThrowErrorHandler(error as ErrorData);
       return;
     } else {
       endLoading();
