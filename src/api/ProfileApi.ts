@@ -81,14 +81,14 @@ export const updateCategory = (token: string, id: string | undefined, categories
     })
 }
 
-export const updateLocationParameter = (token: string, id: string | undefined, latitude: number, longitude: number, isPrivate: boolean) => {
+export const updateLocationParameter = (token: string, id: string | undefined, latitude: number, longitude: number, isPublic: boolean) => {
     return api.patch(URLS.updateCoordonates,
         {
             id,
             coordonates: {
                 latitude,
                 longitude,
-                isPrivate
+                isPublic
             }
         }, {
         headers: { 'Authorization': token }

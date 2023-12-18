@@ -1,4 +1,5 @@
 export interface IProfile {
+    [x: string]: any;
     _id?: string
     name: string
     localisation?: UserLocalisation;
