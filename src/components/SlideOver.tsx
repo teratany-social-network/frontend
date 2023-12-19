@@ -1,7 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { HiOutlineXMark } from "react-icons/hi2";
-import { ItemListAvatar } from "./ItemListAvatar";
+import { ProfileListMap } from "./ProfileListMap";
+import { IProfile } from "types/profile.type";
+import SearchInputField from "./SearchInputField";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
 
 type SlideOverProps = {
   isOpen?: boolean;
@@ -12,6 +16,25 @@ export const SlideOver: React.FC<SlideOverProps> = ({
   isOpen = false,
   onClose,
 }) => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const profiles = useSelector<RootState>(
+    (state) => state.teratany_page.profiles!
+  ) as IProfile[];
+
+  const [searchedProfile, setSearchedProfile] = useState<IProfile[]>(profiles);
+
+  const searchProfile = useCallback(() => {
+    let resultats = profiles.filter((profile) => {
+      return profile?.name?.toLowerCase().includes(searchQuery?.toLowerCase()!);
+    });
+    setSearchedProfile(resultats);
+  }, [profiles, searchQuery]);
+
+  useEffect(() => {
+    searchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profiles, searchQuery]);
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-1000" onClose={onClose}>
@@ -67,11 +90,17 @@ export const SlideOver: React.FC<SlideOverProps> = ({
                   <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
                       <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        Pages
+                        Profiles
                       </Dialog.Title>
                     </div>
+                    <div className=" mt-4 px-6 sm:px-6">
+                      <SearchInputField onChange={(e) => setSearchQuery(e)} />
+                    </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                      <ItemListAvatar />
+                      <ProfileListMap
+                        profiles={searchedProfile}
+                        onCloseSlideOver={onClose}
+                      />
                     </div>
                   </div>
                 </Dialog.Panel>

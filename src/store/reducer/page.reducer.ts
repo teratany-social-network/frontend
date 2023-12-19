@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IProfile } from "../../types/profile.type";
 
 export type CoordonatesValue = {
     latitude?: number | null,
@@ -19,6 +20,8 @@ export interface PageInitialState {
     address?: string;
     country?: string;
     deviantWalletID?: string;
+    profileCoordonates?: CoordonatesValue;
+    profiles?: IProfile[]
 }
 
 const initialState: PageInitialState = {
@@ -36,6 +39,12 @@ const initialState: PageInitialState = {
     deviantWalletID: '',
     profileType: '',
     category: '',
+    profileCoordonates: {
+        latitude: null,
+        longitude: null
+    },
+    profiles: []
+
 }
 
 export const pageSlice = createSlice({
@@ -63,8 +72,13 @@ export const pageSlice = createSlice({
                 longitude: action.payload.coordonates?.longitude
             }
         },
+        setCoordonates: (state, action: PayloadAction<PageInitialState>) => {
+            state.profileCoordonates = { latitude: action.payload.profileCoordonates?.latitude!, longitude: action.payload.profileCoordonates?.longitude! }
+        },
 
-
+        setProfilesWithCoordonates: (state, action: PayloadAction<PageInitialState>) => {
+            state.profiles = action.payload.profiles
+        },
 
         resetPageInfo: (state) => {
             state.email = '';
@@ -86,5 +100,5 @@ export const pageSlice = createSlice({
     }
 })
 
-export const { setPageInfo, setPageCoordonates, resetPageInfo } = pageSlice.actions;
+export const { setPageInfo, setPageCoordonates, resetPageInfo, setCoordonates, setProfilesWithCoordonates } = pageSlice.actions;
 export default pageSlice.reducer;
