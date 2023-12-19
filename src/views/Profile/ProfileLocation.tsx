@@ -48,26 +48,21 @@ const ProfileLocation: React.FC = () => {
     const lat: number = Number(localStorage.getItem("lat"));
     const lng: number = Number(localStorage.getItem("lng"));
     startLoading();
-    if (lat && lng) {
-      const { error } = await withAsync(() =>
-        updateLocationParameter(token, profile?._id, lat, lng, locationStatus!)
-      );
-      if (error instanceof AxiosError) {
-        endLoading();
-        const error_message: string =
-          error?.response?.data.description ||
-          error?.response?.data ||
-          error.message;
-        toast.error(error_message);
-      } else {
-        endLoading();
-        toast.success("Location information updated!");
-        localStorage.removeItem("lat");
-        localStorage.removeItem("lng");
-      }
-    } else {
-      toast.error("Coordonates information required!!!");
+    const { error } = await withAsync(() =>
+      updateLocationParameter(token, profile?._id, lat, lng, locationStatus!)
+    );
+    if (error instanceof AxiosError) {
       endLoading();
+      const error_message: string =
+        error?.response?.data.description ||
+        error?.response?.data ||
+        error.message;
+      toast.error(error_message);
+    } else {
+      endLoading();
+      toast.success("Location information updated!");
+      localStorage.removeItem("lat");
+      localStorage.removeItem("lng");
     }
   };
 

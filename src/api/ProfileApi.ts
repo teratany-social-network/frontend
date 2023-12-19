@@ -12,9 +12,16 @@ const URLS = {
     searchProfile: "/profile",
     passwordRecovery: "/profile/password/recovery",
     followedProfile: "/profile/follow/list",
+    profileWithCoordonates: "/profile/withCoordonates",
 
 }
 
+
+export const getProfileWithCoordonates = (token: string) => {
+    return api.get(`${URLS.profileWithCoordonates}`, {
+        headers: { 'Authorization': token }
+    })
+}
 
 export const getFollowedProfile = (token: string, id: string | undefined) => {
     return api.get(`${URLS.followedProfile}/${id}`, {
@@ -74,14 +81,14 @@ export const updateCategory = (token: string, id: string | undefined, categories
     })
 }
 
-export const updateLocationParameter = (token: string, id: string | undefined, latitude: number, longitude: number, isPrivate: boolean) => {
+export const updateLocationParameter = (token: string, id: string | undefined, latitude: number, longitude: number, isPublic: boolean) => {
     return api.patch(URLS.updateCoordonates,
         {
             id,
             coordonates: {
                 latitude,
                 longitude,
-                isPrivate
+                isPublic
             }
         }, {
         headers: { 'Authorization': token }
