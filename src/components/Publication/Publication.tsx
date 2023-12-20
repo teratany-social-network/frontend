@@ -76,17 +76,9 @@ const Publication: React.FC<PublicationProps> = ({
   };
   window.addEventListener("popstate", () => {
     closeDrawer();
-
-    setTimeout(() => {
-      window.history.pushState({ page: "" }, "", "?isModal=false");
-    }, 1000);
-  });
-  document.addEventListener("backbutton", () => {
-    closeDrawer();
-
-    setTimeout(() => {
-      window.history.pushState({ page: "" }, "", "?isModal=false");
-    }, 1000);
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl.replace(/(\?|&)isModal=true/, "");
+    window.history.replaceState({ page: "" }, "", newUrl);
   });
 
   const togglePubContentDetails = () => {
