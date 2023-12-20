@@ -44,18 +44,14 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleBackButton = () => {
       const currentPath = window.location.pathname;
-      const queryParams = new URLSearchParams(window.location.search);
-      const param1 = queryParams.get("isModal");
-      if ((currentPath === "/" && !param1) || currentPath === "/signin") {
+      if (currentPath === "/signin") {
         CapacitorApp.minimizeApp();
       } else {
         window.history.back();
       }
     };
-    document.addEventListener("popstate", handleBackButton);
     document.addEventListener("backbutton", handleBackButton);
     return () => {
-      document.removeEventListener("popstate", handleBackButton);
       document.removeEventListener("backbutton", handleBackButton);
     };
   }, []);
