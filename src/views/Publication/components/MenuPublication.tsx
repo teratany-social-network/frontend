@@ -20,10 +20,9 @@ export const MenuPublication: React.FC<MenuProps> = ({ id }) => {
   };
   window.addEventListener("popstate", () => {
     closeDrawerBottom();
-
-    // setTimeout(() => {
-    //   window.history.pushState({ page: "" }, "", "?isModal=false");
-    // }, 1000);
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl.replace(/(\?|&)isModal=true/, "");
+    window.history.replaceState({ page: "" }, "", newUrl);
   });
 
   return (
