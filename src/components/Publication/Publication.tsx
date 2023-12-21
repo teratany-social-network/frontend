@@ -15,6 +15,12 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MenuPublication } from "../../views/Publication/components/MenuPublication";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "../../styles/SwiperPublication.css";
+import { Pagination } from "swiper/modules";
+
 interface PublicationProps {
   _id?: string;
   profileId?: string;
@@ -124,9 +130,19 @@ const Publication: React.FC<PublicationProps> = ({
         </div>
         <div className="">
           {images && (
-            <div className="flex justify-between gap-1 mb-1">
-              <img alt="" className="w-full" src={FileServerURL + images[0]} />
-            </div>
+            <Swiper
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Pagination]}
+              className="mySwiper"
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <img alt="" className="w-full" src={FileServerURL + image} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           )}
         </div>
         <div className="p-4 pb-0">
