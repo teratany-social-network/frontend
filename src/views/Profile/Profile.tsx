@@ -25,6 +25,8 @@ const Profile: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
   const [followText, setFollowText] = React.useState<string>();
   const [publications, setPublications] = React.useState<IPublication[]>();
+  const [isProfileFetched, setIsProfileFetched] =
+    React.useState<Boolean>(false);
 
   const openDrawerBottom = () => {
     setOpenBottom(true);
@@ -51,6 +53,7 @@ const Profile: React.FC = () => {
         setProfile(response?.data as IProfile);
         const isProfileFollowed = response?.data as IProfile;
         setFollowText(isProfileFollowed.isFollowed ? "UnFollow" : "Follow");
+        setIsProfileFetched(true);
       }
     }
   };
@@ -79,25 +82,29 @@ const Profile: React.FC = () => {
   };
 
   const RenderProfileComponent = (): JSX.Element => {
-    if (profile?.profileType === "user") {
-      return (
-        <UserProfile
-          profileConnectedUser={profileConnectedUser!}
-          profile={profile}
-          idUserViewed={id!}
-          followText={followText!}
-          onClick={follow}
-        />
-      );
+    if (isProfileFetched) {
+      if (profile?.profileType === "user") {
+        return (
+          <UserProfile
+            profileConnectedUser={profileConnectedUser!}
+            profile={profile}
+            idUserViewed={id!}
+            followText={followText!}
+            onClick={follow}
+          />
+        );
+      } else {
+        return (
+          <PageProfile
+            profile={profile!}
+            followText={followText!}
+            follow={follow}
+            changeDrawerStatus={changeDrawerStatus}
+          />
+        );
+      }
     } else {
-      return (
-        <PageProfile
-          profile={profile!}
-          followText={followText!}
-          follow={follow}
-          changeDrawerStatus={changeDrawerStatus}
-        />
-      );
+      return <></>;
     }
   };
 

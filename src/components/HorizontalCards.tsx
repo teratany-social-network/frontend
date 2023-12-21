@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./common/Button";
 import { FileServerURL } from "../api/FileApi";
 import { withAsync } from "../helpers/withAsync";
@@ -15,6 +15,7 @@ interface horizontalCardsProps {
   image?: string;
   _id?: string;
   isFollowed?: string;
+  isButtonShowed?: boolean;
 }
 
 const HorizontalCards: React.FC<horizontalCardsProps> = ({
@@ -23,6 +24,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
   image,
   _id,
   isFollowed,
+  isButtonShowed,
 }) => {
   const token = useToken();
   const profileConnectedUser = useFetchProfile();
@@ -41,6 +43,8 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
       toast.error(error_message);
     }
   };
+
+  useEffect(() => {}, [profileConnectedUser?._id, _id]);
 
   return (
     <div className="mx-1 w-full p-2 ">
@@ -61,7 +65,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
             <p className="font-medium">{name}</p>
           </Link>
           <p className="text-sm text-gray-500 mb-1">{desc}</p>
-          {profileConnectedUser?._id === _id ? null : (
+          {isButtonShowed && (
             <Button
               width="w-full"
               height="py-2"
