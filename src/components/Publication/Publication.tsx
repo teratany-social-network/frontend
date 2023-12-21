@@ -68,12 +68,18 @@ const Publication: React.FC<PublicationProps> = ({
   };
 
   const changeDrawerStatus = () => {
-    console.log("clicked");
+    window.history.pushState({ page: "" }, "", "?isModal=true");
     setDrawerOpen(true);
   };
   const closeDrawer = () => {
     setDrawerOpen(false);
   };
+  window.addEventListener("popstate", () => {
+    closeDrawer();
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl.replace(/(\?|&)isModal=true/, "");
+    window.history.replaceState({ page: "" }, "", newUrl);
+  });
 
   const togglePubContentDetails = () => {
     setIsFullContent(!isFullContent);
