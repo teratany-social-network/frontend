@@ -1,0 +1,11 @@
+
+.swiper-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic, .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
+    position: relative;
+    bottom: -5px; /* ajustez la position verticale selon vos besoins */
+    left: 50%; /* centre horizontalement */
+    transform: translateX(-50%);
+    margin: .4rem;
+  }
+  .swiper-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{
+    background-color: rgba(0, 0, 0, 0.9);
+  }
