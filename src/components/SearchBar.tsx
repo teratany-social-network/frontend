@@ -6,9 +6,11 @@ import useToken from "../hooks/useToken";
 import useFetchProfile from "../hooks/useFetchProfile";
 import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
 
-interface SearchBarProps {}
+interface SearchBarProps {
+  textFilter?: string;
+}
 
-const SearchBar: React.FC<SearchBarProps> = () => {
+const SearchBar: React.FC<SearchBarProps> = ({ textFilter }) => {
   const [query, setQuery] = useState<string>();
   const navigate = useNavigate();
   const token = useToken();
@@ -28,7 +30,20 @@ const SearchBar: React.FC<SearchBarProps> = () => {
   const searchByQuery = async () => {
     if (query) {
       await addSearchResult(query);
-      navigate(`/search/result/${query}`);
+
+      switch (textFilter) {
+        case "publication":
+          navigate(`/search/result/publication/${query}`);
+          break;
+        case "user":
+          navigate(`/search/result/user/${query}`);
+          break;
+        case "page":
+          navigate(`/pages/${query}`);
+          break;
+        default:
+          navigate(`/search/result/${query}`);
+      }
     }
   };
 

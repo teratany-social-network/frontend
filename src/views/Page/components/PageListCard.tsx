@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { followProfile } from "../../../api/ProfileApi";
+import useToken from "../../../hooks/useToken";
+import { withAsync } from "../../../helpers/withAsync";
+import useFetchProfile from "../../../hooks/useFetchProfile";
+import { ErrorData, ThrowErrorHandler } from "../../../helpers/HandleError";
 interface PageListCardsProps {
+  _id: string;
   name: string;
-  desc: string;
+  followers: number;
   isFollowed: boolean;
 }
 const PageListCard: React.FC<PageListCardsProps> = ({
+  _id,
   name,
-  desc,
+  followers,
   isFollowed,
 }) => {
+  const token = useToken();
+  const [followText, setFollowText] = useState<string>(
+    isFollowed! ? "UnFollow" : "Follow"
+  );
+  const profileConnectedUser = useFetchProfile();
+
+  const follow = async () => {
+    setFollowText(followText === "Follow" ? "UnFollow" : "Follow");
+    const { error } = await withAsync(() =>
+      followProfile(token, profileConnectedUser?._id, _id)
+    );
+    if (error) {
+      ThrowErrorHandler(error as ErrorData);
+    }
+  };
   return (
     <div className="mx-1 w-full p-2 mb-4">
       <div className="flex items-center">
@@ -21,14 +43,19 @@ const PageListCard: React.FC<PageListCardsProps> = ({
         </div>
         <div className="flex flex-col items-start px-4 w-full flex-5">
           <p className="font-medium">{name}</p>
-          <p className="text-sm text-gray-500 mb-1">{desc}</p>
+          <p className="text-sm text-gray-500 mb-1">{followers} Followers</p>
         </div>
         <div className="mr-4 flex-3">
-          {isFollowed ? (
-            <p className="font-bold text-sm">Follow</p>
-          ) : (
-            <p className="font-normal text-sm text-gray-400">UnFollow</p>
-          )}
+          <p
+            className={
+              isFollowed
+                ? "font-bold text-sm"
+                : "font-normal text-sm text-gray-400"
+            }
+            onClick={follow}
+          >
+            {followText}
+          </p>
         </div>
       </div>
     </div>
