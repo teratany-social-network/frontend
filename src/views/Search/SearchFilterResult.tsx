@@ -18,6 +18,8 @@ const SearchFilterResult: React.FC = () => {
 
   const results = useFetchSearchByQuery(query!);
 
+  console.log("results ", results);
+
   const showDropDown = () => {
     setVisibility(!dropDownIsVisible);
   };
@@ -74,7 +76,7 @@ const SearchFilterResult: React.FC = () => {
               _id={user._id}
               name={user.name}
               image={user.image!}
-              isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
+              isFollowed={user.isFollowed}
               desc={`${user?.numberOfFollowers} Followers`}
               isButtonShowed={
                 profileConnectedUser?._id !== user._id ? true : false
