@@ -6,11 +6,14 @@ import Publication from "components/Publication/Publication";
 import HorizontalCards from "components/HorizontalCards";
 import { useParams } from "react-router-dom";
 import useFetchSearchByQuery from "hooks/useFetchSearchByQuery";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const SearchResult: React.FC = () => {
   const { query } = useParams();
 
   const results = useFetchSearchByQuery(query!);
+
+  const profileConnectedUser = useFetchProfile();
 
   const handleGoBack = () => {
     window.history.back();
@@ -32,15 +35,20 @@ const SearchResult: React.FC = () => {
       {results?.profiles?.length! > 0 && (
         <div className="flex w-full flex-col pb-3 items-start border-b border-b-1">
           <p className="mx-3 mt-2 font-medium ">Users</p>
-          {results?.profiles?.map((user) => (
-            <HorizontalCards
-              _id={user._id}
-              name={user.name}
-              image={user.image!}
-              isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
-              desc={`${user?.numberOfFollowers} Followers`}
-            />
-          ))}
+          <>
+            {results?.profiles?.map((user) => (
+              <HorizontalCards
+                _id={user._id}
+                name={user.name}
+                image={user.image!}
+                isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
+                desc={`${user?.numberOfFollowers} Followers`}
+                isButtonShowed={
+                  profileConnectedUser?._id !== user._id ? true : false
+                }
+              />
+            ))}
+          </>
         </div>
       )}
       {results?.publications?.length! > 0 && (

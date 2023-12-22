@@ -6,6 +6,7 @@ import DropDown from "../../components/common/dropDown";
 import TopBar from "../../components/common/TopBar";
 import useFetchSearchByQuery from "../../hooks/useFetchSearchByQuery";
 import { useParams } from "react-router-dom";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const SearchFilterResult: React.FC = () => {
   const currentPath = window.location.pathname;
@@ -13,6 +14,7 @@ const SearchFilterResult: React.FC = () => {
   const [dropDownIsVisible, setVisibility] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState(choices[0]);
   const { query } = useParams();
+  const profileConnectedUser = useFetchProfile();
 
   const results = useFetchSearchByQuery(query!);
 
@@ -74,6 +76,9 @@ const SearchFilterResult: React.FC = () => {
               image={user.image!}
               isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
               desc={`${user?.numberOfFollowers} Followers`}
+              isButtonShowed={
+                profileConnectedUser?._id !== user._id ? true : false
+              }
             />
           ))}
     </>

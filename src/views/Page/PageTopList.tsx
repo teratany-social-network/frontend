@@ -14,6 +14,7 @@ const PageTopList = () => {
   const profileConnectedUser = useFetchProfile();
   const token = useToken();
   const [profileFollowed, setProfileFollowed] = useState<IProfile[]>();
+  const [isProfileFetched, setIsProfileFetched] = useState<Boolean>(false);
 
   const fetchFollowedProfile = async () => {
     if (profileConnectedUser) {
@@ -28,6 +29,7 @@ const PageTopList = () => {
         toast.error(error_message);
       } else {
         setProfileFollowed(response?.data as IProfile[]);
+        setIsProfileFetched(true);
       }
     }
   };
@@ -41,29 +43,33 @@ const PageTopList = () => {
 
   return (
     <>
-      {profileFollowed?.length! > 0 ? (
-        <div className="flex my-2 overflow-x-scroll no-scrollbar  w-full sm:w-[30%] p-2 pl-4 ">
-          {profileFollowed?.map((profile) => (
-            <div className="flex flex-col items-center mr-4">
-              <Link to={`/profile/${profile?._id}`}>
-                <img
-                  className="w-16 h-16 max-w-16 max-h-16 min-w-[3rem] min-h-[3rem] p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                  src={
-                    profile?.image
-                      ? FileServerURL + profile?.image
-                      : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-                  }
-                  alt="profile"
-                />
-              </Link>
-              <p className="truncated-name text-center">{profile?.name}</p>
+      {isProfileFetched && (
+        <>
+          {profileFollowed?.length! > 0 ? (
+            <div className="flex my-2 overflow-x-scroll no-scrollbar  w-full sm:w-[30%] pt-2 pb-0 pl-4 ">
+              {profileFollowed?.map((profile) => (
+                <div className="flex flex-col items-center mr-4">
+                  <Link to={`/profile/${profile?._id}`}>
+                    <img
+                      className="w-16 h-16 max-w-16 max-h-16 min-w-[3rem] min-h-[3rem] p-0.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500 object-cover"
+                      src={
+                        profile?.image
+                          ? FileServerURL + profile?.image
+                          : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                      }
+                      alt="profile"
+                    />
+                  </Link>
+                  <p className="truncated-name text-center">{profile?.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-[calc(100vh-8rem)]">
-          <FeedNoPage />
-        </div>
+          ) : (
+            <div className="flex justify-center items-center h-[calc(100vh-8rem)]">
+              <FeedNoPage />
+            </div>
+          )}
+        </>
       )}
     </>
   );
