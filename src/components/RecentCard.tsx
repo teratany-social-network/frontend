@@ -32,7 +32,9 @@ const RecentCard: React.FC<recentProps> = ({ historique, onClick }) => {
           <div className="mx-3 mb-6 flex items-center justify-between">
             <div className="flex items-center">
               <RiSearchLine size={22} />
-              <p className="text-base px-3">{history?.text}</p>
+              <Link to={`/search/result/${history?.text}`}>
+                <p className="text-base px-3">{history?.text}</p>
+              </Link>
             </div>
             <MdClose
               size={24}
@@ -47,7 +49,11 @@ const RecentCard: React.FC<recentProps> = ({ historique, onClick }) => {
                 <div className="flex items-center">
                   <img
                     className="w-10 h-10 rounded-lg object-cover"
-                    src={`${FileServerURL}/${history?.pictureUrl}`}
+                    src={
+                      history?.pictureUrl
+                        ? `${FileServerURL}/${history?.pictureUrl}`
+                        : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                    }
                     alt=""
                   />
                   <p className="text-base px-3">{history?.text}</p>
