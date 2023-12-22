@@ -15,8 +15,9 @@ export type ErrorData = {
 export const ThrowErrorHandler = (error: ErrorData) => {
   if (error instanceof AxiosError) {
     const error_message =
-      error?.response?.data.error.description ||
-      error?.response?.data.description;
+      error?.response?.data?.error?.description ||
+      error?.response?.data?.description ||
+      error?.response?.data;
     error_message ? toast.error(error_message) : toast.error(UNEXPECTED_ERROR);
   }
 };

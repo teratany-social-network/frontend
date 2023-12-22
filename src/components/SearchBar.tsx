@@ -1,11 +1,37 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { withAsync } from "../helpers/withAsync";
+import { addSearchHistory } from "../api/SearchApi";
+import useToken from "../hooks/useToken";
+import useFetchProfile from "../hooks/useFetchProfile";
+import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
 
 interface SearchBarProps {}
 
 const SearchBar: React.FC<SearchBarProps> = () => {
   const [query, setQuery] = useState<string>();
   const navigate = useNavigate();
+  const token = useToken();
+  const profileConnected = useFetchProfile();
+
+  const addSearchResult = async (query: string) => {
+    if (query.length > 4 && query.length < 20) {
+      const { error } = await withAsync(() =>
+        addSearchHistory(token, profileConnected?._id!, query)
+      );
+      if (error) {
+        ThrowErrorHandler(error as ErrorData);
+      }
+    }
+  };
+
+  const searchByQuery = async () => {
+    if (query) {
+      await addSearchResult(query);
+      navigate(`/search/result/${query}`);
+    }
+  };
+
   return (
     <div className="flex w-full">
       <div className="relative w-full">
@@ -20,9 +46,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
         />
         <button
           disabled={!query ? true : false}
-          onClick={() => {
-            if (query) navigate(`/search/result/${query}`);
-          }}
+          onClick={searchByQuery}
           className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-black rounded-r-lg border border-black"
         >
           <svg
