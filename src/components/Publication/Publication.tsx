@@ -137,46 +137,60 @@ const Publication: React.FC<PublicationProps> = ({
               modules={[Pagination]}
               className="mySwiper"
             >
-              {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  {(() => {
-                    const tempImage = new Image();
-                    tempImage.src = FileServerURL + image;
-                    const minHeight = 600;
-                    const isImageTooLarge = tempImage.height > minHeight;
+              {images.length > 1 ? (
+                images.map((image, index) => (
+                  <SwiperSlide key={index}>
+                    {(() => {
+                      const tempImage = new Image();
+                      tempImage.src = FileServerURL + image;
+                      const minHeight = 600;
+                      const isImageTooLarge = tempImage.height > minHeight;
 
-                    return (
-                      <>
-                        {!isImageTooLarge ? (
-                          <div className="swiper-slide">
-                            <div
-                              className="bg-image"
-                              style={{
-                                backgroundImage: `url(${
-                                  FileServerURL + image
-                                })`,
-                              }}
-                            ></div>
-                            <img
-                              alt=""
-                              className="w-full h-full object-contain"
-                              src={FileServerURL + image}
-                            />
-                          </div>
-                        ) : (
-                          <div className="swiper-slide">
-                            <img
-                              alt=""
-                              className="w-full h-full object-center scale-[100%]"
-                              src={FileServerURL + image}
-                            />
-                          </div>
-                        )}
-                      </>
-                    );
-                  })()}
-                </SwiperSlide>
-              ))}
+                      return (
+                        <>
+                          {!isImageTooLarge ? (
+                            <div className="swiper-slide">
+                              <div
+                                className="bg-image"
+                                style={{
+                                  backgroundImage: `url(${
+                                    FileServerURL + image
+                                  })`,
+                                }}
+                              ></div>
+                              <img
+                                alt=""
+                                className="w-full h-full object-contain"
+                                src={FileServerURL + image}
+                              />
+                            </div>
+                          ) : (
+                            <div className="swiper-slide">
+                              <img
+                                alt=""
+                                className="w-full h-full object-center scale-[100%]"
+                                src={FileServerURL + image}
+                              />
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </SwiperSlide>
+                ))
+              ) : (
+                <>
+                  {images.length === 1 ? (
+                    <img
+                      alt=""
+                      className="w-full h-full object-center scale-[100%]"
+                      src={FileServerURL + images}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
             </Swiper>
           )}
         </div>
