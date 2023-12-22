@@ -16,7 +16,7 @@ interface horizontalCardsProps {
   desc: string;
   image?: string;
   _id?: string;
-  isFollowed?: string;
+  isFollowed?: boolean;
   isButtonShowed?: boolean;
 }
 
@@ -30,7 +30,9 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
 }) => {
   const token = useToken();
   const profileConnectedUser = useFetchProfile();
-  const [followText, setFollowText] = useState<string>(isFollowed!);
+  const [followText, setFollowText] = useState<string>(
+    isFollowed! ? "UnFollow" : "Follow"
+  );
 
   const follow = async () => {
     setFollowText(followText === "Follow" ? "UnFollow" : "Follow");

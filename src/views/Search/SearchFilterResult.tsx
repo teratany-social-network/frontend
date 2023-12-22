@@ -15,6 +15,19 @@ const SearchFilterResult: React.FC = () => {
 
   const results = useFetchSearchByQuery(query!);
 
+<<<<<<< HEAD
+=======
+  console.log("results ", results);
+
+  const showDropDown = () => {
+    setVisibility(!dropDownIsVisible);
+  };
+
+  const handleChoiceSelect = (choice: string) => {
+    setSelectedChoice(choice);
+  };
+
+>>>>>>> 1f4824c55ee3873f0035a8082b5c531c361f67ca
   const pathSegments = currentPath.split("/");
   const textFilter = pathSegments[pathSegments.length - 2];
 
@@ -67,7 +80,7 @@ const SearchFilterResult: React.FC = () => {
               _id={user._id}
               name={user.name}
               image={user.image!}
-              isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
+              isFollowed={user.isFollowed}
               desc={`${user?.numberOfFollowers} Followers`}
               isButtonShowed={
                 profileConnectedUser?._id !== user._id ? true : false
