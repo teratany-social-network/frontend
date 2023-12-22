@@ -49,6 +49,7 @@ const Home = () => {
             content={pub?.content}
             images={pub?.images!}
             isReacted={pub.isReacted}
+            isShared={true}
           />
         ))}
       </div>

@@ -26,6 +26,7 @@ interface PublicationProps {
   reactions?: number;
   comments?: number;
   isReacted?: boolean;
+  isShared?: boolean;
 }
 
 const Publication: React.FC<PublicationProps> = ({
@@ -39,6 +40,7 @@ const Publication: React.FC<PublicationProps> = ({
   reactions,
   comments,
   isReacted,
+  isShared,
 }) => {
   const [isPostLiked, setIsPostLiked] = useState<Boolean>(isReacted!);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
@@ -89,6 +91,15 @@ const Publication: React.FC<PublicationProps> = ({
     // <!-- Wrapper-->
     <div className="wrapper my-2 w-full sm:w-[30%] flex flex-col items-center bg-white rounded-lg shadow-md">
       {/* <!-- Card--> */}
+      {isShared && (
+        <div className="flex items-center border-b-2 border-gray-200 w-full h-8 text-start px-4 text-sm">
+          Partagée par&nbsp;
+          <div className="flex">
+            <p className="font-semibold"> Hasina,</p>
+            <p className="font-semibold">&nbsp;Andritiana</p>
+          </div>
+        </div>
+      )}
       <article className="mb-4 break-inside rounded-xl bg-white white:bg-slate-800 flex flex-col bg-clip-border w-full">
         <div
           className={
