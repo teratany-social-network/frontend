@@ -5,10 +5,12 @@ import PageListCard from "./components/PageListCard";
 import { useParams } from "react-router-dom";
 import useFetchSearchByQuery from "../../hooks/useFetchSearchByQuery";
 import { ProfileFilter } from "../../types/profile.type";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const PageList = () => {
   const [activeBage, setActiveBage] = useState<boolean | null>(null);
   const { query } = useParams();
+  const profileConnected = useFetchProfile();
 
   const results = useFetchSearchByQuery(query!);
   const [filterPage, setfilterPage] = useState<ProfileFilter[]>([]);
@@ -18,6 +20,8 @@ const PageList = () => {
     const pageFiltered = results?.profiles?.filter(
       (page) => page.isFollowed === true
     );
+    console.log("filterByFollowedPage ", pageFiltered);
+
     setfilterPage(pageFiltered);
   };
   const filterByUnFollowedPage = () => {
@@ -25,6 +29,7 @@ const PageList = () => {
     const pageFiltered = results?.profiles?.filter(
       (page) => page.isFollowed === false
     );
+    console.log("filterByUnFollowedPage ", pageFiltered);
     setfilterPage(pageFiltered);
   };
 
@@ -41,15 +46,22 @@ const PageList = () => {
           name={page?.name}
           followers={page?.numberOfFollowers}
           isFollowed={page?.isFollowed}
+          isOwner={page?._id === profileConnected?._id}
+          image={page?.image}
+          profileType={page?.profileType}
         />
       ));
     } else {
+      console.log("results ", results);
       return results?.profiles?.map((page) => (
         <PageListCard
           _id={page?._id}
           name={page?.name}
           followers={page?.numberOfFollowers}
           isFollowed={page?.isFollowed}
+          isOwner={page?._id === profileConnected?._id}
+          image={page?.image}
+          profileType={page?.profileType}
         />
       ));
     }
@@ -82,7 +94,7 @@ const PageList = () => {
                   : "text-sm px-3 !bg-gray-200 !text-gray-800 rounded-full"
               }
             >
-              Followed Page
+              UnFollowed Page
             </div>
             <div
               onClick={filterByFollowedPage}
@@ -93,7 +105,7 @@ const PageList = () => {
                   : "text-sm px-3 !bg-gray-200 !text-gray-800 rounded-full"
               }
             >
-              UnFollowed Page
+              Followed Page
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ const SearchFilterResult: React.FC = () => {
         results?.publications?.length! > 0 && (
           <div
             className={`bg-gray-100 flex flex-col items-start ${
-              textFilter === "publication" && "mt-14"
+              textFilter === "publication" && "mt-28"
             }`}
           >
             {results?.publications?.map((pub) => (
@@ -61,7 +61,7 @@ const SearchFilterResult: React.FC = () => {
           </div>
         )
       ) : (
-        <div className={`flex flex-col items-start mt-16`}>
+        <div className={`flex flex-col items-start mt-28`}>
           {results?.profiles?.map((user) => (
             <HorizontalCards
               _id={user._id}
