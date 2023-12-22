@@ -140,7 +140,6 @@ const Publication: React.FC<PublicationProps> = ({
               {images.map((image, index) => (
                 <SwiperSlide key={index}>
                   {(() => {
-                    // Créez une nouvelle image pour obtenir sa largeur
                     const tempImage = new Image();
                     tempImage.src = FileServerURL + image;
                     const minHeight = 600;
