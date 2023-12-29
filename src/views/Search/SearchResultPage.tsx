@@ -41,7 +41,7 @@ const SearchResult: React.FC = () => {
                 _id={user._id}
                 name={user.name}
                 image={user.image!}
-                isFollowed={user.isFollowed ? "UnFollow" : "Follow"}
+                isFollowed={user?.isFollowed}
                 desc={`${user?.numberOfFollowers} Followers`}
                 isButtonShowed={
                   profileConnectedUser?._id !== user._id ? true : false
