@@ -168,7 +168,7 @@ const Publication: React.FC<PublicationProps> = ({
                             <div className="swiper-slide">
                               <img
                                 alt=""
-                                className="w-full h-full object-center scale-[100%]"
+                                className="w-full h-full object-center object-cover scale-[100%]"
                                 src={FileServerURL + image}
                               />
                             </div>
