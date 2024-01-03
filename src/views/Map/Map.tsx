@@ -60,11 +60,19 @@ const Map = () => {
   };
 
   const changeSlideStatus = () => {
+    window.history.pushState({ page: "" }, "", "?isModal=true");
+
     setSlideOpen(true);
   };
   const closeSlide = () => {
     setSlideOpen(false);
   };
+  window.addEventListener("popstate", () => {
+    closeSlide();
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl.replace(/(\?|&)isModal=true/, "");
+    window.history.replaceState({ page: "" }, "", newUrl);
+  });
   const fetchProfileWithCoordonates = async () => {
     const { response, error } = await withAsync(() =>
       getProfileWithCoordonates(token)
