@@ -31,7 +31,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
   const token = useToken();
   const profileConnectedUser = useFetchProfile();
   const [followText, setFollowText] = useState<string>(
-    isFollowed! ? "UnFollow" : "Follow"
+    isFollowed! === true ? "UnFollow" : "Follow"
   );
 
   const follow = async () => {

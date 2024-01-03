@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import TopBar from "../../components/common/TopBar";
 import PageListCard from "./components/PageListCard";
@@ -15,57 +15,48 @@ const PageList = () => {
   const results = useFetchSearchByQuery(query!);
   const [filterPage, setfilterPage] = useState<ProfileFilter[]>([]);
 
-  const filterByFollowedPage = () => {
+  const filterByFollowedPage = useCallback(() => {
     setActiveBage(false);
     const pageFiltered = results?.profiles?.filter(
-      (page) => page.isFollowed === true
+      (page) => page?.isFollowed === true
     );
-    console.log("filterByFollowedPage ", pageFiltered);
 
     setfilterPage(pageFiltered);
-  };
-  const filterByUnFollowedPage = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeBage, results, filterPage]);
+
+  const filterByUnFollowedPage = useCallback(() => {
     setActiveBage(true);
+
     const pageFiltered = results?.profiles?.filter(
-      (page) => page.isFollowed === false
+      (page) => page?.isFollowed === false
     );
-    console.log("filterByUnFollowedPage ", pageFiltered);
     setfilterPage(pageFiltered);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeBage, results, filterPage]);
 
   const filterByAll = () => {
     setActiveBage(null);
-    setfilterPage([]);
+    setfilterPage(results?.profiles);
   };
 
   const renderPageList = () => {
-    if (filterPage.length > 0) {
-      return filterPage?.map((page) => (
-        <PageListCard
-          _id={page?._id}
-          name={page?.name}
-          followers={page?.numberOfFollowers}
-          isFollowed={page?.isFollowed}
-          isOwner={page?._id === profileConnected?._id}
-          image={page?.image}
-          profileType={page?.profileType}
-        />
-      ));
-    } else {
-      console.log("results ", results);
-      return results?.profiles?.map((page) => (
-        <PageListCard
-          _id={page?._id}
-          name={page?.name}
-          followers={page?.numberOfFollowers}
-          isFollowed={page?.isFollowed}
-          isOwner={page?._id === profileConnected?._id}
-          image={page?.image}
-          profileType={page?.profileType}
-        />
-      ));
-    }
+    return filterPage?.map((page) => (
+      <PageListCard
+        _id={page?._id}
+        name={page?.name}
+        followers={page?.numberOfFollowers}
+        isFollowed={page?.isFollowed}
+        isOwner={page?._id === profileConnected?._id}
+        image={page?.image}
+        profileType={page?.profileType}
+      />
+    ));
   };
+
+  useEffect(() => {
+    setfilterPage(results?.profiles);
+  }, [results]);
 
   return (
     <>

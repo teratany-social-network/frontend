@@ -30,7 +30,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ textFilter }) => {
   const searchByQuery = async () => {
     if (query) {
       await addSearchResult(query);
-<<<<<<< HEAD
 
       switch (textFilter) {
         case "publication":
@@ -45,9 +44,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ textFilter }) => {
         default:
           navigate(`/search/result/${query}`);
       }
-=======
-      navigate(`/search/result/${query}`);
->>>>>>> 1f4824c55ee3873f0035a8082b5c531c361f67ca
     }
   };
 

@@ -25,9 +25,14 @@ const PageListCard: React.FC<PageListCardsProps> = ({
   profileType,
 }) => {
   const token = useToken();
+
+  console.log("isFollowed ", name, isFollowed);
+
   const [followText, setFollowText] = useState<string>(
     isFollowed! ? "UnFollow" : "Follow"
   );
+
+  console.log("follow text ", name, followText);
   const profileConnectedUser = useFetchProfile();
 
   const follow = async () => {
