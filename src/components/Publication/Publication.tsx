@@ -128,7 +128,7 @@ const Publication: React.FC<PublicationProps> = ({
           </div>
           {profileId === profile?._id && <MenuPublication id={_id!} />}
         </div>
-        <div className="">
+        <div className="z-0">
           {images && (
             <Swiper
               pagination={{
