@@ -15,6 +15,7 @@ import {
   PopoverHandler,
   PopoverContent,
 } from "@material-tailwind/react";
+import profileDefault from "../../assets/userPics.jpg";
 
 interface CommentProps {
   publicationId: string;
@@ -103,7 +104,7 @@ const Comments: React.FC<CommentProps> = ({ publicationId }) => {
                     src={
                       comment.profile.image
                         ? FileServerURL + comment.profile.image
-                        : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                        : profileDefault
                     }
                     className="object-cover w-8 h-8 rounded-full   shadow-emerald-400 "
                     alt="comments"

@@ -7,7 +7,7 @@ import { IoMap } from "@react-icons/all-files/io5/IoMap";
 import { IoMapOutline } from "@react-icons/all-files/io5/IoMapOutline";
 import { BsFillPlusSquareFill } from "@react-icons/all-files/bs/BsFillPlusSquareFill";
 import { BsPlusSquare } from "@react-icons/all-files/bs/BsPlusSquare";
-import ProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
+import ProfilePicture from "../../assets/userPics.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileServerURL } from "../../api/FileApi";

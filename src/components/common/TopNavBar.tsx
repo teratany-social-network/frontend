@@ -17,7 +17,7 @@ const TopNavBar: React.FC<TopNavBarProps> = (props: any) => {
         <p className="text-lg font-serif flex justify-center font-medium">
           <img className="h-10" src={LogoTeratany} alt="instagram" />
         </p>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <div className=" relative px-2">
             <IoNotificationsOutline
               size={27}
@@ -34,7 +34,7 @@ const TopNavBar: React.FC<TopNavBarProps> = (props: any) => {
               {props.messageCount}
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

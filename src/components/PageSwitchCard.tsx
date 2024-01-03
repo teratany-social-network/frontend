@@ -7,6 +7,7 @@ import { AppDispatch } from "../store/store";
 import { setAuthentication } from "../store/reducer/user.reducer";
 import useToken from "../hooks/useToken";
 import { FileServerURL } from "../api/FileApi";
+import profileDefault from "../assets/userPics.jpg";
 
 interface PageCardsProps {
   name: string;
@@ -53,11 +54,7 @@ const PageSwitchCard: React.FC<PageCardsProps> = ({
           <img
             alt="page"
             className=" !w-10 !h-10 rounded-full shadow-lg"
-            src={
-              image
-                ? FileServerURL + image
-                : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-            }
+            src={image ? FileServerURL + image : profileDefault}
           />
         </div>
         <div className="flex flex-col items-start px-3 w-full flex-5">
