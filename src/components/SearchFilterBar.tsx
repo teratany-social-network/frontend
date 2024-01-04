@@ -37,7 +37,7 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ query }) => {
       <p
         className="w-1/3 border border-1 rounded-lg border-gray-200 mx-1 text-center px-2"
         onClick={() => {
-          navigate("/pages");
+          navigate(`/pages/${query}`);
         }}
       >
         Page

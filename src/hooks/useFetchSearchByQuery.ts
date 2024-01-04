@@ -8,7 +8,7 @@ import useToken from "hooks/useToken";
 import useFetchProfile from "./useFetchProfile";
 import { ISearch } from "types/search.type";
 
-const useFetchSearchByQuery = (query: string) => {
+const useFetchSearchByQuery = (query: string, type?: string) => {
   const token = useToken();
   const profileConnectedUser = useFetchProfile();
   const [results, setResults] = useState<ISearch>();
@@ -17,7 +17,7 @@ const useFetchSearchByQuery = (query: string) => {
     async function fetchResults() {
       if (profileConnectedUser) {
         const { error, response } = await withAsync(() =>
-          searchProfile(token, query, profileConnectedUser?._id!)
+          searchProfile(token, query, profileConnectedUser?._id!, type)
         );
         if (error instanceof AxiosError) {
           const error_message: string =
@@ -27,6 +27,7 @@ const useFetchSearchByQuery = (query: string) => {
           toast.error(error_message);
         } else {
           setResults(response?.data as ISearch);
+
         }
       }
     } fetchResults()
