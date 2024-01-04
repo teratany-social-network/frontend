@@ -78,7 +78,7 @@ const PageList = () => {
                   : "text-sm px-3 !bg-gray-200 !text-gray-800 rounded-full"
               }
             >
-              Followed Page
+              Followed page
             </div>
           </div>
         </div>
