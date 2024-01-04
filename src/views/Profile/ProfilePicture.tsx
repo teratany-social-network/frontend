@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import defaultProfilePicture from "../../assets/Teratany_ico/apple-touch-icon-180x180.png";
+import defaultProfilePicture from "../../assets/userPics.jpg";
 import Button from "../../components/common/Button";
 import TopBar from "../../components/common/TopBar";
 import { withAsync } from "../../helpers/withAsync";
@@ -10,6 +10,7 @@ import useLoadingButton from "../../hooks/useLoadingButton";
 import { toast } from "react-toastify";
 import { FileServerURL, uploadFile } from "../../api/FileApi";
 import useFetchProfile from "../../hooks/useFetchProfile";
+import profileDefault from "../../assets/userPics.jpg";
 
 const ProfilePicture: React.FC = () => {
   const token = useToken();
@@ -79,7 +80,7 @@ const ProfilePicture: React.FC = () => {
       <TopBar text="Profile picture" />
       <div className="mt-20 w-[90%] mx-auto flex flex-col items-center justify-center">
         <img
-          src={fileViewer}
+          src={fileViewer ? fileViewer : profileDefault}
           alt=""
           className="w-32 h-32 border-2 rounded-full mx-3 my-6 object-cover"
         />
