@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { withAsync } from "../helpers/withAsync";
 import { addSearchHistory } from "../api/SearchApi";
 import useToken from "../hooks/useToken";
 import useFetchProfile from "../hooks/useFetchProfile";
 import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
 
-interface SearchBarProps {}
+interface SearchBarProps {
+  textFilter?: string;
+}
 
-const SearchBar: React.FC<SearchBarProps> = () => {
-  const [query, setQuery] = useState<string>();
+const SearchBar: React.FC<SearchBarProps> = ({ textFilter }) => {
+  const queryText = useParams().query;
+  const [query, setQuery] = useState<string>(queryText!);
   const navigate = useNavigate();
   const token = useToken();
   const profileConnected = useFetchProfile();
@@ -28,7 +31,20 @@ const SearchBar: React.FC<SearchBarProps> = () => {
   const searchByQuery = async () => {
     if (query) {
       await addSearchResult(query);
-      navigate(`/search/result/${query}`);
+
+      switch (textFilter) {
+        case "publication":
+          navigate(`/search/result/publication/${query}`);
+          break;
+        case "user":
+          navigate(`/search/result/user/${query}`);
+          break;
+        case "page":
+          navigate(`/pages/${query}`);
+          break;
+        default:
+          navigate(`/search/result/${query}`);
+      }
     }
   };
 
@@ -40,6 +56,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
           id="search-dropdown"
           className="block p-2.5 w-full z-20 text-sm text-gray-900 rounded-lg border border-1"
           placeholder="Search..."
+          value={query}
           onChange={(e) => {
             setQuery(e.target.value);
           }}

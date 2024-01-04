@@ -52,23 +52,25 @@ const SearchResult: React.FC = () => {
         </div>
       )}
       {results?.publications?.length! > 0 && (
-        <div className="flex flex-col items-start">
-          <p className="mx-3 mt-2 font-medium ">Publications</p>
-          {results?.publications?.map((pub) => (
-            <Publication
-              key={pub?._id}
-              _id={pub?._id}
-              profileId={pub?.profile?._id}
-              profileName={pub?.profile?.name}
-              profileImage={pub?.profile?.image}
-              date={pub?.date}
-              comments={pub?.numberOfComments}
-              reactions={pub?.numberOfReactions}
-              content={pub?.content}
-              images={pub?.images!}
-              isReacted={pub.isReacted}
-            />
-          ))}
+        <div className="bg-gray-100 flex flex-col items-start">
+          <p className="bg-gray-100 mx-3 mt-2 font-medium ">Publications</p>
+          <div className="bg-gray-100">
+            {results?.publications?.map((pub) => (
+              <Publication
+                key={pub?._id}
+                _id={pub?._id}
+                profileId={pub?.profile?._id}
+                profileName={pub?.profile?.name}
+                profileImage={pub?.profile?.image}
+                date={pub?.date}
+                comments={pub?.numberOfComments}
+                reactions={pub?.numberOfReactions}
+                content={pub?.content}
+                images={pub?.images!}
+                isReacted={pub.isReacted}
+              />
+            ))}
+          </div>
         </div>
       )}
     </>

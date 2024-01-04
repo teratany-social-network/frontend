@@ -1,78 +1,61 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import TopBar from "../../components/common/TopBar";
 import PageListCard from "./components/PageListCard";
+import { useParams } from "react-router-dom";
+import useFetchSearchByQuery from "../../hooks/useFetchSearchByQuery";
+import { ProfileFilter } from "../../types/profile.type";
+import useFetchProfile from "../../hooks/useFetchProfile";
 
 const PageList = () => {
   const [activeBage, setActiveBage] = useState<boolean | null>(null);
+  const { query } = useParams();
+  const profileConnected = useFetchProfile();
 
-  let pages = [
-    {
-      name: "Teratany",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: true,
-    },
-    {
-      name: "Ampela Mitsingy",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: false,
-    },
-    {
-      name: "Zanaka Malagasy",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: false,
-    },
-    {
-      name: "Faritsy Menabe",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: true,
-    },
-    {
-      name: "Bongolava Miray",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: true,
-    },
-    {
-      name: "Sakalava ",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: false,
-    },
-    {
-      name: "Faritsy Analamanga",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: true,
-    },
-    {
-      name: "Tampoketsa Fitambarana",
-      desc: "50k Followers - Antananarivo",
-      isFollowed: false,
-    },
-  ];
+  const results = useFetchSearchByQuery(query!, "n");
 
-  const [pageList, setPageList] = useState(pages);
+  const [filterPage, setfilterPage] = useState<ProfileFilter[]>([]);
 
-  const filterByFollowedPage = () => {
+  const filterByFollowedPage = useCallback(() => {
     setActiveBage(false);
-    const pageFiltered = pages.filter((page) => page.isFollowed === true);
-    console.log("pageFiltered ", pageFiltered);
-    setPageList(pageFiltered);
-  };
-  const filterByUnFollowedPage = () => {
-    setActiveBage(true);
-    const pageFiltered = pages.filter((page) => page.isFollowed === false);
-    setPageList(pageFiltered);
-  };
+    const pageFiltered = results?.profiles?.filter(
+      (page) => page?.isFollowed === true
+    );
+
+    setfilterPage(pageFiltered);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeBage, results, filterPage]);
 
   const filterByAll = () => {
     setActiveBage(null);
-    setPageList(pages);
+    setfilterPage(results?.profiles);
   };
+
+  const renderPageList = () => {
+    return filterPage?.map((page) => (
+      <PageListCard
+        _id={page?._id}
+        name={page?.name}
+        followers={page?.numberOfFollowers}
+        isFollowed={page?.isFollowed}
+        isOwner={page?._id === profileConnected?._id}
+        image={page?.image}
+        profileType={page?.profileType}
+      />
+    ));
+  };
+
+  useEffect(() => {
+    setfilterPage(results?.profiles);
+
+    console.log(results?.profiles);
+  }, [results]);
 
   return (
     <>
       <TopBar text="Pages" />
       <div className="fixed top-0 w-full bg-white p-2  mb-2 mt-14 flex flex-col items-start">
-        <SearchBar />
+        <SearchBar textFilter="page" />
         <div className="flex mt-4">
           <div className="flex space-x-2">
             <div
@@ -87,17 +70,6 @@ const PageList = () => {
               All
             </div>
             <div
-              onClick={filterByUnFollowedPage}
-              style={{ paddingTop: "0.1em", paddingBottom: "0.1rem" }}
-              className={
-                activeBage
-                  ? "text-sm px-3 !bg-gray-800 !text-white rounded-full"
-                  : "text-sm px-3 !bg-gray-200 !text-gray-800 rounded-full"
-              }
-            >
-              Followed Page
-            </div>
-            <div
               onClick={filterByFollowedPage}
               style={{ paddingTop: "0.1em", paddingBottom: "0.1rem" }}
               className={
@@ -106,20 +78,14 @@ const PageList = () => {
                   : "text-sm px-3 !bg-gray-200 !text-gray-800 rounded-full"
               }
             >
-              UnFollowed Page
+              Followed page
             </div>
           </div>
         </div>
       </div>
 
       <div className="w-full overflow-y-auto flex flex-col items-center mt-40">
-        {pageList.map((page) => (
-          <PageListCard
-            name={page.name}
-            desc={page.desc}
-            isFollowed={page.isFollowed}
-          />
-        ))}
+        {renderPageList()}
       </div>
     </>
   );
