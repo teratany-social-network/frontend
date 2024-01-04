@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import MapContainerForm from "../../components/MapContainer";
 import { SlideOver } from "../../components/SlideOver";
-import { HiMenuAlt1 } from "@react-icons/all-files/hi/HiMenuAlt1";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { MARKER_ICON } from "../../constants/MarkerIcon";
 import { getProfileWithCoordonates } from "../../api/ProfileApi";
@@ -13,11 +12,16 @@ import { IProfile } from "../../types/profile.type";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { Link } from "react-router-dom";
+import { FileServerURL } from "../../api/FileApi";
+import ProfilePicture from "../../assets/userPics.jpg";
 import {
   setCoordonates,
   setProfilesWithCoordonates,
 } from "../../store/reducer/page.reducer";
 import { useDispatch } from "react-redux";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 type profileCoordonatesType = {
   latitude: number;
@@ -102,9 +106,23 @@ const Map = () => {
       <div>
         <button
           onClick={changeSlideStatus}
-          className="fixed bottom-16 left-3 z-1000 flex items-center gap-1 bg-gray-800 text-white py-2 px-2 rounded-md hover:bg-gray-700 transition duration-300 ease-in-out transform hover:scale-110"
+          className="fixed bottom-16 left-3 z-1000 flex items-center gap-1 bg-gray-900 text-white p-2.5 rounded-md transition duration-300 ease-in-out transform"
         >
-          <HiMenuAlt1 />
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
         </button>
       </div>
       <SlideOver isOpen={slideOpen} onClose={closeSlide} />
@@ -113,29 +131,52 @@ const Map = () => {
         lng={47.53613}
         className="w-full h-screen"
       >
-        <MapCoordonatesProfileSelected />
-        {profiles?.map((profile) => (
-          <Marker
-            icon={MARKER_ICON}
-            position={[
-              profile?.localisation?.coordonates?.latitude!,
-              profile?.localisation?.coordonates?.longitude!,
-            ]}
-            interactive
-          >
-            <Popup>
-              <Link to={`/profile/${profile?._id}`}>
-                <span className="font-semibold hover:underline-offset-2">
-                  {profile?.name}
-                </span>
-              </Link>{" "}
-              <br />
-              <span className="text-slate-500">
-                {profile?.followers?.length} followers
-              </span>
-            </Popup>
-          </Marker>
-        ))}
+        <MarkerClusterGroup chunkedLoading polygonOptions={{ opacity: 0 }}>
+          <MapCoordonatesProfileSelected />
+          {profiles?.map((profile) => (
+            <Marker
+              icon={MARKER_ICON}
+              position={[
+                profile?.localisation?.coordonates?.latitude!,
+                profile?.localisation?.coordonates?.longitude!,
+              ]}
+              interactive
+            >
+              <Popup>
+                <Link
+                  to={`/profile/${profile?._id}`}
+                  className="flex flex-col items-start justify-start overflow-hidden pl-1"
+                >
+                  <div className="flex items-center w-[42vw]">
+                    <img
+                      src={
+                        profile?.image
+                          ? FileServerURL + profile?.image
+                          : ProfilePicture
+                      }
+                      className="w-10 h-10 border-2 rounded-full border-black object-cover"
+                      alt=""
+                    />
+                    <span className="font-semibold hover:underline-offset-2 overflow-hidden px-2">
+                      {profile?.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center pt-2 pb-1">
+                    <span className="text-slate-500 px-1">
+                      {profile?.publications?.length} posts
+                    </span>
+                    <span className="text-slate-500 px-1">
+                      {profile?.followers?.length} followers
+                    </span>
+                  </div>
+                  <span className="text-slate-500 px-1">
+                    {profile?.profileType}
+                  </span>
+                </Link>{" "}
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
       </MapContainerForm>
     </div>
   );
