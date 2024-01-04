@@ -15,6 +15,12 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MenuPublication } from "../../views/Publication/components/MenuPublication";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "../../styles/SwiperPublication.css";
+import { Pagination } from "swiper/modules";
+
 interface PublicationProps {
   _id?: string;
   profileId?: string;
@@ -122,11 +128,70 @@ const Publication: React.FC<PublicationProps> = ({
           </div>
           {profileId === profile?._id && <MenuPublication id={_id!} />}
         </div>
-        <div className="">
+        <div className="z-0">
           {images && (
-            <div className="flex justify-between gap-1 mb-1">
-              <img alt="" className="w-full" src={FileServerURL + images[0]} />
-            </div>
+            <Swiper
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Pagination]}
+              className="mySwiper"
+            >
+              {images.length > 1 ? (
+                images.map((image, index) => (
+                  <SwiperSlide key={index}>
+                    {(() => {
+                      const tempImage = new Image();
+                      tempImage.src = FileServerURL + image;
+                      const minHeight = 600;
+                      const isImageTooLarge = tempImage.height > minHeight;
+
+                      return (
+                        <>
+                          {!isImageTooLarge ? (
+                            <div className="swiper-slide">
+                              <div
+                                className="bg-image"
+                                style={{
+                                  backgroundImage: `url(${
+                                    FileServerURL + image
+                                  })`,
+                                }}
+                              ></div>
+                              <img
+                                alt=""
+                                className="w-full h-full object-contain"
+                                src={FileServerURL + image}
+                              />
+                            </div>
+                          ) : (
+                            <div className="swiper-slide">
+                              <img
+                                alt=""
+                                className="w-full h-full object-center object-cover scale-[100%]"
+                                src={FileServerURL + image}
+                              />
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </SwiperSlide>
+                ))
+              ) : (
+                <>
+                  {images.length === 1 ? (
+                    <img
+                      alt=""
+                      className="w-full h-full object-center scale-[100%]"
+                      src={FileServerURL + images}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </>
+              )}
+            </Swiper>
           )}
         </div>
         <div className="p-4 pb-0">
