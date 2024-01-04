@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MenuPublication } from "../../views/Publication/components/MenuPublication";
 import { Link } from "react-router-dom";
+import profileDefault from "../../assets/userPics.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -109,9 +110,7 @@ const Publication: React.FC<PublicationProps> = ({
                 alt="profilePubImage"
                 className="rounded-full max-w-[3rem] max-h-[3rem] min-h-[3rem] min-w-[3rem] w-12 h-12 mr-4 object-cover"
                 src={
-                  profileImage
-                    ? FileServerURL + profileImage
-                    : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                  profileImage ? FileServerURL + profileImage : profileDefault
                 }
               />
               <div className="flex flex-col">
