@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { followProfile } from "api/ProfileApi";
 import useToken from "hooks/useToken";
 import { withAsync } from "helpers/withAsync";
@@ -26,13 +26,9 @@ const PageListCard: React.FC<PageListCardsProps> = ({
 }) => {
   const token = useToken();
 
-  console.log("isFollowed ", name, isFollowed);
+  const [followText, setFollowText] = useState<string>("...");
 
-  const [followText, setFollowText] = useState<string>(
-    isFollowed! ? "UnFollow" : "Follow"
-  );
-
-  console.log("follow text ", name, followText);
+  console.log("follow text ", name, isFollowed);
   const profileConnectedUser = useFetchProfile();
 
   const follow = async () => {
@@ -44,6 +40,12 @@ const PageListCard: React.FC<PageListCardsProps> = ({
       ThrowErrorHandler(error as ErrorData);
     }
   };
+
+  useEffect(() => {
+    setFollowText(isFollowed ? "UnFollow" : "Follow");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFollowed]);
+
   return (
     <>
       {profileType !== "user" && (

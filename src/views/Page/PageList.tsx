@@ -12,7 +12,8 @@ const PageList = () => {
   const { query } = useParams();
   const profileConnected = useFetchProfile();
 
-  const results = useFetchSearchByQuery(query!);
+  const results = useFetchSearchByQuery(query!, "n");
+
   const [filterPage, setfilterPage] = useState<ProfileFilter[]>([]);
 
   const filterByFollowedPage = useCallback(() => {
@@ -56,6 +57,8 @@ const PageList = () => {
 
   useEffect(() => {
     setfilterPage(results?.profiles);
+
+    console.log(results?.profiles);
   }, [results]);
 
   return (
