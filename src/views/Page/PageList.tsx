@@ -26,16 +26,6 @@ const PageList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeBage, results, filterPage]);
 
-  const filterByUnFollowedPage = useCallback(() => {
-    setActiveBage(true);
-
-    const pageFiltered = results?.profiles?.filter(
-      (page) => page?.isFollowed === false
-    );
-    setfilterPage(pageFiltered);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeBage, results, filterPage]);
-
   const filterByAll = () => {
     setActiveBage(null);
     setfilterPage(results?.profiles);
@@ -78,17 +68,6 @@ const PageList = () => {
               }
             >
               All
-            </div>
-            <div
-              onClick={filterByUnFollowedPage}
-              style={{ paddingTop: "0.1em", paddingBottom: "0.1rem" }}
-              className={
-                activeBage
-                  ? "text-sm px-3 !bg-gray-800 !text-white rounded-full"
-                  : "text-sm px-3 !bg-gray-200 !text-gray-800 rounded-full"
-              }
-            >
-              UnFollowed Page
             </div>
             <div
               onClick={filterByFollowedPage}
