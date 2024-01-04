@@ -29,12 +29,19 @@ const Profile: React.FC = () => {
     React.useState<Boolean>(false);
 
   const openDrawerBottom = () => {
+    window.history.pushState({ page: "" }, "", "?isModal2=true");
     setOpenBottom(true);
   };
 
   const closeDrawerBottom = () => {
     setOpenBottom(false);
   };
+  window.addEventListener("popstate", () => {
+    closeDrawerBottom();
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl.replace(/(\?|&)isModal2=true/, "");
+    window.history.replaceState({ page: "" }, "", newUrl);
+  });
 
   const closeDrawer = () => setDrawerOpen(false);
   const changeDrawerStatus = () => setDrawerOpen(true);
