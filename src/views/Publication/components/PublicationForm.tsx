@@ -12,6 +12,8 @@ import { editPublication, postPublication } from "api/PublicationApi";
 import useToken from "hooks/useToken";
 import { useNavigate } from "react-router-dom";
 import InputEmoji from "react-input-emoji";
+import profileDefault from "../../../assets/userPics.jpg";
+
 interface PublicationFormProps {
   _id?: string;
   content?: string;
@@ -143,11 +145,7 @@ const PublicationForm: React.FC<PublicationFormProps> = ({
       <div className="w-[90%] flex justify-start items-center space-x-4 mt-20">
         <img
           className="w-10 h-10 rounded-full"
-          src={
-            profile?.image
-              ? FileServerURL + profile?.image
-              : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-          }
+          src={profile?.image ? FileServerURL + profile?.image : profileDefault}
           alt="profileImage"
         />
         <p className="flex font-medium">{profile?.name}</p>

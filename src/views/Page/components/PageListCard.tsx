@@ -1,4 +1,6 @@
 import React from "react";
+import profileDefault from "../../../assets/userPics.jpg";
+
 interface PageListCardsProps {
   name: string;
   desc: string;
@@ -16,7 +18,7 @@ const PageListCard: React.FC<PageListCardsProps> = ({
           <img
             alt="page"
             className=" !w-10 !h-10 rounded-full shadow-lg flex-2"
-            src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+            src={profileDefault}
           />
         </div>
         <div className="flex flex-col items-start px-4 w-full flex-5">
