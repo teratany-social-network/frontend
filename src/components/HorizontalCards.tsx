@@ -8,13 +8,15 @@ import useToken from "../hooks/useToken";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { addSearchHistory } from "../api/SearchApi";
+import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
 
 interface horizontalCardsProps {
   name: string;
   desc: string;
   image?: string;
   _id?: string;
-  isFollowed?: string;
+  isFollowed?: boolean;
   isButtonShowed?: boolean;
 }
 
@@ -28,7 +30,9 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
 }) => {
   const token = useToken();
   const profileConnectedUser = useFetchProfile();
-  const [followText, setFollowText] = useState<string>(isFollowed!);
+  const [followText, setFollowText] = useState<string>(
+    isFollowed! ? "UnFollow" : "Follow"
+  );
 
   const follow = async () => {
     setFollowText(followText === "Follow" ? "UnFollow" : "Follow");
@@ -44,12 +48,37 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
     }
   };
 
+  const addSearchResult = async (
+    query: string,
+    profileId: string,
+    pictureUrl: string
+  ) => {
+    if (query.length > 4 && query.length < 20) {
+      const { error } = await withAsync(() =>
+        addSearchHistory(
+          token,
+          profileConnectedUser?._id!,
+          query,
+          profileId,
+          pictureUrl
+        )
+      );
+      if (error) {
+        ThrowErrorHandler(error as ErrorData);
+      }
+    }
+  };
+
   useEffect(() => {}, [profileConnectedUser?._id, _id]);
 
   return (
     <div className="mx-1 w-full p-2 ">
       <div className="flex items-center">
-        <Link to={`/profile/${_id}`} className="mr-4">
+        <Link
+          to={`/profile/${_id}`}
+          className="mr-4"
+          onClick={() => addSearchResult(name, _id!, image!)}
+        >
           <img
             alt="profile"
             className="rounded-full w-12 h-12 max-h-12 max-w-12 min-w-12 min-h-12 object-cover mr-4"
@@ -61,7 +90,10 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
           />
         </Link>
         <div className="flex flex-col items-start pr-4 w-full">
-          <Link to={`/profile/${_id}`}>
+          <Link
+            to={`/profile/${_id}`}
+            onClick={() => addSearchResult(name, _id!, image!)}
+          >
             <p className="font-medium">{name}</p>
           </Link>
           <p className="text-sm text-gray-500 mb-1">{desc}</p>
