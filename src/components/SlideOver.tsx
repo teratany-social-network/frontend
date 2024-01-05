@@ -10,11 +10,13 @@ import { useSelector } from "react-redux";
 type SlideOverProps = {
   isOpen?: boolean;
   onClose: () => void;
+  onChildData: (data: IProfile[]) => void;
 };
 
 export const SlideOver: React.FC<SlideOverProps> = ({
   isOpen = false,
   onClose,
+  onChildData,
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const profiles = useSelector<RootState>(
@@ -28,10 +30,12 @@ export const SlideOver: React.FC<SlideOverProps> = ({
       return profile?.name?.toLowerCase().includes(searchQuery?.toLowerCase()!);
     });
     setSearchedProfile(resultats);
+    onChildData(resultats);
   }, [profiles, searchQuery]);
 
   useEffect(() => {
     searchProfile();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profiles, searchQuery]);
 
@@ -89,7 +93,10 @@ export const SlideOver: React.FC<SlideOverProps> = ({
                   </Transition.Child>
                   <div className="flex h-full flex-col bg-white py-6 shadow-xl">
                     <div className="px-4 sm:px-4">
-                      <SearchInputField onChange={(e) => setSearchQuery(e)} />
+                      <SearchInputField
+                        onChange={(e) => setSearchQuery(e)}
+                        searchQuery={searchQuery}
+                      />
                     </div>
                     <div className="relative mt-2 flex-1 overflow-y-scroll">
                       <ProfileListMap

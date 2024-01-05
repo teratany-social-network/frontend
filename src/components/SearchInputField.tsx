@@ -1,17 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface SearchInputFieldProps {
   onChange: (value: string) => void;
+  searchQuery: string;
 }
 
-const SearchInputField: React.FC<SearchInputFieldProps> = ({ onChange }) => {
-  let mapPath = false;
+const SearchInputField: React.FC<SearchInputFieldProps> = ({
+  onChange,
+  searchQuery,
+}) => {
+  const mapPathRef = useRef(false);
+
   useEffect(() => {
     const currentPath = window.location.pathname;
     if (currentPath === "/map") {
-      mapPath = true;
+      mapPathRef.current = true;
+    } else {
+      mapPathRef.current = false; // Make sure to handle other cases if needed
     }
-  }, [mapPath]);
+  }, []);
   return (
     <div className="flex w-full">
       <div className="relative w-full">
@@ -20,9 +27,10 @@ const SearchInputField: React.FC<SearchInputFieldProps> = ({ onChange }) => {
           id="search-dropdown"
           className="block p-2.5 w-full z-20 text-sm text-gray-900 rounded-lg border border-1"
           placeholder="Search..."
+          value={searchQuery}
           onChange={(e) => onChange(e.target.value as string)}
         />
-        {mapPath && (
+        {mapPathRef && (
           <button className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-black rounded-r-lg border border-black">
             <svg
               className="w-4 h-4"

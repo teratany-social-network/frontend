@@ -50,6 +50,7 @@ const Map = () => {
   const [slideOpen, setSlideOpen] = useState<boolean>();
   const token = useToken();
   const [profiles, setProfiles] = useState<IProfile[]>();
+  const [profilesSearched, setProfilesSearched] = useState<IProfile[]>();
   const dispatch = useDispatch<AppDispatch>();
 
   const initialiseMapCoordonates = () => {
@@ -61,6 +62,12 @@ const Map = () => {
         },
       })
     );
+  };
+
+  const handleChildData = (data: IProfile[]) => {
+    // Faites quelque chose avec les données reçues du composant enfant
+    console.log("Données reçues du composant enfant :", data);
+    setProfilesSearched(data);
   };
 
   const changeSlideStatus = () => {
@@ -93,6 +100,12 @@ const Map = () => {
       );
     }
   };
+  useEffect(() => {
+    // Mettre à jour profiles avec profilesSearched si la longueur est supérieure à 0
+    if (profilesSearched && profilesSearched.length > 0) {
+      setProfiles(profilesSearched);
+    }
+  }, [profilesSearched]);
 
   useEffect(() => {
     initialiseMapCoordonates();
@@ -125,7 +138,11 @@ const Map = () => {
           </svg>
         </button>
       </div>
-      <SlideOver isOpen={slideOpen} onClose={closeSlide} />
+      <SlideOver
+        isOpen={slideOpen}
+        onClose={closeSlide}
+        onChildData={handleChildData}
+      />
       <MapContainerForm
         lat={-18.91368}
         lng={47.53613}
@@ -145,9 +162,9 @@ const Map = () => {
               <Popup>
                 <Link
                   to={`/profile/${profile?._id}`}
-                  className="flex flex-col items-start justify-start overflow-hidden pl-1"
+                  className="flex flex-col overflow-hidden pl-1"
                 >
-                  <div className="flex items-center w-[42vw]">
+                  <div className="flex items-center w-[40vw]">
                     <img
                       src={
                         profile?.image
