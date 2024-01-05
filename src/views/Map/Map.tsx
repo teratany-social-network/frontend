@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import MapContainerForm from "../../components/MapContainer";
 import { SlideOver } from "../../components/SlideOver";
 import { Marker, Popup, useMap } from "react-leaflet";
-import { MARKER_ICON } from "../../constants/MarkerIcon";
+import { MARKER_USER } from "../../constants/MarkerIcon";
+import { MARKER_ASSOCIATION } from "../../constants/MarkerIcon";
+import { MARKER_ENTREPRISE } from "../../constants/MarkerIcon";
 import { getProfileWithCoordonates } from "../../api/ProfileApi";
 import { withAsync } from "../../helpers/withAsync";
 import useToken from "../../hooks/useToken";
@@ -112,7 +114,18 @@ const Map = () => {
     fetchProfileWithCoordonates();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const getMarkerIcon = (profileType: string | undefined) => {
+    switch (profileType) {
+      case "user":
+        return MARKER_USER;
+      case "association":
+        return MARKER_ASSOCIATION;
+      case "entreprise":
+        return MARKER_ENTREPRISE;
+      default:
+        return MARKER_USER;
+    }
+  };
   return (
     <div>
       {/* slideover */}
@@ -152,7 +165,7 @@ const Map = () => {
           <MapCoordonatesProfileSelected />
           {profiles?.map((profile) => (
             <Marker
-              icon={MARKER_ICON}
+              icon={getMarkerIcon(profile.profileType)}
               position={[
                 profile?.localisation?.coordonates?.latitude!,
                 profile?.localisation?.coordonates?.longitude!,
