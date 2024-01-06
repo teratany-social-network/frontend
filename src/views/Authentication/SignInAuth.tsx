@@ -1,9 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { withAsync } from "helpers/withAsync";
 import { signinAuth } from "api/AuthenticationApi";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "store/store";
 import { toast } from "react-toastify";
 import TeratanyLogo from "assets/Teratany_ico/apple-touch-icon-180x180.png";
 import FormField from "components/common/FormField";
@@ -97,7 +97,12 @@ const SignInAuth: React.FC = () => {
       toast.success("Successfully logged in");
     }
   };
-
+  const isAuthenticated = useSelector<RootState>(
+    (state) => state.teratany_user.isAuthenticated
+  ) as boolean;
+  if (isAuthenticated) {
+    return <Navigate to={"/"} replace />;
+  }
   return (
     <>
       <div className="h-screen w-full flex flex-col items-center justify-center">

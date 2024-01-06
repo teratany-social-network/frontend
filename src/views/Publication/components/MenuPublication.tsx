@@ -11,7 +11,7 @@ export const MenuPublication: React.FC<MenuProps> = ({ id }) => {
   const [openBottom, setOpenBottom] = React.useState<boolean>(false);
 
   const openDrawerBottom = () => {
-    // window.history.pushState({ page: "" }, "", "?isModal=true");
+    window.history.pushState({ page: "" }, "", "?isModal=true");
     setOpenBottom(true);
   };
 

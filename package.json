@@ -41,6 +41,10 @@
     "react-toastify": "^9.1.3",
     "redux-persist": "^6.0.0",
     "styled-components": "^6.1.0",
+<<<<<<< HEAD
+=======
+    "swiper": "^11.0.5",
+>>>>>>> 8838702db058aa8a08282beb69913b06dd814121
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "yup": "^1.3.2"

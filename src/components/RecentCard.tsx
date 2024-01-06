@@ -8,6 +8,8 @@ import { withAsync } from "../helpers/withAsync";
 import { deleteSearchHistory } from "../api/SearchApi";
 import useToken from "../hooks/useToken";
 import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
+import profileDefault from "../assets/userPics.jpg";
+
 interface recentProps {
   historique: IHistory[];
   onClick: () => void;
@@ -52,7 +54,7 @@ const RecentCard: React.FC<recentProps> = ({ historique, onClick }) => {
                     src={
                       history?.pictureUrl
                         ? `${FileServerURL}/${history?.pictureUrl}`
-                        : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                        : profileDefault
                     }
                     alt=""
                   />

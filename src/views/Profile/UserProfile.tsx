@@ -2,6 +2,7 @@ import React from "react";
 import { IProfile } from "../../types/profile.type";
 import { FileServerURL } from "../../api/FileApi";
 import Button from "../../components/common/Button";
+import profileDefault from "../../assets/userPics.jpg";
 
 interface UserProfileProps {
   profile: IProfile;
@@ -22,12 +23,8 @@ const UserProfile: React.FC<UserProfileProps> = ({
     <div className="mt-16 pb-3 flex w-full justify-evenly items-center border-b border-gray-200">
       <img
         className="w-20 h-20 object-cover rounded-full
-                 border-2 border-pink-600 p-1 mr-2"
-        src={
-          profile?.image
-            ? FileServerURL + profile.image
-            : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-        }
+                 border-2 border-pink-600 mr-2"
+        src={profile?.image ? FileServerURL + profile.image : profileDefault}
         alt="profile"
       />
       <div className="flex flex-col">

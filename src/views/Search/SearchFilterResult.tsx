@@ -1,77 +1,68 @@
-import React, { useState } from "react";
+import React from "react";
 // import EditHeader from "../../components/common/HeaderEdit";
 import Publication from "../../components/Publication/Publication";
 import HorizontalCards from "../../components/HorizontalCards";
-import DropDown from "../../components/common/dropDown";
 import TopBar from "../../components/common/TopBar";
 import useFetchSearchByQuery from "../../hooks/useFetchSearchByQuery";
 import { useParams } from "react-router-dom";
 import useFetchProfile from "../../hooks/useFetchProfile";
+import SearchBar from "../../components/SearchBar";
 
 const SearchFilterResult: React.FC = () => {
   const currentPath = window.location.pathname;
-  const choices = ["Followed", "not followed"];
-  const [dropDownIsVisible, setVisibility] = useState(false);
-  const [selectedChoice, setSelectedChoice] = useState(choices[0]);
   const { query } = useParams();
   const profileConnectedUser = useFetchProfile();
 
   const results = useFetchSearchByQuery(query!);
 
-  console.log("results ", results);
-
-  const showDropDown = () => {
-    setVisibility(!dropDownIsVisible);
-  };
-
-  const handleChoiceSelect = (choice: string) => {
-    setSelectedChoice(choice);
-  };
-
   const pathSegments = currentPath.split("/");
-  const lastSegment = pathSegments[pathSegments.length - 2];
-  const isPublication = lastSegment === "publication";
+  const textFilter = pathSegments[pathSegments.length - 2];
+
+  const renderQueryFilterNavigation = (): string => {
+    switch (textFilter) {
+      case "publication":
+        return "publication";
+      case "user":
+        return "user";
+      default:
+        return "";
+    }
+  };
   return (
     <>
-      <TopBar text={isPublication ? "Publications" : "Users"} />
-      <div className="flex mt-6 mb-2 mx-2">
-        <p
-          className=" border border-1 rounded-lg border-gray-200 mx-1 text-center px-2"
-          onClick={() => {
-            showDropDown();
-          }}
-        >
-          {selectedChoice}
-        </p>
-        {dropDownIsVisible && (
-          <DropDown
-            choices={choices}
-            onChoiceSelect={handleChoiceSelect}
-            closeOnSelect={showDropDown}
-          />
-        )}
+      <TopBar text={textFilter === "publication" ? "Publications" : "Users"} />
+
+      <div className="fixed top-12 p-4 z-40 w-full flex items-center justify-center h-16 bg-white border-b border-gray-200">
+        <SearchBar textFilter={renderQueryFilterNavigation()} />
       </div>
-      {isPublication
-        ? results?.publications?.length! > 0 && (
-            <div className="flex flex-col items-start">
-              {results?.publications?.map((pub) => (
-                <Publication
-                  key={pub?._id}
-                  _id={pub?._id}
-                  profileId={pub?.profile?._id}
-                  profileName={pub?.profile?.name}
-                  profileImage={pub?.profile?.image}
-                  date={pub?.date}
-                  comments={pub?.numberOfComments}
-                  reactions={pub?.numberOfReactions}
-                  content={pub?.content}
-                  images={pub?.images!}
-                  isReacted={pub.isReacted}
-                />
-              ))}
-            </div>
-          )
-        : results?.profiles?.map((user) => (
+
+      {textFilter === "publication" ? (
+        results?.publications?.length! > 0 && (
+          <div
+            className={`bg-gray-100 flex flex-col items-start ${
+              textFilter === "publication" && "mt-28"
+            }`}
+          >
+            {results?.publications?.map((pub) => (
+              <Publication
+                key={pub?._id}
+                _id={pub?._id}
+                profileId={pub?.profile?._id}
+                profileName={pub?.profile?.name}
+                profileImage={pub?.profile?.image}
+                date={pub?.date}
+                comments={pub?.numberOfComments}
+                reactions={pub?.numberOfReactions}
+                content={pub?.content}
+                images={pub?.images!}
+                isReacted={pub.isReacted}
+              />
+            ))}
+          </div>
+        )
+      ) : (
+        <div className={`flex flex-col items-start mt-28`}>
+          {results?.profiles?.map((user) => (
             <HorizontalCards
               _id={user._id}
               name={user.name}
@@ -83,6 +74,8 @@ const SearchFilterResult: React.FC = () => {
               }
             />
           ))}
+        </div>
+      )}
     </>
   );
 };

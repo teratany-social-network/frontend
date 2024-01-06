@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { addSearchHistory } from "../api/SearchApi";
 import { ErrorData, ThrowErrorHandler } from "../helpers/HandleError";
+import profileDefault from "../assets/userPics.jpg";
 
 interface horizontalCardsProps {
   name: string;
@@ -31,7 +32,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
   const token = useToken();
   const profileConnectedUser = useFetchProfile();
   const [followText, setFollowText] = useState<string>(
-    isFollowed! ? "UnFollow" : "Follow"
+    isFollowed! === true ? "UnFollow" : "Follow"
   );
 
   const follow = async () => {
@@ -82,11 +83,7 @@ const HorizontalCards: React.FC<horizontalCardsProps> = ({
           <img
             alt="profile"
             className="rounded-full w-12 h-12 max-h-12 max-w-12 min-w-12 min-h-12 object-cover mr-4"
-            src={
-              image
-                ? FileServerURL + image
-                : "https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-            }
+            src={image ? FileServerURL + image : profileDefault}
           />
         </Link>
         <div className="flex flex-col items-start pr-4 w-full">
